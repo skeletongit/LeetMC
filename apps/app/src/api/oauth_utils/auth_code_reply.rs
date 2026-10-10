@@ -117,7 +117,7 @@ pub fn cancel_pending_auth() {
     }
 }
 
-/// delivers a `modrinth://auth` callback to the in-flight protocol 2 sign-in.
+/// delivers a `leetmc://auth` callback to the in-flight protocol 2 sign-in.
 /// returns false when no sign-in is waiting on this nonce
 pub fn submit_deeplink(code: String, nonce: &str) -> bool {
     if code.len() > MAX_AUTH_PARAM_LEN || nonce.len() > MAX_AUTH_PARAM_LEN {
@@ -137,7 +137,7 @@ pub fn submit_deeplink(code: String, nonce: &str) -> bool {
 
 pub fn parse_auth_deeplink(command: &str) -> Option<(String, String)> {
     let url = Url::parse(command.trim()).ok()?;
-    if url.scheme() != "modrinth" || url.host_str() != Some("auth") {
+    if url.scheme() != "leetmc" || url.host_str() != Some("auth") {
         return None;
     }
 

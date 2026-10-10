@@ -48,21 +48,16 @@
 				"depends": []
 			}
 		},
-		"fileAssociations": [
-			{
-				"ext": ["mrpack"],
-				"mimeType": "application/x-modrinth-modpack+zip"
-			}
-		]
+		"fileAssociations": []
 	},
-	"productName": "Modrinth App",
+	"productName": "LeetMC",
 	"version": "../app-frontend/package.json",
-	"mainBinaryName": "Modrinth App",
-	"identifier": "ModrinthApp",
+	"mainBinaryName": "LeetMC",
+	"identifier": "io.github.skeletongit.leetmc",
 	"plugins": {
 		"deep-link": {
 			"desktop": {
-				"schemes": ["modrinth"]
+				"schemes": ["leetmc"]
 			},
 			"mobile": []
 		}
@@ -77,7 +72,7 @@
 				"fullscreen": false,
 				"height": 800,
 				"resizable": true,
-				"title": "Modrinth App",
+				"title": "LeetMC",
 				"label": "main",
 				"width": 1280,
 				"minHeight": 700,
