@@ -6,6 +6,7 @@
 		:description="instance ? formatMessage(messages.description, { name: instance.name }) : ''"
 		:diffs="diffs"
 		:confirm-label="formatMessage(commonMessages.updateButton)"
+		:cancel-label="formatMessage(messages.declineButton)"
 		:confirm-icon="DownloadIcon"
 		:added-label="formatMessage(messages.addedLabel)"
 		:removed-label="formatMessage(messages.removedLabel)"
@@ -117,9 +118,13 @@ const messages = defineMessages({
 		defaultMessage: 'Update required',
 	},
 	description: {
-		id: 'app.modal.update-to-play.update-required-description',
+		id: 'app.modal.shared-instance-update.description',
 		defaultMessage:
-			'An update is required to play {name}. Please update to latest version to launch the game.',
+			'The room owner changed {name}. We recommend accepting the update so your mods, resource packs, and shaders match the room. If you decline, the game will not launch.',
+	},
+	declineButton: {
+		id: 'app.modal.update-to-play.decline-button',
+		defaultMessage: 'Decline',
 	},
 	addedLabel: {
 		id: 'app.modal.update-to-play.shared-instance-added-label',

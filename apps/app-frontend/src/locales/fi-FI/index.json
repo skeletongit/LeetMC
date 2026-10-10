@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Näytä instanssi"
   },
-  "app.hosting.update-required.description": {
-    "message": "Modrinth -ohjelma tulee päivittää käyttääksesi Modrinth Hosting -palvelua"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Päivitä"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Innokas Modrinth -botti"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Modrinth -ohjelman päivitys vaaditaan"
-  },
   "app.install.phase.downloading_content": {
     "message": "Ladataan sisältöä"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "Lisää palvelin instanssiin"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Lisätty"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Paikallinen instanssi on muille jaettuja versioita edellä."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Muutoksia ei ole jaettu vielä"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Jaa päivitys eteenpäin"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Jaetaan..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Poistettu"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Jaa päivitys eteenpäin"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Katso kokonaiskuva sisällön muutoksista, mitkä jaetaan kaikille, jotka käyttävät tätä instanssia."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Katso muutokset"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Arvioidaan..."
   },
   "app.instance.card.icon-alt": {
     "message": "Instanssin kuva"
@@ -728,39 +689,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Takaisin instanssiin"
   },
-  "app.instance.share.empty.description": {
-    "message": "Voit jakaa tämän instanssin kavereidesi kanssa!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Ei kutsuttuja kavereita"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Kutsu kavereita"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Jaa {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "Tämän instanssin {limit} käyttäjän raja on täynnä."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Kirjaudu sisään käyttäjällä"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "päästäksesi sisään tälle sivulle."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "linkitetty käyttäjä"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Kirjaudu sisään"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Vaihda tiliä"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Väärä tili"
-  },
   "app.instance.share.members.empty": {
     "message": "Kukaan ei ole liittynyt vielä"
   },
@@ -793,12 +721,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "Jos poistat pääsyoikeuden {username} -käyttäjältä, hänet tulee kutsua uudelleen, ennen kuin he voivat saada päivityksiä tähän jaettuun instanssiin."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Kirjaudu sisään"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "Instanssinjakopalvelu ei ole saatavilla tällä hetkellä. Kokeile uudelleen myöhemmin."
   },
   "app.instance.worlds.add-server": {
     "message": "Lisää palvelin"

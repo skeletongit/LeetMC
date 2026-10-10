@@ -47,7 +47,13 @@
 			</div>
 		</div>
 
+		<div v-if="loading" class="flex min-h-24 items-center justify-center gap-2 text-secondary">
+			<SpinnerIcon class="animate-spin" />
+			{{ formatMessage(messages.loadingChanges) }}
+		</div>
+
 		<div
+			v-else
 			class="flex max-h-[272px] flex-col overflow-y-auto border-0 border-y border-solid border-surface-5 bg-surface-2 px-3 py-2"
 		>
 			<div v-if="!diffs.length" class="flex h-10 min-h-10 items-center gap-2 px-2">
@@ -117,7 +123,7 @@
 			</div>
 		</div>
 
-		<div v-if="$slots['additional-content']" class="px-4 pt-4">
+		<div v-if="!loading && $slots['additional-content']" class="px-4 pt-4">
 			<slot name="additional-content" />
 		</div>
 
@@ -178,12 +184,12 @@
 				<div class="flex gap-2">
 					<Button type="outlined" class="!border" @click="handleCancel">
 						<XIcon />
-						{{ formatMessage(commonMessages.cancelButton) }}
+						{{ cancelLabel || formatMessage(commonMessages.cancelButton) }}
 					</Button>
 					<Button
 						type="colored"
 						color="brand"
-						:disabled="buttonsDisabled || confirmDisabled"
+						:disabled="loading || buttonsDisabled || confirmDisabled"
 						@click="handleConfirm"
 					>
 						<component :is="confirmIcon" v-if="confirmIcon" />
@@ -203,6 +209,7 @@ import {
 	PlusIcon,
 	RefreshCwIcon,
 	ReportIcon,
+	SpinnerIcon,
 	XIcon,
 } from '@modrinth/assets'
 import { type Component, computed, ref } from 'vue'
@@ -223,12 +230,14 @@ const props = defineProps<{
 	diffs: ContentDiffItem[]
 	hasUnknownContent?: boolean
 	confirmLabel?: string
+	cancelLabel?: string
 	confirmIcon?: Component
 	showReportButton?: boolean
 	showBackupCreator?: boolean
 	addedLabel?: string
 	removedLabel?: string
 	confirmDisabled?: boolean
+	loading?: boolean
 	disableClose?: boolean
 	showExternalWarnings?: boolean
 	externalWarningDescription?: string
@@ -376,6 +385,10 @@ function handleHide() {
 }
 
 const messages = defineMessages({
+	loadingChanges: {
+		id: 'content.diff-modal.loading-changes',
+		defaultMessage: 'Loading changes...',
+	},
 	removedCount: {
 		id: 'content.diff-modal.removed-count',
 		defaultMessage: '{count} removed',

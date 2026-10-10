@@ -58,7 +58,7 @@ import { computed, ref } from 'vue'
 
 import { methodLabels, type ShareRow } from './shared-instance-share-types'
 
-const props = defineProps<{ row: ShareRow | null; memberCount: number }>()
+const props = defineProps<{ row: ShareRow | null }>()
 const emit = defineEmits<{ confirm: [row: ShareRow]; clear: [] }>()
 const modal = ref<InstanceType<typeof NewModal>>()
 const { formatMessage } = useVIntl()
@@ -90,20 +90,16 @@ const messages = defineMessages({
 		id: 'app.instance.share.remove-user-modal.effect-invite-again',
 		defaultMessage: 'You can invite them again later',
 	},
-	effectLastUser: {
-		id: 'app.instance.share.remove-user-modal.effect-last-user',
-		defaultMessage: 'This is the last user, sharing will be turned off for this instance',
-	},
 	removeButton: {
 		id: 'app.instance.share.remove-user-modal.remove-button',
 		defaultMessage: 'Revoke access',
 	},
 })
-const effects = computed(() => {
-	const result = [messages.effectAccess, messages.effectInstalledCopy, messages.effectInviteAgain]
-	if (props.memberCount === 1) result.push(messages.effectLastUser)
-	return result
-})
+const effects = computed(() => [
+	messages.effectAccess,
+	messages.effectInstalledCopy,
+	messages.effectInviteAgain,
+])
 
 function show(event?: MouseEvent) {
 	modal.value?.show(event)

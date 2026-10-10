@@ -230,9 +230,6 @@
   "app.instance.add-server.cancel": {
     "message": "Batal"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Ditambah"
-  },
   "app.instance.card.play": {
     "message": "Main"
   },
@@ -289,9 +286,6 @@
   },
   "app.instance.tab.logs": {
     "message": "Log"
-  },
-  "app.instance.tab.share": {
-    "message": "Kongsi"
   },
   "app.instance.tab.worlds": {
     "message": "Dunia"

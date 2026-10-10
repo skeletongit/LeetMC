@@ -10,7 +10,12 @@ import { setupErrorReporting } from '@/helpers/error-reporting'
 import { debugStartup, traceStartupStep } from '@/helpers/startup-debug'
 import i18nPlugin from '@/plugins/i18n'
 import i18nDebugPlugin from '@/plugins/i18n-debug'
-import router from '@/routes'
+import {
+	preloadPrimaryRoutes,
+	preloadRemainingRoutes,
+	preloadSecondaryRoutes,
+	default as router,
+} from '@/routes'
 
 debugStartup('Frontend entry module evaluated')
 const app = createApp(App)
@@ -26,6 +31,16 @@ app.use(i18nDebugPlugin)
 installTooltipDirective(app)
 app.directive('overlay-scrollbars', overlayScrollbarsDirective)
 
+function scheduleRoutePreload(task, delay) {
+	window.setTimeout(() => {
+		if ('requestIdleCallback' in window) {
+			window.requestIdleCallback(() => void task(), { timeout: 3_000 })
+		} else {
+			void task()
+		}
+	}, delay)
+}
+
 async function mount() {
 	if (import.meta.env.DEV && import.meta.env.VITE_VUE_SCAN === 'true') {
 		const { VueScanPlugin } = await traceStartupStep(
@@ -37,6 +52,9 @@ async function mount() {
 	debugStartup('Vue mount started')
 	app.mount('#app')
 	debugStartup('Vue mount completed')
+	scheduleRoutePreload(preloadPrimaryRoutes, 500)
+	scheduleRoutePreload(preloadSecondaryRoutes, 3_000)
+	scheduleRoutePreload(preloadRemainingRoutes, 7_000)
 }
 
 void mount()

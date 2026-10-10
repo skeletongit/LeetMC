@@ -166,7 +166,6 @@ pub async fn revoke_shared_instance_invite(
 pub async fn remove_shared_instance_users(
     instance_id: &str,
     user_ids: Vec<String>,
-    has_pending_recipients: bool,
 ) -> crate::Result<SharedInstanceUsers> {
     let state = State::get().await?;
     let _shared_instance_lock = state.lock_shared_instance(instance_id).await;
@@ -180,20 +179,6 @@ pub async fn remove_shared_instance_users(
     }
 
     let remaining_users = get_remote_users(&attachment.id, &state).await?;
-    if !has_shared_instance_recipients(
-        &remaining_users,
-        &attachment,
-        has_pending_recipients,
-        &state,
-    )
-    .await?
-    {
-        delete_remote_instance(&attachment.id, &state).await?;
-        crate::state::clear_shared_instance(instance_id, &state.pool).await?;
-        emit_instance(instance_id, InstancePayloadType::Edited).await?;
-
-        return Ok(SharedInstanceUsers::empty());
-    }
 
     emit_instance(instance_id, InstancePayloadType::Edited).await?;
 

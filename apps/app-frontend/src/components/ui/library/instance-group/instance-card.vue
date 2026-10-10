@@ -8,12 +8,20 @@ import { useRouter } from 'vue-router'
 
 import InstanceCardView from '@/components/ui/library/instance-group/instance-card-view.vue'
 import { getLibraryInstanceSelectionKey, useLibrary } from '@/components/ui/library/use-library'
+import SharedInstanceUpdateModal from '@/components/ui/shared-instances/SharedInstanceUpdateModal.vue'
 import { useAppEvent } from '@/composables/use-app-event'
 import { handleSevereError } from '@/composables/use-error.js'
 import { trackEvent } from '@/helpers/analytics'
-import { install_existing_instance, install_pack_to_existing_instance } from '@/helpers/install'
+import {
+	getSharedInstanceUnavailableReason,
+	install_existing_instance,
+	install_get_shared_instance_update_preview,
+	install_pack_to_existing_instance,
+	isSharedInstanceUnavailableError,
+} from '@/helpers/install'
 import { kill, run } from '@/helpers/instance'
 import { get_by_instance_id } from '@/helpers/process'
+import { useSharedInstanceErrors } from '@/helpers/shared-instance-errors'
 import type { GameInstance } from '@/helpers/types'
 import { showInstanceInFolder } from '@/helpers/utils.js'
 
@@ -29,6 +37,7 @@ const instanceCardSensors = [
 ]
 
 const { handleError } = injectNotificationManager()
+const { notifySharedInstanceError, notifySharedInstanceUnavailable } = useSharedInstanceErrors()
 const { formatMessage } = useVIntl()
 const messages = defineMessages({
 	selectInstance: {
@@ -71,6 +80,7 @@ const emit = defineEmits<{
 const instanceCardElement = ref<InstanceType<typeof InstanceCardView> | null>(null)
 const playing = ref(false)
 const loading = ref(false)
+const sharedInstanceUpdateModal = ref<InstanceType<typeof SharedInstanceUpdateModal>>()
 const currentEvent = ref<ProcessEvent | null>(null)
 const isPrimaryPointerDown = ref(false)
 const modLoading = computed(
@@ -179,6 +189,36 @@ const play = async (event: MouseEvent | null, context: string) => {
 	event?.stopPropagation()
 	if (props.instance.quarantined || installing.value || modLoading.value) return
 	loading.value = true
+
+	if (props.instance.shared_instance?.role === 'member') {
+		try {
+			const preview = await install_get_shared_instance_update_preview(props.instance.id)
+			if (preview?.updateAvailable) {
+				loading.value = false
+				sharedInstanceUpdateModal.value?.show(
+					props.instance,
+					preview,
+					() => launch(context),
+					event ?? undefined,
+				)
+				return
+			}
+		} catch (error) {
+			loading.value = false
+			if (isSharedInstanceUnavailableError(error)) {
+				notifySharedInstanceUnavailable(getSharedInstanceUnavailableReason(error))
+			} else {
+				notifySharedInstanceError(error)
+			}
+			return
+		}
+	}
+
+	await launch(context)
+}
+
+const launch = async (context: string) => {
+	loading.value = true
 	await run(props.instance.id)
 		.catch((err) => handleSevereError(err, { instanceId: props.instance.id }))
 		.finally(() => {
@@ -189,6 +229,12 @@ const play = async (event: MouseEvent | null, context: string) => {
 			})
 		})
 	loading.value = false
+}
+
+function handleSharedInstanceUnavailable(
+	reason: Parameters<typeof notifySharedInstanceUnavailable>[0],
+) {
+	notifySharedInstanceUnavailable(reason)
 }
 
 const stop = async (event: MouseEvent | null, context: string) => {
@@ -387,4 +433,8 @@ onMounted(() => {
 			</button>
 		</template>
 	</InstanceCardView>
+	<SharedInstanceUpdateModal
+		ref="sharedInstanceUpdateModal"
+		@shared-instance-unavailable="handleSharedInstanceUnavailable"
+	/>
 </template>

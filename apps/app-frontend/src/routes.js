@@ -1,71 +1,80 @@
 import { createRouter, createWebHistory } from 'vue-router'
-/**
- * Loads each page when its route is visited.
- */
-export default new createRouter({
+
+const loadHome = () => import('@/pages/Index.vue')
+const loadRooms = () => import('@/pages/Rooms.vue')
+const loadBrowse = () => import('@/pages/Browse.vue')
+const loadSkins = () => import('@/pages/Skins.vue')
+const loadScreenshots = () => import('@/pages/Screenshots.vue')
+const loadUser = () => import('@/pages/User.vue')
+const loadProject = () => import('@/pages/project/Index.vue')
+const loadProjectDescription = () => import('@/pages/project/Description.vue')
+const loadProjectVersions = () => import('@/pages/project/Versions.vue')
+const loadProjectVersion = () => import('@/pages/project/Version.vue')
+const loadProjectGallery = () => import('@/pages/project/Gallery.vue')
+const loadInstance = () => import('@/pages/instance/layout.vue')
+const loadInstanceWorlds = () => import('@/pages/instance/worlds/index.vue')
+const loadInstanceContent = () => import('@/pages/instance/content/index.vue')
+const loadInstanceFiles = () => import('@/pages/instance/files/index.vue')
+const loadInstanceScreenshots = () => import('@/pages/instance/screenshots/index.vue')
+const loadInstanceLogs = () => import('@/pages/instance/logs/index.vue')
+
+async function preloadRoutes(loaders) {
+	await Promise.allSettled(loaders.map((load) => load()))
+}
+
+export function preloadPrimaryRoutes() {
+	return preloadRoutes([loadRooms, loadBrowse, loadInstance, loadInstanceContent])
+}
+
+export function preloadSecondaryRoutes() {
+	return preloadRoutes([
+		loadScreenshots,
+		loadProject,
+		loadProjectDescription,
+		loadProjectVersions,
+		loadInstanceWorlds,
+		loadInstanceFiles,
+		loadInstanceScreenshots,
+		loadInstanceLogs,
+	])
+}
+
+export function preloadRemainingRoutes() {
+	return preloadRoutes([loadSkins, loadUser, loadProjectVersion, loadProjectGallery])
+}
+
+const router = new createRouter({
 	history: createWebHistory(),
 	routes: [
 		{
 			path: '/',
 			name: 'Home',
-			component: () => import('@/pages/Index.vue'),
+			component: loadHome,
 		},
 		{
-			path: '/hosting/manage/',
-			name: 'Servers',
-			component: () => import('@/pages/Servers.vue'),
-		},
-		{
-			path: '/hosting/manage/:id',
-			name: 'ServerManage',
-			component: () => import('@/pages/hosting/manage/Index.vue'),
-			children: [
-				{
-					path: '',
-					name: 'ServerManageOverview',
-					component: () => import('@/pages/hosting/manage/Overview.vue'),
-				},
-				{
-					path: 'content',
-					name: 'ServerManageContent',
-					component: () => import('@/pages/hosting/manage/Content.vue'),
-				},
-				{
-					path: 'files',
-					name: 'ServerManageFiles',
-					component: () => import('@/pages/hosting/manage/Files.vue'),
-				},
-				{
-					path: 'backups',
-					name: 'ServerManageBackups',
-					component: () => import('@/pages/hosting/manage/Backups.vue'),
-				},
-				{
-					path: 'access',
-					name: 'ServerManageAccess',
-					component: () => import('@/pages/hosting/manage/Access.vue'),
-				},
-			],
+			path: '/rooms',
+			name: 'Rooms',
+			component: loadRooms,
 		},
 		{
 			path: '/browse/:projectType',
 			name: 'Discover content',
-			component: () => import('@/pages/Browse.vue'),
+			component: loadBrowse,
 		},
 		{
 			path: '/skins',
 			name: 'Skin selector',
-			component: () => import('@/pages/Skins.vue'),
+			component: loadSkins,
 		},
 		{
 			path: '/screenshots',
 			name: 'Screenshots',
-			component: () => import('@/pages/Screenshots.vue'),
+			component: loadScreenshots,
 		},
 		{
 			path: '/user/:user/:projectType?',
 			name: 'User',
-			component: () => import('@/pages/User.vue'),
+			component: loadUser,
 		},
 		{
 			path: '/:projectType(mod|plugin|datapack|resourcepack|shader|modpack)/:id/:rest(.*)*',
@@ -77,71 +86,66 @@ export default new createRouter({
 		{
 			path: '/project/:id',
 			name: 'Project',
-			component: () => import('@/pages/project/Index.vue'),
+			component: loadProject,
 			props: true,
 			children: [
 				{
 					path: '',
 					name: 'Description',
-					component: () => import('@/pages/project/Description.vue'),
+					component: loadProjectDescription,
 				},
 				{
 					path: 'versions',
 					name: 'Versions',
-					component: () => import('@/pages/project/Versions.vue'),
+					component: loadProjectVersions,
 				},
 				{
 					path: 'version/:version',
 					name: 'Version',
-					component: () => import('@/pages/project/Version.vue'),
+					component: loadProjectVersion,
 					props: true,
 				},
 				{
 					path: 'gallery',
 					name: 'Gallery',
-					component: () => import('@/pages/project/Gallery.vue'),
+					component: loadProjectGallery,
 				},
 			],
 		},
 		{
 			path: '/instance/:id',
 			name: 'Instance',
-			component: () => import('@/pages/instance/layout.vue'),
+			component: loadInstance,
 			children: [
 				{
 					path: 'worlds',
 					name: 'InstanceWorlds',
-					component: () => import('@/pages/instance/worlds/index.vue'),
-				},
-				{
-					path: 'share',
-					name: 'InstanceShare',
-					component: () => import('@/pages/instance/share/index.vue'),
+					component: loadInstanceWorlds,
 				},
 				{
 					path: '',
 					name: 'InstanceContent',
-					component: () => import('@/pages/instance/content/index.vue'),
+					component: loadInstanceContent,
 				},
 				{
 					path: 'projects/:type',
 					name: 'InstanceContentFilter',
-					component: () => import('@/pages/instance/content/index.vue'),
+					component: loadInstanceContent,
 				},
 				{
 					path: 'files',
 					name: 'InstanceFiles',
-					component: () => import('@/pages/instance/files/index.vue'),
+					component: loadInstanceFiles,
 				},
 				{
 					path: 'screenshots',
 					name: 'InstanceScreenshots',
-					component: () => import('@/pages/instance/screenshots/index.vue'),
+					component: loadInstanceScreenshots,
 				},
 				{
 					path: 'logs',
 					name: 'InstanceLogs',
-					component: () => import('@/pages/instance/logs/index.vue'),
+					component: loadInstanceLogs,
 					meta: {
 						renderMode: 'fixed',
 					},
@@ -161,3 +165,5 @@ export default new createRouter({
 		}
 	},
 })
+
+export default router

@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Pokaż instancję"
   },
-  "app.hosting.update-required.description": {
-    "message": "Musisz pobrać aktualizacje, by móc korzystać z Modrinth Hosting poprzez Modrinth App"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Pobierz aktualizację"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Podekscytowany Modrinth Bot"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Wymagana aktualizacja Modrinth App"
-  },
   "app.install.phase.downloading_content": {
     "message": "Pobieranie zawartości"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "Dodaj serwer do instancji"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Dodano"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Twoja lokalna przesłana instalacja wyprzedza te, które zostały przesłane użytkownikom."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Twoje zmiany nie zostały jeszcze udostępnione"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Opublikuj aktualizację"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Publikowanie..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Usunięto"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Opublikuj aktualizację"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Zobacz zmienione treści, które zostaną przesłane wszystkim użytkownikom tej instalacji."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Sprawdź zmiany"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Trwa przegląd..."
   },
   "app.instance.card.icon-alt": {
     "message": "Ikona instancji"
@@ -719,36 +680,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Powrót do instancji"
   },
-  "app.instance.share.empty.description": {
-    "message": "Możesz udostępnić tę instancję znajomym!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Nie zaproszono żadnych znajomych"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Zaproś znajomych"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Udostępnij {name}"
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Musisz zalogować się jako"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": ", by mieć dostęp do tej strony."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "połączone konto"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Nie zalogowano"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Zmień konto"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Złe konto"
-  },
   "app.instance.share.members.empty": {
     "message": "Żaden użytkownik jeszcze nie dołączył"
   },
@@ -781,21 +712,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "Jeśli pozbawisz użytkownika {username} dostępu do tej współdzielonej instancji, musisz zaprosić go ponownie, aby mógł otrzymywać aktualizacje."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Zaloguj się"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "Usługa współdzielonych instancji jest obecnie niedostępna, spróbuj ponownie później"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "Nie można nawiązać połączenia"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "Musisz odłączyć paczkę modów, aby udostępnić swoją instancję"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Udostępnianie wymaga odłączenia"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "Ta udostępniona instancja jest już zainstalowana jako <bold>{instanceName} </bold>. Czy na pewno chcesz zainstalować jej kopię?"
@@ -844,9 +760,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Zrzuty ekranu"
-  },
-  "app.instance.tab.share": {
-    "message": "Udostępnianie"
   },
   "app.instance.tab.worlds": {
     "message": "Światy"
@@ -1351,9 +1264,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Konto Modrinth"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "Usuń konto"

@@ -413,18 +413,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "عرض النسخة"
   },
-  "app.hosting.update-required.description": {
-    "message": "يجب عليك التحديث لاستخدام Modrinth Hosting بواسطة تطبيق Modrinth"
-  },
-  "app.hosting.update-required.download": {
-    "message": "نزّل للتحديث"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "بوت Modrinth المتحمّس"
-  },
-  "app.hosting.update-required.title": {
-    "message": "يلزم تحديث تطبيق Modrinth"
-  },
   "app.install.phase.downloading_content": {
     "message": "جارٍ تنزيل المحتوى"
   },
@@ -521,35 +509,8 @@
   "app.instance.add-server.title": {
     "message": "أضفة السيرفر للنسخة"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "مضاف"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "نسختك المحلية أحدث من النسخة لدى المستخدمين الذين شاركتها معهم."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "لم يتم مشاركة تغييراتك بعد"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "رفع التحديث"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "جاري الرفع..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "تمت الإزالة"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "رفع التحديث"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "مراجعة تغييرات المحتوى التي سيتم مشاركتها مع جميع مستخدمي هذه النسخة."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "مراجعة التغييرات "
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "مراجعة..."
   },
   "app.instance.card.icon-alt": {
     "message": "أيقونة نسخ"
@@ -647,39 +608,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "العودة إلى النسخة"
   },
-  "app.instance.share.empty.description": {
-    "message": "يمكنك مشاركة هذه النسخة مع أصدقائك!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "لا يوجد أصدقاء مدعوين"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "دعوة الأصدقاء"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "شارك {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "وصلت هذه النسخة إلى الحد الأقصى المسموح به من المستخدمين ({limit})"
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "تحتاج إلى تسجيل الدخول كـ"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "للوصول إلى هذه الصفحة."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "الحساب المرتبط"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "لم يتم تسجيل الدخول"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "تبديل الحسابات"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "حساب خاطئ"
-  },
   "app.instance.share.members.empty": {
     "message": "لم ينضم أي مستخدمين حتى الآن"
   },
@@ -712,21 +640,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "إذا قمت بإلغاء وصول {username}إلى هذه النسخة المشتركة، سوف تحتاج إلى دعوتهم مرة أخرى قبل أن يتمكنوا من تلقي التحديثات."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "تسجيل الدخول"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "تعذر الوصول إلى خدمة النسخ المُشاركة في الوقت الحالي، يُرجى المحاولة مرة أخرى لاحقاً."
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "تعذر الاتصال "
-  },
-  "app.instance.share.unlink.body": {
-    "message": "يجب إلغاء ربط المودباك هذا لمشاركة نسختك"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "تتطلب المشاركة إلغاء الربط"
   },
   "app.instance.shared-instance-already-installed.header": {
     "message": "النسخة المشتركة مثبّتة بالفعل"
@@ -772,9 +685,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "لقطات الشاشة"
-  },
-  "app.instance.tab.share": {
-    "message": "مشاركة"
   },
   "app.instance.tab.worlds": {
     "message": "عوالم"
@@ -1273,9 +1183,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "حساب Modrinth"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "استضافة Modrinth"
   },
   "app.nav.remove-account": {
     "message": "إزالة الحساب"

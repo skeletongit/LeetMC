@@ -1,13 +1,8 @@
 <template>
 	<StackedAdmonitions v-bind="$attrs" :items="stackItems" class="w-full">
 		<template #item="{ item, dismissible }">
-			<InstanceAdmonitionsSharedInstanceStale
-				v-if="item.kind === 'shared-instance-stale'"
-				:instance="instance"
-				@published="emit('published')"
-			/>
 			<InstanceAdmonitionsSharedInstanceWrongAccount
-				v-else-if="item.kind === 'shared-instance-wrong-account'"
+				v-if="item.kind === 'shared-instance-wrong-account'"
 				:expected-user-id="sharedInstanceExpectedUserId"
 				:role="sharedInstanceRole"
 				:signed-out="sharedInstanceSignedOut"
@@ -31,7 +26,6 @@ import { computed, ref, watch } from 'vue'
 import type { SharedInstanceUnavailableReason } from '@/helpers/install'
 import type { GameInstance } from '@/helpers/types'
 
-import InstanceAdmonitionsSharedInstanceStale from './shared-instance-stale.vue'
 import InstanceAdmonitionsSharedInstanceUnavailable from './shared-instance-unavailable.vue'
 import InstanceAdmonitionsSharedInstanceWrongAccount from './shared-instance-wrong-account.vue'
 import type { InstanceAdmonitionItem, SharedInstanceRole } from './types.ts'
@@ -51,7 +45,6 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits<{
-	published: []
 	delete: []
 }>()
 
@@ -61,13 +54,6 @@ const displayedSharedInstanceUnavailableReason = computed<SharedInstanceUnavaila
 		props.instance.quarantined ? 'quarantined' : (props.sharedInstanceUnavailableReason ?? null),
 )
 const sharedInstanceUnavailableDismissed = ref(false)
-const showSharedInstancePublishAdmonition = computed(
-	() =>
-		!sharedInstanceWrongAccount.value &&
-		props.instance.install_stage === 'installed' &&
-		props.instance.shared_instance?.role === 'owner' &&
-		props.instance.shared_instance.status === 'stale',
-)
 const stackItems = computed<InstanceAdmonitionItem[]>(() => {
 	const items: InstanceAdmonitionItem[] = []
 
@@ -91,15 +77,6 @@ const stackItems = computed<InstanceAdmonitionItem[]>(() => {
 			type: 'warning',
 			dismissible: !sharedInstanceQuarantined,
 			kind: 'shared-instance-unavailable',
-		})
-	}
-
-	if (showSharedInstancePublishAdmonition.value) {
-		items.push({
-			id: 'shared-instance-stale',
-			type: 'warning',
-			dismissible: false,
-			kind: 'shared-instance-stale',
 		})
 	}
 

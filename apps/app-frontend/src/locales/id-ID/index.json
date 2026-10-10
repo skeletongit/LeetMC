@@ -338,9 +338,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Lihat instans"
   },
-  "app.hosting.update-required.title": {
-    "message": "Modrinth App membutuhkan pembaruan"
-  },
   "app.install.phase.downloading_content": {
     "message": "Mengunduh konten"
   },
@@ -436,9 +433,6 @@
   },
   "app.instance.mods.successfully-uploaded": {
     "message": "Berhasil diunggah"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Bagikan {name}"
   },
   "app.instance.shared-instance-already-installed.instance": {
     "message": "Instans"

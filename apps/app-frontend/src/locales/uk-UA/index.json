@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Переглянути примірник"
   },
-  "app.hosting.update-required.description": {
-    "message": "Вам потрібно оновитися, щоб використовувати Modrinth Hosting через застосунок Modrinth"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Завантажити для оновлення"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Схвильований бот Modrinth"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Потрібне оновлення Modrinth App"
-  },
   "app.install.phase.downloading_content": {
     "message": "Завантаження вмісту"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "Додати сервер до примірника"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Додано"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Локальний примірник містить зміни, якими ви ще не поділилися з іншими користувачами."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Ви ще не поділилися своїми змінами"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Опублікувати оновлення"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Публікуємо..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Видалено"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Публікація оновлення"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Переглянути зміни вмісту, які застосуються для всіх, хто використовує цей примірник."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Огляд змін"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Оглядаємо..."
   },
   "app.instance.card.icon-alt": {
     "message": "Значок примірника"
@@ -719,39 +680,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Назад до примірника"
   },
-  "app.instance.share.empty.description": {
-    "message": "Ви можете поділитися цим примірником із друзями!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Немає запрошених друзів"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Запросити друзів"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Поділитися {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "Цей примірник досяг ліміту в {limit} користувачів."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Ви повинні ввійти як"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "для отримання доступу до цієї сторінки."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "прив'язаний обліковий запис"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Вхід не виконано"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Змінити обліковий запис"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Неправильний обліковий запис"
-  },
   "app.instance.share.members.empty": {
     "message": "Жоден користувач ще не приєднався"
   },
@@ -784,21 +712,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "Якщо ви відкличете доступ {username} до цього спільного примірника, він зможе отримувати оновлення, лише якщо ви знову його запросите."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Увійти"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "Сервіс спільних примірників наразі недоступний, спробуйте знову пізніше"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "Не вдалося під'єднатися"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "Ви повинні від'єднати цю збірку, щоб поділитися своїм примірником"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Спільний доступ вимагає відв'язування"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "Цей спільний примірник уже встановлено як <bold>«{instanceName}»</bold>. Справді бажаєте встановити ще одну копію?"
@@ -847,9 +760,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Знімки екрана"
-  },
-  "app.instance.tab.share": {
-    "message": "Поділитися"
   },
   "app.instance.tab.worlds": {
     "message": "Світи"
@@ -1354,9 +1264,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Обліковий запис Modrinth"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "Вилучити обліковий запис"

@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "인스턴스 보기"
   },
-  "app.hosting.update-required.description": {
-    "message": "업데이트해야 Modrinth 앱을 통해 Modrinth 호스팅을 사용할 수 있습니다"
-  },
-  "app.hosting.update-required.download": {
-    "message": "다운로드하여 업데이트"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "신난 Modrinth Bot"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Modrinth App 업데이트 필요"
-  },
   "app.install.phase.downloading_content": {
     "message": "콘텐츠 다운로드 중"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "인스턴스에 서버 추가"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "추가됨"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "현재 로컬 인스턴스가 콘텐츠를 공유한 다른 사용자들의 인스턴스보다 최신 상태입니다."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "변경 사항이 아직 공유되지 않았습니다"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "업데이트 게시"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "게시 중..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "제거됨"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "업데이트 게시"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "이 인스턴스를 사용하는 모든 사람과 공유될 콘텐츠 변경 사항을 검토하세요."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "변경사항 검토"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "검토 중..."
   },
   "app.instance.card.icon-alt": {
     "message": "인스턴스 아이콘"
@@ -728,39 +689,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "인스턴스로 돌아가기"
   },
-  "app.instance.share.empty.description": {
-    "message": "친구들과 이 인스턴스를 공유할 수 있습니다!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "초대한 친구 없음"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "친구 초대"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "{name} 공유"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "이 인스턴스는 {limit}명 사용자 제한에 도달했습니다."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "이 페이지에 접근하려면"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "계정으로 로그인해야 합니다."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "연동된"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "로그인되지 않음"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "계정 전환"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "잘못된 계정"
-  },
   "app.instance.share.members.empty": {
     "message": "아직 참여한 사용자가 없습니다"
   },
@@ -793,21 +721,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "이 공유 인스턴스에서 {username} 사용자의 접근 권한을 제거하면, 해당 사용자가 업데이트를 받기 전에 다시 초대해야 합니다."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "로그인"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "현재 공유 인스턴스 서비스를 이용할 수 없습니다. 잠시 후 다시 시도해 주세요"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "연결할 수 없습니다"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "인스턴스를 공유하려면 이 모드팩을 연동 해제해야 합니다"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "공유하려면 연동을 해제해야 합니다"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "이 공유 인스턴스는 이미 <bold>{instanceName}</bold> 이름으로 설치되어 있습니다. 사본을 하나 더 설치하시겠습니까?"
@@ -856,9 +769,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "스크린샷"
-  },
-  "app.instance.tab.share": {
-    "message": "공유"
   },
   "app.instance.tab.worlds": {
     "message": "세계"
@@ -1363,9 +1273,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Modrinth 계정"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth 호스팅"
   },
   "app.nav.remove-account": {
     "message": "계정 제거"

@@ -488,18 +488,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "インスタンスを表示"
   },
-  "app.hosting.update-required.description": {
-    "message": "Modrinth Hostingを利用するには、Modrinth Appを更新してください"
-  },
-  "app.hosting.update-required.download": {
-    "message": "ダウンロードして更新"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "ワクワクしているModrinth Bot"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Modrinth Appの更新が必要です"
-  },
   "app.install.phase.downloading_content": {
     "message": "コンテンツをダウンロード中"
   },
@@ -596,35 +584,8 @@
   "app.instance.add-server.title": {
     "message": "インスタンスにサーバーを追加"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "追加済"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "ローカルインスタンスのバージョンが、共有しているユーザー側のバージョンより進んでいます。"
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "変更はまだ共有されていません"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "アップデートを公開する"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "公開しています…"
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "削除されました"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "アップデートを公開する"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "このインスタンスを利用しているすべてのユーザーに共有されるコンテンツの変更内容を確認してください。"
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "変更点を確認"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "審査中…"
   },
   "app.instance.card.icon-alt": {
     "message": "インスタンスのアイコン"
@@ -722,39 +683,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "インスタンスに戻る"
   },
-  "app.instance.share.empty.description": {
-    "message": "フレンドとこのインスタンスをシェアしましょう！"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "まだ誰も招待していないようです"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "フレンドを招待"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "{name} をシェアする"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "このインスタンスは上限の{limit}人に達しました。"
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "このページにアクセスするには"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "としてサインインする必要があります。"
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "リンクされたアカウント"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "サインインしていません"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "アカウントを切り替える"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "アカウントが違います"
-  },
   "app.instance.share.members.empty": {
     "message": "まだ誰も参加していません"
   },
@@ -787,21 +715,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "もし{username}のアクセス権を取り消した場合、彼らが再びアップデートを受け取れるようにするには、もう一度招待し直す必要があります。"
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "サインイン"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "インスタンスの共有は現在ご利用いただけません。しばらくしてからもう一度お試しください"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "接続エラー"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "インスタンスを共有するには、このModパックのリンクを解除する必要があります"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "共有にはリンクを解除する必要があります"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "この共有インスタンスはすでに<bold> {instanceName} </bold>としてインストールされています。別のコピーをインストールしてもよろしいですか？"
@@ -850,9 +763,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "スクリーンショット"
-  },
-  "app.instance.tab.share": {
-    "message": "共有"
   },
   "app.instance.tab.worlds": {
     "message": "ワールド"
@@ -1357,9 +1267,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Modrinthアカウント"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "アカウントを削除"

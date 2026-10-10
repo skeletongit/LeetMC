@@ -36,7 +36,6 @@ type InviteVariables = {
 
 type RemoveVariables = {
 	id: string
-	hasPendingRecipients: boolean
 	change: OptimisticChange
 	exclusive: boolean
 }
@@ -81,8 +80,8 @@ export function useSharedInstanceMembers(options: {
 	})
 
 	const removeMutation = useMutation({
-		mutationFn: ({ id, hasPendingRecipients, change }: RemoveVariables) =>
-			remove_shared_instance_users(change.queryKey[1], [id], hasPendingRecipients),
+		mutationFn: ({ id, change }: RemoveVariables) =>
+			remove_shared_instance_users(change.queryKey[1], [id]),
 		onError: (error, { change }) => {
 			rollback(change)
 			options.onError(error)
@@ -173,14 +172,11 @@ export function useSharedInstanceMembers(options: {
 		const exclusive = rows.value.length === 1
 		removingUserIds.add(normalizedId)
 		if (exclusive) exclusiveMutationPending.value = true
-		const hasPendingRecipients = rows.value.some(
-			(row) => row.pending && normalizeInviteKey(row.id) !== normalizedId,
-		)
 		const change = beginOptimisticChange(id)
 		updateRows(change.queryKey, (currentRows) =>
 			currentRows.filter((row) => normalizeInviteKey(row.id) !== normalizedId),
 		)
-		removeMutation.mutate({ id, hasPendingRecipients, change, exclusive })
+		removeMutation.mutate({ id, change, exclusive })
 	}
 
 	function beginOptimisticChange(userId: string): OptimisticChange {

@@ -744,12 +744,10 @@ export async function revoke_shared_instance_invite(
 export async function remove_shared_instance_users(
 	instanceId: string,
 	userIds: string[],
-	hasPendingRecipients: boolean,
 ): Promise<SharedInstanceUsers> {
 	return await invoke('plugin:instance|instance_share_remove_users', {
 		instanceId,
 		userIds,
-		hasPendingRecipients,
 	})
 }
 

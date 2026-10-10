@@ -338,26 +338,8 @@
   "app.install.phase.preparing_java.validating": {
     "message": "Validerer Java {version}"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Tilføjet"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Skub opdatering"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Skubber..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Fjernet"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Skub opdatering"
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Gennemså ændringer"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Gennemgår..."
   },
   "app.instance.confirm-delete.admonition-body": {
     "message": "Al' data for din instance vil blive permanent slettet, dette inkludere dine verdener, konfigurationer, og alt installeret indhold."
@@ -404,30 +386,6 @@
   "app.instance.mods.successfully-uploaded": {
     "message": "Uploadet"
   },
-  "app.instance.share.empty.description": {
-    "message": "Du kan ændre denne instance med dine venner!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Ingen venner inviteret"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Inviter venner"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Del {name}"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "for at tilgå denne side."
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Ikke logget ind"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Skift konto"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Forkert konto"
-  },
   "app.instance.share.remove-user-modal.effects-label": {
     "message": "Hvad vil der ske?"
   },
@@ -439,9 +397,6 @@
   },
   "app.instance.share.remove-user-modal.user-avatar-alt": {
     "message": "{username}'s avatar"
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Log ind"
   },
   "app.instance.shared-instance-already-installed.install-anyway": {
     "message": "Installer alligevel"

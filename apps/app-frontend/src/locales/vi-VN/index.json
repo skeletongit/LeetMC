@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Xem bản cài đặt"
   },
-  "app.hosting.update-required.description": {
-    "message": "Bạn cần cập nhật để sử dụng Modrinth Hosting qua Ứng dụng Modrinth"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Tải xuống để cập nhật"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Bot Modrinth đang phấn khích"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Yêu cầu cập nhật Ứng dụng Modrinth"
-  },
   "app.install.phase.downloading_content": {
     "message": "Đang tải nội dung"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "Thêm máy chủ vào bản cài đặt"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Đã thêm"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Bản cài đặt trên máy của bạn có các thay đổi mới hơn bản của những người được chia sẻ."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Các thay đổi của bạn chưa được chia sẻ"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Gửi bản cập nhật"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Đang gửi bản cập nhật..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Đã gỡ"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Gửi bản cập nhật"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Xem lại các thay đổi nội dung sẽ được chia sẻ với mọi người đang dùng bản cài đặt này."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Xem lại thay đổi"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Đang xem lại..."
   },
   "app.instance.card.icon-alt": {
     "message": "Biểu tượng bản cài đặt"
@@ -728,39 +689,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Quay lại bản cài đặt"
   },
-  "app.instance.share.empty.description": {
-    "message": "Bạn có thể chia sẻ bản cài đặt này với bạn bè!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Chưa mời bạn bè"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Mời bạn bè"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Chia sẻ {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "Bản cài đặt này đã đạt giới hạn {limit} người dùng."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Bạn cần đăng nhập bằng"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "để truy cập trang này."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "tài khoản đã liên kết"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Chưa đăng nhập"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Chuyển tài khoản"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Sai tài khoản"
-  },
   "app.instance.share.members.empty": {
     "message": "Chưa có người dùng nào tham gia"
   },
@@ -793,21 +721,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "Nếu bạn thu hồi quyền truy cập của {username} vào bản cài đặt được chia sẻ này, bạn sẽ phải mời lại họ trước khi họ có thể nhận cập nhật."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Đăng nhập"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "Dịch vụ bản cài đặt được chia sẻ hiện không thể truy cập. Vui lòng thử lại sau"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "Không thể kết nối"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "Bạn phải gỡ liên kết modpack này để chia sẻ bản cài đặt của mình"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Cần gỡ liên kết để chia sẻ"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "Bản cài đặt được chia sẻ này đã được cài dưới tên <bold>{instanceName}</bold>. Bạn có chắc muốn cài thêm một bản sao không?"
@@ -856,9 +769,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Ảnh chụp màn hình"
-  },
-  "app.instance.tab.share": {
-    "message": "Chia sẻ"
   },
   "app.instance.tab.worlds": {
     "message": "Thế giới"
@@ -1363,9 +1273,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Tài khoản Modrinth"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "Xóa tài khoản"

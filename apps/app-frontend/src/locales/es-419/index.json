@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Ver instancia"
   },
-  "app.hosting.update-required.description": {
-    "message": "Necesitas actualizar para usar Modrinth Hosting a través de la aplicación de Modrinth"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Descarga para actualizar"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Modrinth Both emocionado"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Se requiere actualizar la aplicación de Modrinth"
-  },
   "app.install.phase.downloading_content": {
     "message": "Descargando contenido"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "Añadir servidor a la instancia"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Añadido"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Tu instancia local tiene cambios nuevos que todavía no se han compartido."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Tus cambios todavía no se han compartido"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Enviar actualización"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Enviando..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Eliminado"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Enviar actualización"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Revisa los cambios de contenido que se compartirán con los usuarios de esta instancia."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Revisar cambios"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Actualizando..."
   },
   "app.instance.card.icon-alt": {
     "message": "Ícono de la instancia"
@@ -728,39 +689,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Volver a la instancia"
   },
-  "app.instance.share.empty.description": {
-    "message": "¡Comparte esta instancia con tus amigos!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "No hay amigos invitados"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Invitar amigos"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Compartir {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "Esta instancia ha llegado al límite de {limit} usuarios."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Necesitas iniciar sesión como"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "para acceder a esta página."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "la cuenta vinculada"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "No estás registrado"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Cambiar de cuenta"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Cuenta equivocada"
-  },
   "app.instance.share.members.empty": {
     "message": "Nadie se ha unido todavía"
   },
@@ -793,21 +721,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "Si revocas el acceso de {username} a esta instancia, tendrás que invitarlos otra vez para que sigan recibiendo actualizaciones."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Inicia sesión"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "El servicio de instancias compartidas no está disponible, por favor inténtalo otra vez más tarde"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "No se puede conectar"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "Debes desvincular este modpack para compartir tu instancia"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Compartir requiere desvincular"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "Esta instancia compartida ya está instalada como <bold>{instanceName}</bold>. ¿Estás seguro que quieres instalar otra copia?"
@@ -856,9 +769,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Screenshots"
-  },
-  "app.instance.tab.share": {
-    "message": "Compartir"
   },
   "app.instance.tab.worlds": {
     "message": "Mundos"
@@ -1363,9 +1273,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Cuenta Modrinth"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "Eliminar cuenta"

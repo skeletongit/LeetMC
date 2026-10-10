@@ -491,9 +491,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Ver instância"
   },
-  "app.hosting.update-required.title": {
-    "message": "É necessária uma atualização da aplicação Modrinth"
-  },
   "app.install.phase.downloading_content": {
     "message": "Baixando conteúdo"
   },
@@ -581,25 +578,7 @@
   "app.instance.add-server.cancel": {
     "message": "Cancelar"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Adicionado"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "A tua instância local está mais atualizada do que a dos utilizadores com quem tu a partilhaste."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "As tuas alterações ainda não foram partilhadas"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
-    "message": "Enviar atualização"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Enviando..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Removido"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
     "message": "Enviar atualização"
   },
   "app.instance.card.play": {
@@ -649,9 +628,6 @@
   },
   "app.instance.mods.successfully-uploaded": {
     "message": "Carregado com sucesso"
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Iniciar sessão"
   },
   "app.instance.shared-instance-wrong-account.sign-in-as-label": {
     "message": "Iniciar sessão como"

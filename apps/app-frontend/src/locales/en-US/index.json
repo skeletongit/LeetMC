@@ -506,18 +506,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "View instance"
   },
-  "app.hosting.update-required.description": {
-    "message": "You need to update to use Modrinth Hosting through the Modrinth App"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Download to update"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Excited Modrinth Bot"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Modrinth App update required"
-  },
   "app.install.phase.downloading_content": {
     "message": "Downloading content"
   },
@@ -614,35 +602,8 @@
   "app.instance.add-server.title": {
     "message": "Add server to instance"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Added"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Your local instance is ahead of the users you've shared it with."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Your changes haven't been shared yet"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Push update"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Pushing..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Removed"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Push update"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Review the content changes that will be shared with everyone using this instance."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Review changes"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Reviewing..."
   },
   "app.instance.card.icon-alt": {
     "message": "Instance icon"
@@ -740,39 +701,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Back to instance"
   },
-  "app.instance.share.empty.description": {
-    "message": "You can share this instance with your friends!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "No friends invited"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Invite friends"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Share {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "This instance has reached the {limit}-user limit."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "You need to sign in as"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "to access this page."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "the linked account"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Not signed in"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Switch account"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Wrong account"
-  },
   "app.instance.share.members.empty": {
     "message": "No users have joined yet"
   },
@@ -805,21 +733,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "If you revoke {username}'s access to this shared instance, you'll need to invite them again before they can receive updates."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Sign in"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "The shared instances service is not accessible at the moment, please try again later"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "Unable to connect"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "You must unlink this modpack to share your instance"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Sharing requires unlinking"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "This shared instance is already installed as <bold>{instanceName}</bold>. Are you sure you want to install another copy?"
@@ -868,9 +781,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Screenshots"
-  },
-  "app.instance.tab.share": {
-    "message": "Share"
   },
   "app.instance.tab.worlds": {
     "message": "Worlds"
@@ -1337,6 +1247,12 @@
   "app.modal.install-to-play.view-contents": {
     "message": "View contents"
   },
+  "app.modal.shared-instance-update.description": {
+    "message": "The room owner changed {name}. We recommend accepting the update so your mods, resource packs, and shaders match the room. If you decline, the game will not launch."
+  },
+  "app.modal.update-to-play.decline-button": {
+    "message": "Decline"
+  },
   "app.modal.update-to-play.header": {
     "message": "Update to play"
   },
@@ -1376,11 +1292,11 @@
   "app.nav.modrinth-account": {
     "message": "Modrinth account"
   },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
-  },
   "app.nav.remove-account": {
     "message": "Remove account"
+  },
+  "app.nav.rooms": {
+    "message": "Rooms"
   },
   "app.nav.screenshots": {
     "message": "Screenshots"
@@ -1483,6 +1399,87 @@
   },
   "app.restarting": {
     "message": "Restarting..."
+  },
+  "app.rooms.action.accept-changes": {
+    "message": "Accept changes"
+  },
+  "app.rooms.action.manage": {
+    "message": "Manage"
+  },
+  "app.rooms.action.open-instance": {
+    "message": "Open instance"
+  },
+  "app.rooms.action.play": {
+    "message": "Play"
+  },
+  "app.rooms.action.send-changes": {
+    "message": "Sync changes"
+  },
+  "app.rooms.create": {
+    "message": "Create room"
+  },
+  "app.rooms.create.description": {
+    "message": "Choose the instance you want to share, then invite your friends."
+  },
+  "app.rooms.create.no-instances": {
+    "message": "Every available instance already has a room."
+  },
+  "app.rooms.create.unlink-required.description": {
+    "message": "{name} was imported from an .mrpack file. LeetMC must unlink it from the original modpack before creating a room. This will not delete any mods, settings, or worlds, but this instance will no longer receive modpack updates."
+  },
+  "app.rooms.create.unlink-required.proceed": {
+    "message": "Unlink and create room"
+  },
+  "app.rooms.create.unlink-required.title": {
+    "message": "Unlink modpack to create room?"
+  },
+  "app.rooms.empty.description": {
+    "message": "Create a room from one of your instances, or accept an invitation from a friend."
+  },
+  "app.rooms.empty.title": {
+    "message": "No rooms yet"
+  },
+  "app.rooms.manage.header": {
+    "message": "Manage {name}"
+  },
+  "app.rooms.manage.invite-header": {
+    "message": "Invite to {name}"
+  },
+  "app.rooms.manage.unlink.button": {
+    "message": "Unlink room"
+  },
+  "app.rooms.manage.unlink.description": {
+    "message": "This will close the room for everyone and stop future synchronization. The instance and all of its installed files will remain on this device."
+  },
+  "app.rooms.manage.unlink.title": {
+    "message": "Unlink this room?"
+  },
+  "app.rooms.manage.user-limit-reached": {
+    "message": "This room has reached the {limit}-user limit."
+  },
+  "app.rooms.role.member": {
+    "message": "Member"
+  },
+  "app.rooms.role.owner": {
+    "message": "Owner"
+  },
+  "app.rooms.status.applying": {
+    "message": "Applying update"
+  },
+  "app.rooms.status.changes-not-sent": {
+    "message": "Not synced"
+  },
+  "app.rooms.status.unknown": {
+    "message": "Status unavailable"
+  },
+  "app.rooms.status.up-to-date": {
+    "message": "Synced"
+  },
+  "app.rooms.status.update-available": {
+    "message": "Update available"
+  },
+  "app.rooms.title": {
+    "message": "Rooms"
   },
   "app.screenshots.copied": {
     "message": "Copied"
@@ -3516,7 +3513,7 @@
     "message": "Press <shortcut>N</shortcut> to quick create an instance"
   },
   "app.welcome-screen.title": {
-    "message": "Welcome to Modrinth"
+    "message": "Welcome to LeetMC"
   },
   "app.world.server-modal.placeholder-address": {
     "message": "example.modrinth.gg"

@@ -491,18 +491,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Bekijk instantie"
   },
-  "app.hosting.update-required.description": {
-    "message": "Je moet bijwerken om Modrinth Hosting te gebruiken via de Modrinth App"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Update aan het downloaden"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Opgewonden Modrinth-bot"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Update van Modrinth-app vereist"
-  },
   "app.install.phase.downloading_content": {
     "message": "Inhoud aan het downloaden"
   },
@@ -599,35 +587,8 @@
   "app.instance.add-server.title": {
     "message": "Voeg server toevoegen aan instantie"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Toegevoegd"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Je lokale instantie loopt voor op de gebruikers met wie je deze hebt gedeeld."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Je wijzigingen zijn nog niet gedeeld"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Update verzenden"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Verzenden..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Verwijderd"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Update verzenden"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Bekijk de inhoudelijke wijzigingen die met alle gebruikers van deze instantie zullen worden gedeeld."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Wijzigingen bekijken"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Controleren..."
   },
   "app.instance.card.icon-alt": {
     "message": "Instance pictogram"
@@ -725,39 +686,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Terug naar de instantie"
   },
-  "app.instance.share.empty.description": {
-    "message": "Je kunt deze instantie met je vrienden delen!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Geen vrienden uitgenodigd"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Vrienden uitnodigen"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "{name} delen"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "Deze instantie heeft de limiet van {limit} gebruikers bereikt."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Je moet je aanmelden als"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "om deze pagina te openen."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "het gekoppelde account"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Niet aangemeld"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Van account wisselen"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Verkeerd account"
-  },
   "app.instance.share.members.empty": {
     "message": "Nog geen gebruikers zijn lid geworden"
   },
@@ -790,21 +718,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "Als je de toegang van {username} tot deze gedeelde instantie intrekt, moet je die persoon opnieuw uitnodigen voordat die updates kunnen ontvangen."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Aanmelden"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "De dienst voor gedeelde instanties is momenteel niet beschikbaar, probeer het later nog eens"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "Kan geen verbinding maken"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "Je moet dit modpack ontkoppelen om je instantie te kunnen delen"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Om te delen moet je ontkoppelen"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "Deze gedeelde instantie is al geïnstalleerd als <bold>{instanceName}</bold>. Weet je zeker dat je nog een exemplaar wilt installeren?"
@@ -853,9 +766,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Schermafbeeldingen"
-  },
-  "app.instance.tab.share": {
-    "message": "Delen"
   },
   "app.instance.tab.worlds": {
     "message": "Werelden"
@@ -1360,9 +1270,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Modrinth-account"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "Account verwijderen"

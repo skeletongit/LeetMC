@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Kurulumu göster"
   },
-  "app.hosting.update-required.description": {
-    "message": "Modrinth Hosting'i Modrinth App'ten kullanmak için güncellemeniz gerekiyor"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Güncellemeyi indir"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Heyecanlı Modrinth Botu"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Modrinth App güncellemesi gerekli"
-  },
   "app.install.phase.downloading_content": {
     "message": "İçerik indiriliyor"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "Sunucuyu kuruluma ekle"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Eklendi"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "Yerel kurulumunuz paylaştığınız kullanıcılardan daha ileride."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Değişiklikler henüz paylaşılmadı"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Güncellemeyi gönder"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Yayınlıyor..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Kaldırıldı"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Güncellemeyi yayınla"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Bu kurulumu kullanan herkesle paylaşılacak içerik değişikliklerini gözden geçirin."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Değişimleri inceleniyor"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "İnceleniyor..."
   },
   "app.instance.card.icon-alt": {
     "message": "Kurulum ikonu"
@@ -728,39 +689,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Kuruluma dön"
   },
-  "app.instance.share.empty.description": {
-    "message": "Bu instance'ı arkadaşlarınla paylaşabilirsin!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Henüz davet edilen arkadaş yok"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Arkadaşlarını davet et"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Paylaş {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "Bu örnek {limit} kullanıcı sınırına ulaştı."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Giriş yapmanız gerekiyor"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "sayfaya giriş yapabilmeniz işin."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "bağlı hesap"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Giriş yapılmadı"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Hesap değiştir"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Hatalı hesap"
-  },
   "app.instance.share.members.empty": {
     "message": "Henüz katılan kullanıcı yok"
   },
@@ -793,21 +721,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "{username}'nın bu paylaşılan örneğe erişimini iptal ederseniz, bu kişinin güncellemeleri alabilmesi için onu yeniden davet etmeniz gerekecektir."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Giriş yap"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "Paylaşımlı örnekler hizmeti şu anda erişilebilir değil, lütfen sonra tekrar deneyin"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "Bağlanılamıyor"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "Örneğini paylaşmak için bu mod paketinin bağlantısını kaldırmalısın"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Paylaşım bağlantıyı kaldırmayı gerektirir"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "Bu paylaşımlı örnek zaten <bold>{instanceName}</bold> olarak yüklü. Başka bir kopya daha yüklemek istediğinize emin misiniz?"
@@ -856,9 +769,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Ekran görüntüleri"
-  },
-  "app.instance.tab.share": {
-    "message": "Paylaş"
   },
   "app.instance.tab.worlds": {
     "message": "Dünyalar"
@@ -1363,9 +1273,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Modrinth hesabı"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "Hesabı kaldır"

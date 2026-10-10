@@ -65,7 +65,6 @@
 				:shared-instance-expected-user-id="sharedInstanceExpectedUserId"
 				:shared-instance-role="instance.shared_instance?.role"
 				:shared-instance-signed-out="sharedInstanceSignedOut"
-				@published="refreshInstance"
 				@delete="requestInstanceDeletion"
 			/>
 		</div>
@@ -97,7 +96,6 @@ import {
 	PlusIcon,
 	StopCircleIcon,
 	TerminalSquareIcon,
-	UserPlusIcon,
 } from '@modrinth/assets'
 import {
 	commonMessages,
@@ -192,7 +190,6 @@ const messages = defineMessages({
 	screenshotsTab: { id: 'app.instance.tab.screenshots', defaultMessage: 'Screenshots' },
 	worldsTab: { id: 'app.instance.tab.worlds', defaultMessage: 'Worlds' },
 	logsTab: { id: 'app.instance.tab.logs', defaultMessage: 'Logs' },
-	shareTab: { id: 'app.instance.tab.share', defaultMessage: 'Share' },
 	shortcutCreated: {
 		id: 'app.instance.shortcut.created',
 		defaultMessage: 'Shortcut created',
@@ -497,19 +494,6 @@ const renderMode = computed<'scroll' | 'fixed'>(() =>
 	route.meta.renderMode === 'fixed' ? 'fixed' : 'scroll',
 )
 const isFixedRender = computed(() => renderMode.value === 'fixed')
-const currentUserCanUseSharedInstances = sharedInstanceState.currentUserCanUseSharedInstances
-const showShareTab = computed(() => {
-	const linkType = instance.value?.link?.type
-
-	return (
-		currentUserCanUseSharedInstances.value &&
-		!instance.value?.quarantined &&
-		instance.value?.shared_instance?.role !== 'member' &&
-		linkType !== 'server_project' &&
-		linkType !== 'server_project_modpack'
-	)
-})
-
 const tabs = computed(() => {
 	const instanceTabs = [
 		{
@@ -549,29 +533,8 @@ const tabs = computed(() => {
 		icon: TerminalSquareIcon,
 	})
 
-	if (showShareTab.value) {
-		instanceTabs.push({
-			label: formatMessage(messages.shareTab),
-			href: `${basePath.value}/share`,
-			icon: UserPlusIcon,
-		})
-	}
-
 	return instanceTabs
 })
-
-watch(
-	() => ({
-		quarantined: instance.value?.quarantined ?? false,
-		routeName: router.currentRoute.value.name,
-	}),
-	({ quarantined, routeName }) => {
-		if (quarantined && routeName === 'InstanceShare') {
-			void router.replace(basePath.value)
-		}
-	},
-	{ immediate: true },
-)
 
 const options = ref<InstanceType<typeof ContextMenu> | null>(null)
 

@@ -14,6 +14,7 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 import NavButton from '@/components/ui/NavButton.vue'
+import SharedInstanceUpdateModal from '@/components/ui/shared-instances/SharedInstanceUpdateModal.vue'
 import { useAppEvent } from '@/composables/use-app-event'
 import { handleSevereError } from '@/composables/use-error.js'
 import {
@@ -21,16 +22,24 @@ import {
 	useQuickInstanceLimit,
 } from '@/composables/use-quick-instance-limit.ts'
 import { trackEvent } from '@/helpers/analytics'
+import {
+	getSharedInstanceUnavailableReason,
+	install_get_shared_instance_update_preview,
+	isSharedInstanceUnavailableError,
+} from '@/helpers/install'
 import { getInstanceIconUrl, kill, run } from '@/helpers/instance'
 import { get_all } from '@/helpers/process'
+import { useSharedInstanceErrors } from '@/helpers/shared-instance-errors'
 import { showInstanceInFolder } from '@/helpers/utils'
 import { instanceListQueryOptions } from '@/pages/instance/query-options'
 
 const ITEM_SIZE = 52
 const { handleError } = injectNotificationManager()
+const { notifySharedInstanceError, notifySharedInstanceUnavailable } = useSharedInstanceErrors()
 const instancesQuery = useQuery(instanceListQueryOptions())
 const router = useRouter()
 const instanceOptions = ref()
+const sharedInstanceUpdateModal = ref()
 const runningInstances = ref([])
 
 const { formatMessage } = useVIntl()
@@ -232,6 +241,27 @@ async function checkProcesses() {
 
 async function playInstance(instance) {
 	if (instance.quarantined || instance.install_stage !== 'installed') return
+	if (instance.shared_instance?.role === 'member') {
+		try {
+			const preview = await install_get_shared_instance_update_preview(instance.id)
+			if (preview?.updateAvailable) {
+				sharedInstanceUpdateModal.value?.show(instance, preview, () => launchInstance(instance))
+				return
+			}
+		} catch (error) {
+			if (isSharedInstanceUnavailableError(error)) {
+				notifySharedInstanceUnavailable(getSharedInstanceUnavailableReason(error))
+			} else {
+				notifySharedInstanceError(error)
+			}
+			return
+		}
+	}
+
+	await launchInstance(instance)
+}
+
+async function launchInstance(instance) {
 	await run(instance.id)
 		.catch((err) => handleSevereError(err, { instanceId: instance.id }))
 		.finally(() => {
@@ -241,6 +271,10 @@ async function playInstance(instance) {
 				source: 'QuickInstanceSwitcher',
 			})
 		})
+}
+
+function handleSharedInstanceUnavailable(reason) {
+	notifySharedInstanceUnavailable(reason)
 }
 
 async function stopInstance(instance) {
@@ -358,6 +392,10 @@ function openContextMenu(event, instance) {
 			<slot />
 		</div>
 	</div>
+	<SharedInstanceUpdateModal
+		ref="sharedInstanceUpdateModal"
+		@shared-instance-unavailable="handleSharedInstanceUnavailable"
+	/>
 </template>
 
 <style scoped lang="scss">

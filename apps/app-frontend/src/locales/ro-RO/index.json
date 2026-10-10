@@ -488,15 +488,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Vizualizează instanța"
   },
-  "app.hosting.update-required.description": {
-    "message": "Trebuie să efectuați o actualizare pentru a putea utiliza serviciul Modrinth Hosting prin intermediul aplicației Modrinth"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Descărcați pentru a actualiza"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Este necesară actualizarea aplicației Modrinth"
-  },
   "app.install.phase.downloading_content": {
     "message": "Descărcarea conținutului"
   },
@@ -548,14 +539,8 @@
   "app.instance.add-server.added": {
     "message": "Adăugat"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Adăugat"
-  },
   "app.instance.modpack-already-installed.create": {
     "message": "Creează"
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Conectează-te"
   },
   "app.instance.shared-instance-already-installed.instance": {
     "message": "Instanță"

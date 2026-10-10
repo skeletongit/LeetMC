@@ -10,6 +10,7 @@
 		:confirm-disabled="publishDiffs.length === 0 && selectedConfigPaths.length === 0"
 		:added-label="formatMessage(messages.addedLabel)"
 		:removed-label="formatMessage(messages.removedLabel)"
+		:loading="previewLoading"
 		@confirm="publishChanges"
 		@cancel="finishReview"
 	>
@@ -82,6 +83,7 @@ const publishDiffs = ref<ContentDiffItem[]>([])
 const configFilePaths = ref<string[]>([])
 const includedConfigPaths = ref<string[]>([])
 const excludedConfigPaths = ref<string[]>([])
+const previewLoading = ref(false)
 const state = ref<SharedInstancePublishState>('idle')
 const configFileItems = computed<FileTreeSelectItem[]>(() =>
 	configFilePaths.value.map((path) => ({ path, type: 'file' })),
@@ -99,12 +101,20 @@ async function show(e?: MouseEvent) {
 	if (state.value !== 'idle') return
 
 	setState('reviewing')
-	let reviewOpened = false
+	publishDiffs.value = []
+	configFilePaths.value = []
+	includedConfigPaths.value = []
+	excludedConfigPaths.value = []
+	previewLoading.value = true
+	publishReviewModal.value?.show(e)
+	let reviewOpened = !!publishReviewModal.value
 	try {
 		const preview = await get_shared_instance_publish_preview(props.instance.id)
 		if (!preview) {
 			notifySharedInstanceUnavailable()
 			emit('published')
+			publishReviewModal.value?.hide()
+			reviewOpened = false
 			return
 		}
 
@@ -118,15 +128,12 @@ async function show(e?: MouseEvent) {
 			disabled: diff.disabled,
 		}))
 		configFilePaths.value = preview.configFiles
-		includedConfigPaths.value = []
-		excludedConfigPaths.value = []
-		if (!publishReviewModal.value) return
-
-		publishReviewModal.value.show(e)
-		reviewOpened = true
 	} catch (error) {
 		handlePublishError(error)
+		publishReviewModal.value?.hide()
+		reviewOpened = false
 	} finally {
+		previewLoading.value = false
 		if (!reviewOpened) finishReview()
 	}
 }

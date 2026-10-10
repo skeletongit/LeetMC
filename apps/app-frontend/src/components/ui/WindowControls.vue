@@ -4,6 +4,7 @@
 			v-if="showControls"
 			ref="controlsEl"
 			class="pointer-events-auto fixed top-0 right-0 z-[10001] flex h-12 items-center gap-2 bg-bg-raised rounded-bl-2xl px-1.5"
+			:style="{ zIndex: hasModal ? 110 : 10001 }"
 			data-tauri-drag-region-exclude
 		>
 			<IconButton
@@ -37,7 +38,7 @@
 
 <script setup>
 import { MaximizeIcon, MinimizeIcon, RestoreIcon, XIcon } from '@modrinth/assets'
-import { IconButton } from '@modrinth/ui'
+import { IconButton, useModalStack } from '@modrinth/ui'
 import { getCurrentWindow } from '@tauri-apps/api/window'
 import { saveWindowState, StateFlags } from '@tauri-apps/plugin-window-state'
 import { computed, onMounted, onUnmounted, ref, watch } from 'vue'
@@ -47,6 +48,7 @@ import { get as getSettings } from '@/helpers/settings.ts'
 import { getOS } from '@/helpers/utils.js'
 
 const appSettings = useAppSettings()
+const { hasModal } = useModalStack()
 
 const nativeDecorations = ref(true)
 const isMaximized = ref(false)

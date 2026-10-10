@@ -494,18 +494,6 @@
   "app.home.jump-back-in.view-instance": {
     "message": "Mostra istanza"
   },
-  "app.hosting.update-required.description": {
-    "message": "È necessario aggiornare l'app per usare Modrinth Hosting"
-  },
-  "app.hosting.update-required.download": {
-    "message": "Scarica per aggiornare"
-  },
-  "app.hosting.update-required.rinthbot-alt": {
-    "message": "Modrinth Bot emozionato"
-  },
-  "app.hosting.update-required.title": {
-    "message": "Aggiornamento richiesto"
-  },
   "app.install.phase.downloading_content": {
     "message": "Download dei contenuti"
   },
@@ -602,35 +590,8 @@
   "app.instance.add-server.title": {
     "message": "Aggiungi server all'istanza"
   },
-  "app.instance.admonitions.shared-instance.added-label": {
-    "message": "Aggiunto"
-  },
-  "app.instance.admonitions.shared-instance.changes-body": {
-    "message": "L'istanza locale è aggiornata rispetto a quella condivisa."
-  },
-  "app.instance.admonitions.shared-instance.changes-header": {
-    "message": "Modifiche non ancora condivise"
-  },
   "app.instance.admonitions.shared-instance.publish-button": {
     "message": "Invia"
-  },
-  "app.instance.admonitions.shared-instance.publishing-button": {
-    "message": "Invio..."
-  },
-  "app.instance.admonitions.shared-instance.removed-label": {
-    "message": "Rimosso"
-  },
-  "app.instance.admonitions.shared-instance.review-admonition-header": {
-    "message": "Invia aggiornamento"
-  },
-  "app.instance.admonitions.shared-instance.review-description": {
-    "message": "Rivedi i contenuti modificati che saranno condivisi con l'intera istanza."
-  },
-  "app.instance.admonitions.shared-instance.review-header": {
-    "message": "Revisione modifiche"
-  },
-  "app.instance.admonitions.shared-instance.reviewing-button": {
-    "message": "Revisione..."
   },
   "app.instance.card.icon-alt": {
     "message": "Icona dell'istanza"
@@ -728,39 +689,6 @@
   "app.instance.navigation.back-to-instance": {
     "message": "Torna all'istanza"
   },
-  "app.instance.share.empty.description": {
-    "message": "Invita chi vuoi a questa istanza!"
-  },
-  "app.instance.share.empty.heading": {
-    "message": "Ancora nessun invito"
-  },
-  "app.instance.share.empty.invite-friends-button": {
-    "message": "Invia un invito"
-  },
-  "app.instance.share.invite-modal.heading": {
-    "message": "Condividi {name}"
-  },
-  "app.instance.share.invite-modal.user-limit-reached": {
-    "message": "L'istanza ha raggiunto il limite di {limit} utenti."
-  },
-  "app.instance.share.locked.empty-description-prefix": {
-    "message": "Devi effettuare l'accesso come"
-  },
-  "app.instance.share.locked.empty-description-suffix": {
-    "message": "per gestire questa pagina."
-  },
-  "app.instance.share.locked.linked-account-fallback": {
-    "message": "l'account collegato"
-  },
-  "app.instance.share.locked.signed-out-heading": {
-    "message": "Accesso non effettuato"
-  },
-  "app.instance.share.locked.switch-account-button": {
-    "message": "Cambia account"
-  },
-  "app.instance.share.locked.wrong-account-heading": {
-    "message": "Account errato"
-  },
   "app.instance.share.members.empty": {
     "message": "Ancora nessun partecipante"
   },
@@ -793,21 +721,6 @@
   },
   "app.instance.share.remove-user-modal.warning-body": {
     "message": "Se revochi l'accesso di {username} a questa istanza condivisa, avrà bisogno di un nuovo invito per ricevere aggiornamenti."
-  },
-  "app.instance.share.sign-in.button": {
-    "message": "Accedi"
-  },
-  "app.instance.share.unable-to-connect.description": {
-    "message": "Il servizio delle istanze condivise non è raggiungibile, riprova più tardi"
-  },
-  "app.instance.share.unable-to-connect.heading": {
-    "message": "Impossibile connettersi"
-  },
-  "app.instance.share.unlink.body": {
-    "message": "Devi scollegare questo pacchetto per condividere l'istanza"
-  },
-  "app.instance.share.unlink.header": {
-    "message": "Scollegamento necessario"
   },
   "app.instance.shared-instance-already-installed.body": {
     "message": "Questa istanza condivisa è già installata come <bold>{instanceName}</bold>. Vuoi davvero installarne un'altra copia?"
@@ -856,9 +769,6 @@
   },
   "app.instance.tab.screenshots": {
     "message": "Schermate"
-  },
-  "app.instance.tab.share": {
-    "message": "Condivisione"
   },
   "app.instance.tab.worlds": {
     "message": "Mondi"
@@ -1360,9 +1270,6 @@
   },
   "app.nav.modrinth-account": {
     "message": "Account Modrinth"
-  },
-  "app.nav.modrinth-hosting": {
-    "message": "Modrinth Hosting"
   },
   "app.nav.remove-account": {
     "message": "Rimuovi account"

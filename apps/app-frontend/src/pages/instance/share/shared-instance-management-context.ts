@@ -16,4 +16,4 @@ export interface SharedInstanceManagementContext {
 }
 
 export const [injectSharedInstanceManagement, provideSharedInstanceManagement] =
-	createContext<SharedInstanceManagementContext>('InstanceSharePage')
+	createContext<SharedInstanceManagementContext>('RoomManagement')
