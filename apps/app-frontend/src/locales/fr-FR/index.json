@@ -131,21 +131,6 @@
   "app.action-bar.view-logs": {
     "message": "Voir les journaux"
   },
-  "app.ads-consent.accept": {
-    "message": "Tout accepter"
-  },
-  "app.ads-consent.body": {
-    "message": "Les publicités rendent Modrinth possible et financent la rémunération des créateurs. Nos partenaires peuvent stocker des cookies ou y accéder au sein de l'application afin de personnaliser les publicités et de mesurer les performances."
-  },
-  "app.ads-consent.manage": {
-    "message": "Gérer les préférences"
-  },
-  "app.ads-consent.reject": {
-    "message": "Tout refuser"
-  },
-  "app.ads-consent.title": {
-    "message": "Votre vie privée et comment les publicités soutiennent Modrinth"
-  },
   "app.appearance-settings.compact-mode.description": {
     "message": "Afficher les instances de la bibliothèque dans une disposition compacte."
   },
@@ -703,9 +688,6 @@
   },
   "app.instance.share.remove-user-modal.effect-invite-again": {
     "message": "Vous pouvez les inviter plus tard"
-  },
-  "app.instance.share.remove-user-modal.effect-last-user": {
-    "message": "C'est le dernier utilisateur, le partage va être désactivé pour cette instance"
   },
   "app.instance.share.remove-user-modal.effects-label": {
     "message": "Que se passe-t-il ?"
@@ -1300,12 +1282,6 @@
   },
   "app.navigation.next-image": {
     "message": "Prochaine image"
-  },
-  "app.news.title": {
-    "message": "Nouveautés"
-  },
-  "app.news.view-all": {
-    "message": "Voir toutes les nouveautés"
   },
   "app.notification.warning": {
     "message": "Avertissement"
@@ -2638,9 +2614,6 @@
   },
   "app.settings.operating-system.macos": {
     "message": "macOS"
-  },
-  "app.settings.privacy.ads-consent.intro": {
-    "message": "Les publicités rendent Modrinth possible et financent les rémunérations des créateurs. Nos partenaires peuvent stocker des cookies ou y accéder au sein de l'application afin de personnaliser les publicités et de mesurer les performances. Vous pouvez refuser ou gérer vos préférences ci-dessous."
   },
   "app.settings.privacy.discord-rich-presence.description": {
     "message": "Affiche Modrinth App en tant que votre activité actuelle sur Discord. Cela n'affecte pas Rich Presence ajouté à l'instance par les mods. Nécessite un redémarrage de l'application."
@@ -4201,5 +4174,380 @@
   },
   "settings.sidebar.label.display": {
     "message": "Affichage"
+  },
+  "app.debug-export.canceling": {
+    "message": "Annulation de l'exportation…"
+  },
+  "app.debug-export.exporting": {
+    "message": "Exporter…"
+  },
+  "app.debug-export.finishing": {
+    "message": "Finition…"
+  },
+  "app.debug-export.preparing": {
+    "message": "Préparation des dossiers…"
+  },
+  "app.library.selection.selected-count": {
+    "message": "{count} sélectionné"
+  },
+  "app.modal.update-to-play.decline-button": {
+    "message": "Refuser"
+  },
+  "app.nav.rooms": {
+    "message": "Salles"
+  },
+  "app.rooms.action.accept-changes": {
+    "message": "Accepter les modifications"
+  },
+  "app.rooms.action.manage": {
+    "message": "Gérer"
+  },
+  "app.modal.shared-instance-update.description": {
+    "message": "Le propriétaire de la salle a modifié {name}. Nous vous conseillons d’accepter la mise à jour afin que vos mods, packs de ressources et shaders correspondent à ceux de la salle. Si vous refusez, le jeu ne démarrera pas."
+  },
+  "app.rooms.action.open-instance": {
+    "message": "Ouvrir l’instance"
+  },
+  "app.rooms.action.play": {
+    "message": "Jouer"
+  },
+  "app.rooms.action.send-changes": {
+    "message": "Synchroniser les modifications"
+  },
+  "app.rooms.create": {
+    "message": "Créer une salle"
+  },
+  "app.rooms.create.description": {
+    "message": "Choisissez l'instance que vous souhaitez partager, puis invitez vos amis."
+  },
+  "app.rooms.create.no-instances": {
+    "message": "Chaque instance disponible possède déjà une salle."
+  },
+  "app.rooms.create.unlink-required.description": {
+    "message": "{name} a été importé à partir d'un fichier .mrpack. LeetMC doit le dissocier du modpack d'origine avant de créer une salle. Cela ne supprimera aucun mod, paramètre ou monde, mais cette instance ne recevra plus de mises à jour de modpack."
+  },
+  "app.rooms.create.unlink-required.proceed": {
+    "message": "Dissocier et créer la salle"
+  },
+  "app.rooms.create.unlink-required.title": {
+    "message": "Dissocier le modpack et créer une salle ?"
+  },
+  "app.rooms.empty.description": {
+    "message": "Créez une salle depuis l'une de vos instances ou acceptez l'invitation d'un ami."
+  },
+  "app.rooms.empty.title": {
+    "message": "Aucune salle pour le moment"
+  },
+  "app.rooms.manage.header": {
+    "message": "Gérer « {name} »"
+  },
+  "app.rooms.manage.invite-header": {
+    "message": "Inviter dans « {name} »"
+  },
+  "app.rooms.manage.unlink.button": {
+    "message": "Dissocier la salle"
+  },
+  "app.rooms.manage.unlink.description": {
+    "message": "Cela fermera la salle à tout le monde et arrêtera la synchronisation future. L'instance et tous ses fichiers installés resteront sur cet appareil."
+  },
+  "app.rooms.manage.unlink.title": {
+    "message": "Dissocier cette salle ?"
+  },
+  "app.rooms.role.member": {
+    "message": "Membre"
+  },
+  "app.rooms.role.owner": {
+    "message": "Propriétaire"
+  },
+  "app.rooms.status.applying": {
+    "message": "Application de la mise à jour"
+  },
+  "app.rooms.status.changes-not-sent": {
+    "message": "Non synchronisé"
+  },
+  "app.rooms.status.unknown": {
+    "message": "Statut indisponible"
+  },
+  "app.rooms.status.up-to-date": {
+    "message": "Synchronisé"
+  },
+  "app.rooms.manage.user-limit-reached": {
+    "message": "Cette salle a atteint sa limite de {limit} utilisateurs."
+  },
+  "app.rooms.status.update-available": {
+    "message": "Mise à jour disponible"
+  },
+  "app.rooms.title": {
+    "message": "Salles"
+  },
+  "app.settings.resource-management.debug-info.description": {
+    "message": "Exportez les journaux d'application et les données de diagnostic vers un fichier ZIP pour les partager avec le support Modrinth."
+  },
+  "app.settings.resource-management.debug-info.export": {
+    "message": "Exporter les informations de débogage"
+  },
+  "app.settings.resource-management.debug-info.title": {
+    "message": "Informations de débogage"
+  },
+  "app.settings.synced-options.choose-sync-source.creative-hotbars-title": {
+    "message": "Choisir la source des barres de raccourcis créatives"
+  },
+  "app.settings.synced-options.choose-sync-source.data-packs-title": {
+    "message": "Choisir la source des packs de données"
+  },
+  "app.settings.synced-options.choose-sync-source.game-settings-description": {
+    "message": "Choisissez à partir de quelle instance copier vos paramètres de jeu. Ces paramètres ne sont utilisés que pour la synchronisation initiale et vous pouvez les modifier ultérieurement à partir de n'importe quelle instance."
+  },
+  "app.settings.synced-options.choose-sync-source.game-settings-title": {
+    "message": "Choisir la source des paramètres de jeu"
+  },
+  "app.settings.synced-options.choose-sync-source.ineligible": {
+    "message": "Vous ne pouvez pas choisir cette instance comme source de synchronisation"
+  },
+  "app.settings.synced-options.choose-sync-source.multiplayer-servers-description": {
+    "message": "Choisissez à partir de quelle instance copier vos serveurs multijoueurs. Ces serveurs ne sont utilisés que pour la synchronisation initiale et vous pouvez ensuite les modifier à partir de n'importe quelle instance."
+  },
+  "app.settings.synced-options.choose-sync-source.multiplayer-servers-title": {
+    "message": "Choisissez la source des serveurs multijoueurs"
+  },
+  "app.settings.synced-options.choose-sync-source.resource-packs-title": {
+    "message": "Choisir la source des packs de ressources"
+  },
+  "app.settings.synced-options.data-packs.description": {
+    "message": "Utilisez les mêmes packs de données sur toutes vos instances"
+  },
+  "app.settings.synced-options.data-packs.none-synced-yet": {
+    "message": "Vous n'avez encore synchronisé aucun pack de données"
+  },
+  "app.settings.synced-options.edit.no-instances": {
+    "message": "Ajoutez une instance avant de modifier les données synchronisées."
+  },
+  "app.settings.synced-options.edit.no-synced-data": {
+    "message": "Choisissez une source de synchronisation avant de modifier ce paramètre."
+  },
+  "app.settings.synced-options.game-settings": {
+    "message": "Options de jeu de synchronisation"
+  },
+  "app.settings.synced-options.game-settings.button": {
+    "message": "Modifier les paramètres du jeu"
+  },
+  "app.settings.synced-options.game-settings.conflict-title": {
+    "message": "Ces paramètres ont changé ailleurs"
+  },
+  "app.settings.synced-options.game-settings.custom-empty": {
+    "message": "Les paramètres ajoutés par les mods apparaîtront ici une fois que Modrinth les aura trouvés dans l'une de vos instances."
+  },
+  "app.settings.synced-options.game-settings.description": {
+    "message": "Utilisez les mêmes options de jeu dans toutes vos instances."
+  },
+  "app.settings.synced-options.game-settings.disable-all": {
+    "message": "Tout désynchroniser"
+  },
+  "app.settings.synced-options.game-settings.disabled-tooltip": {
+    "message": "Activez la synchronisation des paramètres de jeu avant de choisir des paramètres individuels."
+  },
+  "app.settings.synced-options.game-settings.empty": {
+    "message": "Aucun paramètre ne correspond à votre recherche ou filtre."
+  },
+  "app.settings.synced-options.game-settings.load-failed": {
+    "message": "Nous n'avons pas pu charger vos paramètres de jeu."
+  },
+  "app.settings.synced-options.game-settings.loading": {
+    "message": "Chargement des paramètres..."
+  },
+  "app.settings.synced-options.game-settings.no-options-to-edit": {
+    "message": "Vous n'avez pas encore d'options à modifier"
+  },
+  "app.settings.synced-options.game-settings.not-being-synced": {
+    "message": "Ne pas être synchronisé"
+  },
+  "app.settings.synced-options.game-settings.sync-description": {
+    "message": "Les options synchronisées sont appliquées à chaque instance et remplacent les valeurs incluses dans un modpack."
+  },
+  "app.settings.synced-options.game-settings.sync-setting": {
+    "message": "Synchroniser {setting} à travers les instances"
+  },
+  "app.settings.synced-options.game-settings.sync-title": {
+    "message": "Synchroniser les paramètres du jeu"
+  },
+  "app.settings.synced-options.game-settings.synced-across-instances": {
+    "message": "Synchronisé entre les instances"
+  },
+  "app.settings.synced-options.game-settings.title": {
+    "message": "Paramètres du jeu"
+  },
+  "app.settings.synced-options.game-settings.unsaved-changes": {
+    "message": "Vous avez des modifications non enregistrées."
+  },
+  "app.settings.synced-options.game-settings.value-mixed": {
+    "message": "Différent selon les instances"
+  },
+  "app.settings.synced-options.game-settings.value-unset": {
+    "message": "Choisissez une valeur"
+  },
+  "app.settings.synced-options.game-settings.unsync-setting": {
+    "message": "Arrêter la synchronisation {setting} à travers les instances"
+  },
+  "app.settings.synced-options.multiplayer-servers.more-options": {
+    "message": "Plus d'options de serveur"
+  },
+  "app.settings.synced-options.multiplayer-servers.no-results": {
+    "message": "Aucun serveur synchronisé ne correspond à votre recherche ou à vos filtres."
+  },
+  "app.settings.synced-options.multiplayer-servers.none-synced-yet": {
+    "message": "Vous n'avez encore synchronisé aucun serveur"
+  },
+  "app.settings.synced-options.multiplayer-servers.status": {
+    "message": "Statut"
+  },
+  "app.settings.synced-options.packs.disabled": {
+    "message": "Activez la synchronisation avant de modifier les packs partagés."
+  },
+  "app.settings.synced-options.resource-packs": {
+    "message": "Synchroniser les packs de ressources"
+  },
+  "app.settings.synced-options.resource-packs.description": {
+    "message": "Utilisez les mêmes packs de ressources dans toutes vos instances."
+  },
+  "app.settings.synced-options.resource-packs.none-synced-yet": {
+    "message": "Vous n'avez pas encore synchronisé de packs de ressources"
+  },
+  "app.settings.tabs.features": {
+    "message": "Caractéristiques"
+  },
+  "app.skins.demo.title": {
+    "message": "Édition avec un compte démo"
+  },
+  "app.sync-instances-update.choose-source.all": {
+    "message": "Choisissez à partir de quelle instance copier les paramètres de jeu, les packs de ressources, l'historique des commandes, les barres de raccourcis créatives et les serveurs multijoueurs. Ces paramètres ne sont utilisés que pour la synchronisation initiale et vous pouvez les modifier ultérieurement à partir de n'importe quelle instance."
+  },
+  "app.sync-instances-update.choose-source.all-title": {
+    "message": "Choisir la source de synchronisation"
+  },
+  "app.sync-instances-update.choose-source.data-packs": {
+    "message": "Choisissez à partir de quelle instance copier vos packs de données. Ces packs ne sont utilisés que pour la synchronisation initiale et vous pouvez ensuite les modifier à partir de n'importe quelle instance."
+  },
+  "app.sync-instances-update.choose-source.resource-packs": {
+    "message": "Choisissez à partir de quelle instance copier vos packs de ressources. Ces packs ne sont utilisés que pour la synchronisation initiale et vous pouvez ensuite les modifier à partir de n'importe quelle instance."
+  },
+  "app.sync-instances-update.creative-hotbars": {
+    "message": "Synchroniser les barres de raccourcis des créations"
+  },
+  "app.sync-instances-update.description": {
+    "message": "Vous pouvez désormais synchroniser des options telles que les paramètres de jeu, les serveurs, les packs de ressources et bien plus encore sur vos instances, afin que tout reste le même à chaque fois que vous jouez !"
+  },
+  "app.sync-instances-update.load-error": {
+    "message": "Impossible de charger vos paramètres de synchronisation. Veuillez réessayer."
+  },
+  "app.sync-instances-update.manage-later": {
+    "message": "Vous pouvez activer la synchronisation maintenant et la gérer plus tard dans les paramètres de votre application."
+  },
+  "app.sync-instances-update.notification.description": {
+    "message": "Synchronisez les paramètres de jeu, les serveurs, les packs de ressources et bien plus encore sur vos instances."
+  },
+  "app.sync-instances-update.notification.dismiss": {
+    "message": "Rejeter"
+  },
+  "app.synced-content.change.disable-description": {
+    "message": "Désactivez-le sur toutes les instances synchronisées, ou uniquement dans cette instance. Le désactiver ici uniquement activera les remplacements pour cette instance."
+  },
+  "app.synced-content.change.enable-description": {
+    "message": "Activez-le sur toutes les instances synchronisées, ou uniquement dans cette instance. L’activer uniquement ici activera les remplacements pour cette instance."
+  },
+  "app.synced-content.delete.override-description": {
+    "message": "Vous pouvez le supprimer uniquement de cette instance ou de toutes les instances synchronisées. Le supprimer uniquement de cette instance permettra les remplacements, et cette instance ne recevra plus les modifications synchronisées pour ces types de contenu."
+  },
+  "app.synced-content.desync.description": {
+    "message": "Cette instance conservera sa propre copie. Souhaitez-vous conserver ce contenu synchronisé dans d’autres instances ou le supprimer ?"
+  },
+  "app.synced-packs.empty": {
+    "message": "Ajoutez des packs à partir de la page de contenu d'une instance pour démarrer la synchronisation."
+  },
+  "app.welcome-screen.import-prompt": {
+    "message": "Échapper à un autre lanceur ?"
+  },
+  "instance.files.managed-content-read-only": {
+    "message": "Gérez votre contenu installé via l'onglet Contenu"
+  },
+  "instance.icon-editor.symbol.wrenth-rinth": {
+    "message": "Clé Modrinth"
+  },
+  "instance.settings.synced-options.data-override": {
+    "message": "Désactivez ce remplacement pour modifier les données synchronisées."
+  },
+  "instance.settings.synced-options.packs-override": {
+    "message": "Désactivez ce remplacement pour modifier les packs synchronisés. Les packs indépendants peuvent être gérés dans l'onglet contenu."
+  },
+  "instance.settings.synced-options.resource-packs.description": {
+    "message": "Séparez les packs de ressources de cette instance des packs synchronisés."
+  },
+  "instance.settings.synced-options.resource-packs.disabled": {
+    "message": "La synchronisation des packs de ressources est désactivée dans les paramètres de l'application."
+  },
+  "instance.settings.tabs.behavior.description": {
+    "message": "Choisissez les onglets qui apparaissent sur cette instance."
+  },
+  "instance.settings.tabs.hooks.description": {
+    "message": "Exécutez des commandes système spécifiques à l'instance avant et après le lancement du jeu."
+  },
+  "instance.settings.tabs.hooks.title": {
+    "message": "Crochets de lancement de jeu personnalisés"
+  },
+  "instance.settings.tabs.java.custom-memory-allocation": {
+    "message": "Définissez l'allocation de mémoire séparément pour cette instance."
+  },
+  "instance.settings.tabs.settings-overrides": {
+    "message": "Remplacements de synchronisation"
+  },
+  "instance.settings.tabs.synced-options.creative-hotbars": {
+    "message": "Désynchroniser les barres de raccourcis des créations enregistrées"
+  },
+  "instance.settings.tabs.synced-options.creative-hotbars.disabled-in-app": {
+    "message": "La synchronisation de la barre de raccourcis des créations enregistrées est désactivée dans les paramètres de l'application."
+  },
+  "instance.settings.tabs.synced-options.creative-hotbars.override-description": {
+    "message": "Séparez les barres de raccourcis de création enregistrées de cette instance des barres de raccourcis synchronisées."
+  },
+  "instance.settings.tabs.synced-options.game-settings.description": {
+    "message": "Conservez le fichier options.txt de cette instance séparé de la copie synchronisée."
+  },
+  "instance.settings.tabs.synced-options.game-settings.disabled-in-app": {
+    "message": "La synchronisation des paramètres de jeu est désactivée dans les paramètres de l'application."
+  },
+  "instance.settings.tabs.synced-options.hotbars-conflict.backup-description": {
+    "message": "La version remplacée sera sauvegardée avant que quoi que ce soit ne change."
+  },
+  "instance.settings.tabs.synced-options.hotbars-conflict.description": {
+    "message": "{instance} et votre version synchronisée possède différentes barres de raccourcis créatives. Choisissez lequel utiliser dans vos instances."
+  },
+  "instance.settings.tabs.synced-options.hotbars-conflict.title": {
+    "message": "Choisissez des barres de raccourcis créatives"
+  },
+  "instance.settings.tabs.synced-options.hotbars-conflict.use-instance": {
+    "message": "Écraser les autres"
+  },
+  "instance.settings.tabs.synced-options.hotbars-conflict.use-synced": {
+    "message": "Utiliser synchronisé"
+  },
+  "instance.settings.tabs.synced-options.multiplayer-servers.disabled-in-app": {
+    "message": "La synchronisation du serveur multijoueur est désactivée dans les paramètres de l'application."
+  },
+  "instance.settings.tabs.synced-options.multiplayer-servers.override-description": {
+    "message": "Séparez les serveurs multijoueurs de cette instance des serveurs synchronisés."
+  },
+  "instance.settings.tabs.synced-options.shared-settings.description": {
+    "message": "Activez un remplacement pour conserver un paramètre synchronisé séparé pour cette instance."
+  },
+  "instance.settings.tabs.window.custom-window-settings": {
+    "message": "Configurez le plein écran et la résolution de lancement séparément pour cette instance."
+  },
+  "instance.worlds.actions.label": {
+    "message": "Actions mondiales"
+  },
+  "instance.worlds.desync-server.description": {
+    "message": "Souhaitez-vous conserver ce serveur dans d'autres instances synchronisées ou le supprimer ?"
+  },
+  "app.welcome-screen.language": {
+    "message": "Langue"
   }
 }

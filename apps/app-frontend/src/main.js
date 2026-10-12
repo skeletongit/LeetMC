@@ -11,10 +11,10 @@ import { debugStartup, traceStartupStep } from '@/helpers/startup-debug'
 import i18nPlugin from '@/plugins/i18n'
 import i18nDebugPlugin from '@/plugins/i18n-debug'
 import {
+	default as router,
 	preloadPrimaryRoutes,
 	preloadRemainingRoutes,
 	preloadSecondaryRoutes,
-	default as router,
 } from '@/routes'
 
 debugStartup('Frontend entry module evaluated')

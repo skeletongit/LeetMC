@@ -2747,101 +2747,23 @@
   "layout.account-switcher.switching": {
     "defaultMessage": "Зміна облікового запису..."
   },
-  "locale.cs-CZ": {
-    "defaultMessage": "Чеська"
-  },
-  "locale.da-DK": {
-    "defaultMessage": "Данська"
-  },
-  "locale.de-CH": {
-    "defaultMessage": "Німецька (Швейцарія)"
-  },
   "locale.de-DE": {
     "defaultMessage": "Німецька (Німеччина)"
   },
   "locale.en-US": {
     "defaultMessage": "Англійська (США)"
   },
-  "locale.es-419": {
-    "defaultMessage": "Іспанська (Латинська Америка)"
-  },
   "locale.es-ES": {
     "defaultMessage": "Іспанська (Іспанія)"
-  },
-  "locale.fi-FI": {
-    "defaultMessage": "Фінська"
-  },
-  "locale.fil-PH": {
-    "defaultMessage": "Філіппінська"
   },
   "locale.fr-FR": {
     "defaultMessage": "Французька"
   },
-  "locale.he-IL": {
-    "defaultMessage": "Іврит"
-  },
-  "locale.hu-HU": {
-    "defaultMessage": "Угорська"
-  },
-  "locale.id-ID": {
-    "defaultMessage": "Індонезійська"
-  },
-  "locale.it-IT": {
-    "defaultMessage": "Італійська (Італія)"
-  },
-  "locale.ja-JP": {
-    "defaultMessage": "Японська"
-  },
-  "locale.ko-KR": {
-    "defaultMessage": "Корейська"
-  },
-  "locale.ms-MY": {
-    "defaultMessage": "Малайська"
-  },
-  "locale.nl-NL": {
-    "defaultMessage": "Нідерландська"
-  },
-  "locale.no-NO": {
-    "defaultMessage": "Норвезька (букмол)"
-  },
-  "locale.pl-PL": {
-    "defaultMessage": "Польська"
-  },
-  "locale.pt-BR": {
-    "defaultMessage": "Португальська (Бразилія)"
-  },
-  "locale.pt-PT": {
-    "defaultMessage": "Португальська (Португалія)"
-  },
-  "locale.ro-RO": {
-    "defaultMessage": "Румунська"
-  },
   "locale.ru-RU": {
     "defaultMessage": "Російська"
   },
-  "locale.sr-CS": {
-    "defaultMessage": "Сербська (латиниця)"
-  },
-  "locale.sv-SE": {
-    "defaultMessage": "Шведська"
-  },
-  "locale.th-TH": {
-    "defaultMessage": "Тайська"
-  },
-  "locale.tr-TR": {
-    "defaultMessage": "Турецька"
-  },
   "locale.uk-UA": {
     "defaultMessage": "Українська"
-  },
-  "locale.vi-VN": {
-    "defaultMessage": "Вʼєтнамська"
-  },
-  "locale.zh-CN": {
-    "defaultMessage": "Китайська (спрощена)"
-  },
-  "locale.zh-TW": {
-    "defaultMessage": "Китайська (традиційна)"
   },
   "markdown-editor.default-image-alt-text": {
     "defaultMessage": "Замініть це описом"
@@ -7126,5 +7048,152 @@
   },
   "version.supplementary-resources.type": {
     "defaultMessage": "Тип"
+  },
+  "content.confirm-deletion.delete-button": {
+    "defaultMessage": "Delete {count, number} {itemType}"
+  },
+  "content.page-layout.empty.hint": {
+    "defaultMessage": "Перегляньте або завантажте {contentType} щоб почати"
+  },
+  "content.selection-bar.bulk.deleting-count": {
+    "defaultMessage": "Видалення {count, number} {contentType}"
+  },
+  "content.selection-bar.bulk.deleting-waiting": {
+    "defaultMessage": "Видалення {contentType}..."
+  },
+  "content.page-layout.search-placeholder": {
+    "defaultMessage": "Пошук {count, number} {contentType}..."
+  },
+  "content.selection-bar.bulk.deleting": {
+    "defaultMessage": "Видалення {progress}/{total} {contentType}..."
+  },
+  "content.selection-bar.bulk.disabling-count": {
+    "defaultMessage": "Відключення {count, number} {contentType}"
+  },
+  "content.selection-bar.bulk.disabling-waiting": {
+    "defaultMessage": "Відключення {contentType}..."
+  },
+  "content.selection-bar.bulk.enabling-count": {
+    "defaultMessage": "Включення {count, number} {contentType}"
+  },
+  "content.selection-bar.bulk.enabling-waiting": {
+    "defaultMessage": "Включення {contentType}..."
+  },
+  "content.selection-bar.bulk.disabling": {
+    "defaultMessage": "Відключення {progress}/{total} {contentType}..."
+  },
+  "content.selection-bar.bulk.enabling": {
+    "defaultMessage": "Включення {progress}/{total} {contentType}..."
+  },
+  "content.selection-bar.bulk.updating-count": {
+    "defaultMessage": "Оновлення {count, number} {contentType}"
+  },
+  "content.selection-bar.bulk.updating": {
+    "defaultMessage": "Оновлення {progress}/{total} {contentType}..."
+  },
+  "content.selection-bar.bulk.updating-waiting": {
+    "defaultMessage": "Оновлення {contentType}..."
+  },
+  "hosting.save-banner.resolve-errors": {
+    "defaultMessage": "Будь ласка, виправте помилки у ваших змінах перед збереженням."
+  },
+  "content.selection-bar.selected-count": {
+    "defaultMessage": "{count, number} {contentType} вибрано"
+  },
+  "hosting.settings.properties.motd-profanity": {
+    "defaultMessage": "Згідно з Правилами використання Minecraft, MOTD вашого сервера не може містити ненормативну лексику. Виявлено: \"{value}”."
+  },
+  "hosting.settings.properties.motd-profanity-save-error": {
+    "defaultMessage": "Згідно з Правилами використання Minecraft, MOTD вашого сервера не може містити ненормативну лексику. Виявлено: \"{value}”"
+  },
+  "servers.access-page.activity-log-filter.action.sftp-credentials-rolled": {
+    "defaultMessage": "Змінені облікові дані SFTP"
+  },
+  "servers.audit-log.event.sftp-credentials-rolled": {
+    "defaultMessage": "Змінені облікові дані SFTP"
+  },
+  "servers.files.server-locked": {
+    "defaultMessage": "Цей сервер заблоковано, а його файли доступні лише для читання."
+  },
+  "servers.lock.modal.error-text": {
+    "defaultMessage": "Під час блокування цього сервера сталася помилка. Спробуйте ще раз."
+  },
+  "servers.lock.modal.error-title": {
+    "defaultMessage": "Не вдалося заблокувати сервер"
+  },
+  "servers.lock.modal.header": {
+    "defaultMessage": "Замок {name}"
+  },
+  "servers.lock.modal.lock-button": {
+    "defaultMessage": "Сервер блокування"
+  },
+  "servers.lock.modal.reason-label": {
+    "defaultMessage": "Причина"
+  },
+  "servers.lock.modal.reason-placeholder": {
+    "defaultMessage": "Видимо для інших адміністраторів"
+  },
+  "servers.lock.modal.success-text": {
+    "defaultMessage": "{name} було заблоковано."
+  },
+  "servers.lock.modal.success-title": {
+    "defaultMessage": "Сервер заблоковано"
+  },
+  "servers.lock.modal.warning-body": {
+    "defaultMessage": "{name} буде доступним лише для читання для його власника та учасників, доки його не розблокує адміністратор."
+  },
+  "servers.lock.modal.warning-header": {
+    "defaultMessage": "Цей сервер стане доступним лише для читання"
+  },
+  "servers.manage.lock-server": {
+    "defaultMessage": "Сервер блокування"
+  },
+  "servers.manage.locked.badge": {
+    "defaultMessage": "Заблоковано"
+  },
+  "servers.manage.locked.badge-tooltip": {
+    "defaultMessage": "Заблоковано з тих пір {date}"
+  },
+  "servers.manage.locked.header": {
+    "defaultMessage": "Сервер заблоковано службою підтримки"
+  },
+  "servers.manage.unlock-server": {
+    "defaultMessage": "Розблокувати сервер"
+  },
+  "servers.manage.unlock.error-text": {
+    "defaultMessage": "Під час розблокування цього сервера сталася помилка. Спробуйте ще раз."
+  },
+  "servers.manage.unlock.error-title": {
+    "defaultMessage": "Не вдалося розблокувати сервер"
+  },
+  "servers.manage.locked.body": {
+    "defaultMessage": "Служба підтримки тимчасово заблокувала цей сервер, тому ви не можете вносити жодних змін. <support-link>Зверніться до служби підтримки</support-link> якщо ви вважаєте, що це помилка."
+  },
+  "servers.manage.unlock.success-text": {
+    "defaultMessage": "{name} було розблоковано."
+  },
+  "servers.manage.unlock.success-title": {
+    "defaultMessage": "Сервер розблоковано"
+  },
+  "servers.settings.support.action-log-title": {
+    "defaultMessage": "Журнал дій"
+  },
+  "servers.settings.support.clear-action-log-button": {
+    "defaultMessage": "Очистити журнал дій"
+  },
+  "servers.settings.support.clear-action-log-confirmation": {
+    "defaultMessage": "Це назавжди видаляє всі записи журналу дій для цього сервера. Продовжити?"
+  },
+  "servers.settings.support.clear-action-log-description": {
+    "defaultMessage": "Видалити всі записи журналу дій для цього сервера."
+  },
+  "servers.settings.support.clear-action-log-error": {
+    "defaultMessage": "Не вдалося очистити журнал дій"
+  },
+  "servers.settings.support.clear-action-log-success": {
+    "defaultMessage": "Журнал дій очищено"
+  },
+  "servers.settings.support.clear-action-log-title": {
+    "defaultMessage": "Очистити журнал дій?"
   }
 }

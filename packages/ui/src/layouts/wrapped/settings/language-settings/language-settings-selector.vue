@@ -77,13 +77,8 @@ type LocaleInfo = {
 	coverage?: LanguageCoverageStats
 }
 
-const localeFlagRegions: Record<string, string> = {
-	'es-419': 'mx',
-	'sr-CS': 'rs',
-}
-
 function getFlagUrl(tag: string): string | undefined {
-	const region = localeFlagRegions[tag] ?? tag.split('-').at(-1)
+	const region = tag.split('-').at(-1)
 	if (!region || !/^[a-z]{2}$/i.test(region)) return undefined
 
 	return `https://flagcdn.com/${region.toLowerCase()}.svg`

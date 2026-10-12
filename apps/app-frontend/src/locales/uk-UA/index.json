@@ -131,21 +131,6 @@
   "app.action-bar.view-logs": {
     "message": "Переглянути журнали"
   },
-  "app.ads-consent.accept": {
-    "message": "Прийняти всі"
-  },
-  "app.ads-consent.body": {
-    "message": "Реклама підтримує існування Modrinth і фінансує виплати творцям. Наші партнери можуть зберігати й отримувати доступ до cookie в застосунку, щоб персоналізувати рекламу та збирати метрики."
-  },
-  "app.ads-consent.manage": {
-    "message": "Налаштувати"
-  },
-  "app.ads-consent.reject": {
-    "message": "Відхилити всі"
-  },
-  "app.ads-consent.title": {
-    "message": "Ваша приватність і як реклама підтримує Modrinth"
-  },
   "app.appearance-settings.compact-mode.description": {
     "message": "Показувати примірники у вигляді компактних рядків."
   },
@@ -694,9 +679,6 @@
   },
   "app.instance.share.remove-user-modal.effect-invite-again": {
     "message": "Ви зможете потім запросити його знову"
-  },
-  "app.instance.share.remove-user-modal.effect-last-user": {
-    "message": "Це останній користувач, тому спільний доступ буде вимкнено для цього примірника"
   },
   "app.instance.share.remove-user-modal.effects-label": {
     "message": "Що тоді?"
@@ -1294,12 +1276,6 @@
   },
   "app.navigation.next-image": {
     "message": "Наступне зображення"
-  },
-  "app.news.title": {
-    "message": "Новини"
-  },
-  "app.news.view-all": {
-    "message": "Переглянути всі новини"
   },
   "app.notification.warning": {
     "message": "Попередження"
@@ -2632,9 +2608,6 @@
   },
   "app.settings.operating-system.macos": {
     "message": "macOS"
-  },
-  "app.settings.privacy.ads-consent.intro": {
-    "message": "Реклама підтримує існування Modrinth і фінансує виплати творцям. Наші партнери можуть зберігати й отримувати доступ до cookie в застосунку, щоб персоналізувати рекламу та збирати метрики. Ви можете відмовитися від них або керувати налаштуваннями нижче."
   },
   "app.settings.privacy.discord-rich-presence.description": {
     "message": "Показувати Modrinth App як вашу поточну активність у Discord. Це не впливає на активність, додану модами. Потребує перезапуску застосунку."
@@ -4453,5 +4426,128 @@
   },
   "settings.sidebar.label.display": {
     "message": "Дисплей"
+  },
+  "app.debug-export.canceling": {
+    "message": "Скасування експорту…"
+  },
+  "app.debug-export.exporting": {
+    "message": "Експорт…"
+  },
+  "app.debug-export.finishing": {
+    "message": "Завершення…"
+  },
+  "app.debug-export.preparing": {
+    "message": "Підготовка файлів…"
+  },
+  "app.instance.confirm-delete.bulk-admonition-body": {
+    "message": "Усі дані цих збірок ({count}) буде остаточно видалено, зокрема світи, конфігурації та весь установлений вміст."
+  },
+  "app.instance.confirm-delete.bulk-delete-button": {
+    "message": "Видалити збірки ({count})"
+  },
+  "app.instance.confirm-delete.bulk-header": {
+    "message": "Видалити збірки ({count})"
+  },
+  "app.modal.shared-instance-update.description": {
+    "message": "Власник кімнати змінив збірку {name}. Радимо прийняти оновлення, щоб ваші моди, ресурспаки й шейдери збігалися з вмістом кімнати. Якщо відмовитися, гра не запуститься."
+  },
+  "app.modal.update-to-play.decline-button": {
+    "message": "відхилити"
+  },
+  "app.nav.rooms": {
+    "message": "Кімнати"
+  },
+  "app.rooms.action.accept-changes": {
+    "message": "Прийняти зміни"
+  },
+  "app.rooms.action.manage": {
+    "message": "Керувати"
+  },
+  "app.rooms.action.open-instance": {
+    "message": "Відкрити збірку"
+  },
+  "app.rooms.action.play": {
+    "message": "Грати"
+  },
+  "app.rooms.action.send-changes": {
+    "message": "Синхронізувати зміни"
+  },
+  "app.rooms.create": {
+    "message": "Створити кімнату"
+  },
+  "app.rooms.create.description": {
+    "message": "Виберіть збірку для кімнати, а потім запросіть друзів."
+  },
+  "app.rooms.create.no-instances": {
+    "message": "Для кожної доступної збірки вже створено кімнату."
+  },
+  "app.rooms.create.unlink-required.description": {
+    "message": "{name} було імпортовано з файлу .mrpack. LeetMC має від’єднати його від оригінального пакета модів перед створенням кімнати. Це не призведе до видалення жодних модів, налаштувань або світів, але цей екземпляр більше не отримуватиме оновлення пакетів модів."
+  },
+  "app.rooms.create.unlink-required.proceed": {
+    "message": "Від’єднати та створити кімнату"
+  },
+  "app.rooms.create.unlink-required.title": {
+    "message": "Відв’язати модпак і створити кімнату?"
+  },
+  "app.rooms.empty.description": {
+    "message": "Створіть кімнату з однієї зі своїх збірок або прийміть запрошення друга."
+  },
+  "app.rooms.empty.title": {
+    "message": "Кімнат поки немає"
+  },
+  "app.rooms.manage.header": {
+    "message": "Керування кімнатою «{name}»"
+  },
+  "app.rooms.manage.invite-header": {
+    "message": "Запросити до кімнати «{name}»"
+  },
+  "app.rooms.manage.unlink.button": {
+    "message": "Від’єднати кімнату"
+  },
+  "app.rooms.manage.unlink.description": {
+    "message": "Це закриє кімнату для всіх і припинить майбутню синхронізацію. Примірник і всі його встановлені файли залишаться на цьому пристрої."
+  },
+  "app.rooms.manage.unlink.title": {
+    "message": "Від’єднати цю кімнату?"
+  },
+  "app.rooms.role.member": {
+    "message": "Учасник"
+  },
+  "app.rooms.role.owner": {
+    "message": "Власник"
+  },
+  "app.rooms.status.applying": {
+    "message": "Застосування оновлення…"
+  },
+  "app.rooms.manage.user-limit-reached": {
+    "message": "У кімнаті вже максимальна кількість учасників: {limit}."
+  },
+  "app.rooms.status.changes-not-sent": {
+    "message": "Не синхронізовано"
+  },
+  "app.rooms.status.unknown": {
+    "message": "Статус недоступний"
+  },
+  "app.rooms.status.up-to-date": {
+    "message": "Синхронізовано"
+  },
+  "app.rooms.status.update-available": {
+    "message": "Доступне оновлення"
+  },
+  "app.rooms.title": {
+    "message": "Кімнати"
+  },
+  "app.settings.resource-management.debug-info.description": {
+    "message": "Експортуйте журнали додатків і діагностичні дані в ZIP-файл, щоб поділитися ними зі службою підтримки Modrinth."
+  },
+  "app.settings.resource-management.debug-info.export": {
+    "message": "Експорт інформації про налагодження"
+  },
+  "app.settings.resource-management.debug-info.title": {
+    "message": "Інформація про налагодження"
+  },
+  "app.welcome-screen.language": {
+    "message": "Мова"
   }
 }

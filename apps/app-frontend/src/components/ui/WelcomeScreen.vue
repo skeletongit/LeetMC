@@ -1,12 +1,24 @@
 <script setup lang="ts">
-import { ImportIcon, ModrinthIcon, PlusIcon } from '@modrinth/assets'
-import { Button, defineMessages, IntlFormatted, useVIntl } from '@modrinth/ui'
-import { inject, onMounted, onUnmounted, ref } from 'vue'
+import { ImportIcon, LanguagesIcon, ModrinthIcon, PlusIcon } from '@modrinth/assets'
+import {
+	Button,
+	type ButtonMenuOption,
+	defineMessages,
+	injectI18n,
+	IntlFormatted,
+	LOCALES,
+	TeleportOverflowMenu,
+	useVIntl,
+} from '@modrinth/ui'
+import { computed, inject, onMounted, onUnmounted, ref } from 'vue'
+
+import { get as getSettings, set as setSettings } from '@/helpers/settings.ts'
 
 const showCreationModal = inject<() => void>('showCreationModal')
 const showImportModal = inject<() => void>('showImportModal')
 
 const { formatMessage } = useVIntl()
+const { locale, setLocale } = injectI18n()
 
 const messages = defineMessages({
 	welcomeTitle: {
@@ -33,7 +45,31 @@ const messages = defineMessages({
 		id: 'app.welcome-screen.import-from-launcher',
 		defaultMessage: 'Import from launcher',
 	},
+	language: {
+		id: 'app.welcome-screen.language',
+		defaultMessage: 'Language',
+	},
 })
+
+const languageOptions = computed<ButtonMenuOption[]>(() =>
+	LOCALES.map((language) => ({
+		id: language.code,
+		label: language.name,
+		selected: locale.value === language.code,
+		action: () => changeLanguage(language.code),
+	})),
+)
+const currentLanguageName = computed(
+	() =>
+		LOCALES.find((language) => language.code === locale.value)?.name ??
+		formatMessage(messages.language),
+)
+
+async function changeLanguage(newLocale: string) {
+	await setLocale(newLocale)
+	const settings = await getSettings()
+	await setSettings({ ...settings, locale: newLocale })
+}
 
 const offline = ref(!navigator.onLine)
 
@@ -131,6 +167,15 @@ onUnmounted(() => {
 				<ImportIcon />
 				{{ formatMessage(messages.importFromLauncher) }}
 			</Button>
+			<TeleportOverflowMenu
+				:label="formatMessage(messages.language)"
+				:options="languageOptions"
+				:icon-only="false"
+				placement="top-center"
+			>
+				<LanguagesIcon />
+				{{ currentLanguageName }}
+			</TeleportOverflowMenu>
 		</div>
 	</div>
 </template>

@@ -2786,101 +2786,23 @@
   "layout.account-switcher.switching": {
     "defaultMessage": "Cambiando cuentas..."
   },
-  "locale.cs-CZ": {
-    "defaultMessage": "Checo"
-  },
-  "locale.da-DK": {
-    "defaultMessage": "Danés"
-  },
-  "locale.de-CH": {
-    "defaultMessage": "Alemán (Suiza)"
-  },
   "locale.de-DE": {
     "defaultMessage": "Alemán (Alemania)"
   },
   "locale.en-US": {
     "defaultMessage": "Inglés (Estados Unidos)"
   },
-  "locale.es-419": {
-    "defaultMessage": "Español (Latinoamérica)"
-  },
   "locale.es-ES": {
     "defaultMessage": "Español (España)"
-  },
-  "locale.fi-FI": {
-    "defaultMessage": "Finlandés"
-  },
-  "locale.fil-PH": {
-    "defaultMessage": "Filipino"
   },
   "locale.fr-FR": {
     "defaultMessage": "Francés"
   },
-  "locale.he-IL": {
-    "defaultMessage": "Hebreo"
-  },
-  "locale.hu-HU": {
-    "defaultMessage": "Húngaro"
-  },
-  "locale.id-ID": {
-    "defaultMessage": "Indonesio"
-  },
-  "locale.it-IT": {
-    "defaultMessage": "Italiano (Italia)"
-  },
-  "locale.ja-JP": {
-    "defaultMessage": "Japonés"
-  },
-  "locale.ko-KR": {
-    "defaultMessage": "Coreano"
-  },
-  "locale.ms-MY": {
-    "defaultMessage": "Malayo"
-  },
-  "locale.nl-NL": {
-    "defaultMessage": "Holandés"
-  },
-  "locale.no-NO": {
-    "defaultMessage": "Bokmål noruego"
-  },
-  "locale.pl-PL": {
-    "defaultMessage": "Polaco"
-  },
-  "locale.pt-BR": {
-    "defaultMessage": "Portugués (Brasil)"
-  },
-  "locale.pt-PT": {
-    "defaultMessage": "Portugués (Portugal)"
-  },
-  "locale.ro-RO": {
-    "defaultMessage": "Rumano"
-  },
   "locale.ru-RU": {
     "defaultMessage": "Ruso"
   },
-  "locale.sr-CS": {
-    "defaultMessage": "Serbio (Latino)"
-  },
-  "locale.sv-SE": {
-    "defaultMessage": "Sueco"
-  },
-  "locale.th-TH": {
-    "defaultMessage": "Tailandés"
-  },
-  "locale.tr-TR": {
-    "defaultMessage": "Turco"
-  },
   "locale.uk-UA": {
     "defaultMessage": "Ucraniano"
-  },
-  "locale.vi-VN": {
-    "defaultMessage": "Vietnamita"
-  },
-  "locale.zh-CN": {
-    "defaultMessage": "Chino (Simplificado)"
-  },
-  "locale.zh-TW": {
-    "defaultMessage": "Chino (Tradicional)"
   },
   "markdown-editor.default-image-alt-text": {
     "defaultMessage": "Reemplazar esto con una descripción"
@@ -7066,5 +6988,212 @@
   },
   "version.supplementary-resources.type": {
     "defaultMessage": "Tipo"
+  },
+  "external-files.permissions-card.editor.select-license-label": {
+    "defaultMessage": "Buscar licencias..."
+  },
+  "external-files.permissions-card.license.all-rights": {
+    "defaultMessage": "Todos los derechos reservados/Sin licencia"
+  },
+  "hosting.save-banner.resolve-errors": {
+    "defaultMessage": "Resuelva los errores en sus cambios antes de guardar."
+  },
+  "hosting.settings.properties.motd-profanity": {
+    "defaultMessage": "Debido a las pautas de uso de Minecraft, el MOTD de su servidor no puede contener malas palabras. Detectado: “{value}”."
+  },
+  "hosting.settings.properties.motd-profanity-save-error": {
+    "defaultMessage": "Debido a las pautas de uso de Minecraft, el MOTD de su servidor no puede contener malas palabras. Detectado: “{value}”"
+  },
+  "label.available": {
+    "defaultMessage": "{amount} disponible."
+  },
+  "profile.button.force-password-reset": {
+    "defaultMessage": "Forzar restablecimiento de contraseña"
+  },
+  "profile.button.lock": {
+    "defaultMessage": "Bloquear cuenta"
+  },
+  "profile.button.reset-2fa": {
+    "defaultMessage": "Restablecer la autenticación de dos factores"
+  },
+  "profile.button.revoke-sessions": {
+    "defaultMessage": "Revocar todas las sesiones"
+  },
+  "profile.force-password-reset.admonition-body": {
+    "defaultMessage": "{username}La contraseña de se eliminará de inmediato, se cerrará su sesión en todos los dispositivos y se enviará un enlace para establecer una nueva al correo electrónico a continuación. Si cambia el correo electrónico, reemplaza el de la cuenta. El enlace caduca después de 24 horas y se puede utilizar incluso cuando la cuenta está bloqueada."
+  },
+  "profile.force-password-reset.admonition-title": {
+    "defaultMessage": "La contraseña actual dejará de funcionar"
+  },
+  "profile.force-password-reset.button": {
+    "defaultMessage": "Restablecer contraseña"
+  },
+  "profile.force-password-reset.email-label": {
+    "defaultMessage": "Correo electrónico de la cuenta"
+  },
+  "profile.force-password-reset.email-placeholder": {
+    "defaultMessage": "Déjelo en blanco para usar el correo electrónico de la cuenta."
+  },
+  "profile.force-password-reset.error-description": {
+    "defaultMessage": "Se produjo un error al restablecer la contraseña. Por favor inténtalo de nuevo."
+  },
+  "profile.force-password-reset.error-title": {
+    "defaultMessage": "No se pudo restablecer la contraseña"
+  },
+  "profile.force-password-reset.success-title": {
+    "defaultMessage": "Restablecer contraseña"
+  },
+  "profile.force-password-reset.success-description": {
+    "defaultMessage": "Se ha enviado un enlace para restablecer la contraseña a {username}."
+  },
+  "profile.force-password-reset.title": {
+    "defaultMessage": "Forzar restablecimiento de contraseña para {username}"
+  },
+  "profile.label.locked": {
+    "defaultMessage": "bloqueado"
+  },
+  "profile.reset-2fa.admonition-body": {
+    "defaultMessage": "{username}Los códigos de autenticación y de respaldo se eliminarán y se les notificará. Solo haga esto después de verificar su identidad."
+  },
+  "profile.reset-2fa.admonition-title": {
+    "defaultMessage": "¿Estás seguro de que deseas restablecer la autenticación de dos factores?"
+  },
+  "profile.reset-2fa.button": {
+    "defaultMessage": "Restablecer 2FA"
+  },
+  "profile.reset-2fa.error-description": {
+    "defaultMessage": "Se produjo un error al restablecer la autenticación de dos factores. Por favor inténtalo de nuevo."
+  },
+  "profile.reset-2fa.error-title": {
+    "defaultMessage": "No se pudo restablecer la autenticación de dos factores"
+  },
+  "profile.reset-2fa.success-description": {
+    "defaultMessage": "{username}Se ha eliminado la autenticación de dos factores."
+  },
+  "profile.reset-2fa.success-title": {
+    "defaultMessage": "Restablecimiento de la autenticación de dos factores"
+  },
+  "profile.reset-2fa.title": {
+    "defaultMessage": "Restablecer la autenticación de dos factores para {username}"
+  },
+  "profile.revoke-sessions.admonition-title": {
+    "defaultMessage": "¿Está seguro de que desea revocar todas las sesiones?"
+  },
+  "profile.revoke-sessions.button": {
+    "defaultMessage": "Revocar sesiones"
+  },
+  "profile.revoke-sessions.error-description": {
+    "defaultMessage": "Se produjo un error al revocar sesiones. Por favor inténtalo de nuevo."
+  },
+  "profile.revoke-sessions.success-description": {
+    "defaultMessage": "{username} ha sido cerrado en todas partes."
+  },
+  "profile.revoke-sessions.success-title": {
+    "defaultMessage": "Sesiones revocadas"
+  },
+  "profile.revoke-sessions.title": {
+    "defaultMessage": "Revocar sesiones para {username}"
+  },
+  "profile.unlock-user.error-description": {
+    "defaultMessage": "Se produjo un error al desbloquear esta cuenta. Por favor inténtalo de nuevo."
+  },
+  "profile.unlock-user.error-title": {
+    "defaultMessage": "No se pudo desbloquear la cuenta"
+  },
+  "profile.unlock-user.success-description": {
+    "defaultMessage": "{username}La cuenta de ha sido desbloqueada."
+  },
+  "profile.unlock-user.success-title": {
+    "defaultMessage": "Cuenta desbloqueada"
+  },
+  "servers.access-page.activity-log-filter.action.sftp-credentials-rolled": {
+    "defaultMessage": "Credenciales SFTP rotadas"
+  },
+  "servers.audit-log.event.sftp-credentials-rolled": {
+    "defaultMessage": "Credenciales SFTP rotadas"
+  },
+  "servers.files.server-locked": {
+    "defaultMessage": "Este servidor está bloqueado y sus archivos son de sólo lectura."
+  },
+  "servers.lock.modal.error-text": {
+    "defaultMessage": "Se produjo un error al bloquear este servidor. Por favor inténtalo de nuevo."
+  },
+  "servers.lock.modal.error-title": {
+    "defaultMessage": "No se pudo bloquear el servidor"
+  },
+  "servers.lock.modal.header": {
+    "defaultMessage": "Bloquear {name}"
+  },
+  "servers.lock.modal.lock-button": {
+    "defaultMessage": "Bloquear servidor"
+  },
+  "servers.lock.modal.reason-label": {
+    "defaultMessage": "Razón"
+  },
+  "servers.lock.modal.reason-placeholder": {
+    "defaultMessage": "Visible para otros administradores"
+  },
+  "servers.lock.modal.success-text": {
+    "defaultMessage": "{name} ha sido bloqueado."
+  },
+  "servers.lock.modal.success-title": {
+    "defaultMessage": "Servidor bloqueado"
+  },
+  "servers.lock.modal.warning-body": {
+    "defaultMessage": "{name} será de solo lectura para su propietario y miembros hasta que un administrador lo desbloquee."
+  },
+  "servers.lock.modal.warning-header": {
+    "defaultMessage": "Este servidor pasará a ser de solo lectura"
+  },
+  "servers.manage.lock-server": {
+    "defaultMessage": "Bloquear servidor"
+  },
+  "servers.manage.locked.badge": {
+    "defaultMessage": "bloqueado"
+  },
+  "servers.manage.locked.badge-tooltip": {
+    "defaultMessage": "Bloqueado desde {date}"
+  },
+  "servers.manage.locked.header": {
+    "defaultMessage": "Servidor bloqueado por soporte"
+  },
+  "servers.manage.unlock-server": {
+    "defaultMessage": "Desbloquear servidor"
+  },
+  "servers.manage.unlock.error-text": {
+    "defaultMessage": "Se produjo un error al desbloquear este servidor. Por favor inténtalo de nuevo."
+  },
+  "servers.manage.unlock.error-title": {
+    "defaultMessage": "No se pudo desbloquear el servidor"
+  },
+  "servers.manage.unlock.success-text": {
+    "defaultMessage": "{name} ha sido desbloqueado."
+  },
+  "servers.manage.unlock.success-title": {
+    "defaultMessage": "Servidor desbloqueado"
+  },
+  "servers.manage.locked.body": {
+    "defaultMessage": "El soporte ha bloqueado temporalmente este servidor, por lo que no puede realizar ningún cambio. <support-link>Contactar con soporte</support-link> si crees que esto es un error."
+  },
+  "servers.settings.support.action-log-title": {
+    "defaultMessage": "Registro de acciones"
+  },
+  "servers.settings.support.clear-action-log-button": {
+    "defaultMessage": "Borrar registro de acciones"
+  },
+  "servers.settings.support.clear-action-log-confirmation": {
+    "defaultMessage": "Esto elimina permanentemente todas las entradas del registro de acciones para este servidor. ¿Continuar?"
+  },
+  "servers.settings.support.clear-action-log-description": {
+    "defaultMessage": "Elimine todas las entradas del registro de acciones para este servidor."
+  },
+  "servers.settings.support.clear-action-log-error": {
+    "defaultMessage": "No se pudo borrar el registro de acciones"
+  },
+  "servers.settings.support.clear-action-log-success": {
+    "defaultMessage": "Registro de acciones borrado"
+  },
+  "servers.settings.support.clear-action-log-title": {
+    "defaultMessage": "¿Borrar registro de acciones?"
   }
 }

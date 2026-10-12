@@ -2714,101 +2714,23 @@
   "layout.account-switcher.switching": {
     "defaultMessage": "Смена аккаунта..."
   },
-  "locale.cs-CZ": {
-    "defaultMessage": "Чешский"
-  },
-  "locale.da-DK": {
-    "defaultMessage": "Датский"
-  },
-  "locale.de-CH": {
-    "defaultMessage": "Немецкий (Швейцария)"
-  },
   "locale.de-DE": {
     "defaultMessage": "Немецкий (Германия)"
   },
   "locale.en-US": {
     "defaultMessage": "Английский (США)"
   },
-  "locale.es-419": {
-    "defaultMessage": "Испанский (Латинская Америка)"
-  },
   "locale.es-ES": {
     "defaultMessage": "Испанский (Испания)"
-  },
-  "locale.fi-FI": {
-    "defaultMessage": "Финский"
-  },
-  "locale.fil-PH": {
-    "defaultMessage": "Филиппинский"
   },
   "locale.fr-FR": {
     "defaultMessage": "Французский"
   },
-  "locale.he-IL": {
-    "defaultMessage": "Иврит"
-  },
-  "locale.hu-HU": {
-    "defaultMessage": "Венгерский"
-  },
-  "locale.id-ID": {
-    "defaultMessage": "Индонезийский"
-  },
-  "locale.it-IT": {
-    "defaultMessage": "Итальянский (Италия)"
-  },
-  "locale.ja-JP": {
-    "defaultMessage": "Японский"
-  },
-  "locale.ko-KR": {
-    "defaultMessage": "Корейский"
-  },
-  "locale.ms-MY": {
-    "defaultMessage": "Малайский"
-  },
-  "locale.nl-NL": {
-    "defaultMessage": "Нидерландский"
-  },
-  "locale.no-NO": {
-    "defaultMessage": "Норвежский букмол"
-  },
-  "locale.pl-PL": {
-    "defaultMessage": "Польский"
-  },
-  "locale.pt-BR": {
-    "defaultMessage": "Португальский (Бразилия)"
-  },
-  "locale.pt-PT": {
-    "defaultMessage": "Португальский (Португалия)"
-  },
-  "locale.ro-RO": {
-    "defaultMessage": "Румынский"
-  },
   "locale.ru-RU": {
     "defaultMessage": "Русский"
   },
-  "locale.sr-CS": {
-    "defaultMessage": "Сербский (латиница)"
-  },
-  "locale.sv-SE": {
-    "defaultMessage": "Шведский"
-  },
-  "locale.th-TH": {
-    "defaultMessage": "Тайский"
-  },
-  "locale.tr-TR": {
-    "defaultMessage": "Турецкий"
-  },
   "locale.uk-UA": {
     "defaultMessage": "Украинский"
-  },
-  "locale.vi-VN": {
-    "defaultMessage": "Вьетнамский"
-  },
-  "locale.zh-CN": {
-    "defaultMessage": "Китайский (упрощённый)"
-  },
-  "locale.zh-TW": {
-    "defaultMessage": "Китайский (традиционный)"
   },
   "markdown-editor.default-image-alt-text": {
     "defaultMessage": "Подставьте сюда описание"
@@ -7075,5 +6997,203 @@
   },
   "version.supplementary-resources.type": {
     "defaultMessage": "Тип"
+  },
+  "billing.resubscribe-modal.cpus": {
+    "defaultMessage": "{sharedCpus} Общие процессоры"
+  },
+  "content.diff-modal.added-count": {
+    "defaultMessage": "{count} добавлено"
+  },
+  "content.confirm-deletion.delete-button": {
+    "defaultMessage": "Delete {count, number} {itemType}"
+  },
+  "content.dependency-warning.bulk-admonition-body": {
+    "defaultMessage": "Некоторые выбранные проекты устанавливаются как зависимости. Их удаление может привести к поломке вашего {context} или остановить правильную загрузку зависимого контента."
+  },
+  "content.dependency-warning.effect-instance": {
+    "defaultMessage": "Ваш {context} может произойти сбой, отказаться запускаться или вести себя неожиданно"
+  },
+  "content.dependency-warning.single-admonition-body": {
+    "defaultMessage": "{project} устанавливается как зависимость. Удаление может привести к поломке вашего {context} или остановить правильную загрузку зависимого контента."
+  },
+  "content.diff-modal.removed-count": {
+    "defaultMessage": "{count} удалено"
+  },
+  "content.diff-modal.removed-disabled-count": {
+    "defaultMessage": "{count} удален (отключен)"
+  },
+  "content.diff-modal.updated-count": {
+    "defaultMessage": "{count} обновлено"
+  },
+  "content.inline-backup.warning-body": {
+    "defaultMessage": "Прежде чем продолжить, мы рекомендуем создать резервную копию, чтобы вы могли восстановить {type} если что-нибудь сломается."
+  },
+  "content.selection-bar.bulk.deleting-count": {
+    "defaultMessage": "Удаление {count, number} {contentType}"
+  },
+  "content.page-layout.search-placeholder": {
+    "defaultMessage": "Поиск {count, number} {contentType}..."
+  },
+  "content.selection-bar.bulk.deleting": {
+    "defaultMessage": "Удаление {progress}/{total} {contentType}..."
+  },
+  "content.selection-bar.bulk.disabling": {
+    "defaultMessage": "Отключение {progress}/{total} {contentType}..."
+  },
+  "content.selection-bar.bulk.disabling-count": {
+    "defaultMessage": "Отключение {count, number} {contentType}"
+  },
+  "content.selection-bar.bulk.enabling-count": {
+    "defaultMessage": "Включение {count, number} {contentType}"
+  },
+  "content.selection-bar.bulk.enabling": {
+    "defaultMessage": "Включение {progress}/{total} {contentType}..."
+  },
+  "content.selection-bar.bulk.updating-count": {
+    "defaultMessage": "Обновление {count, number} {contentType}"
+  },
+  "content.selection-bar.selected-count": {
+    "defaultMessage": "{count, number} {contentType} выбрано"
+  },
+  "files.conflict-modal.overwritten-count": {
+    "defaultMessage": "{count} перезаписан"
+  },
+  "content.selection-bar.bulk.updating": {
+    "defaultMessage": "Обновление {progress}/{total} {contentType}..."
+  },
+  "files.create-modal.create-button": {
+    "defaultMessage": "Создать {type}"
+  },
+  "files.create-modal.header": {
+    "defaultMessage": "Создайте {type}"
+  },
+  "files.conflict-modal.overwrite-warning": {
+    "defaultMessage": "Следующие {count} файлы уже существуют на вашем сервере и будут перезаписаны, если вы продолжите извлечение."
+  },
+  "files.editor.find-match-count": {
+    "defaultMessage": "{current} из {total}"
+  },
+  "files.layout.selected-count": {
+    "defaultMessage": "{count} выбрано"
+  },
+  "hosting.save-banner.resolve-errors": {
+    "defaultMessage": "Прежде чем сохранять изменения, устраните ошибки в них."
+  },
+  "hosting.specs.shared-cpus": {
+    "defaultMessage": "{cpus} Общие процессоры"
+  },
+  "markdown-editor.max-length.value": {
+    "defaultMessage": "{currentLength}/{maxLength}"
+  },
+  "hosting.settings.properties.motd-profanity": {
+    "defaultMessage": "В соответствии с правилами использования Minecraft MOTD вашего сервера не может содержать ненормативную лексику. Обнаружено: «{value}”."
+  },
+  "hosting.settings.properties.motd-profanity-save-error": {
+    "defaultMessage": "В соответствии с правилами использования Minecraft MOTD вашего сервера не может содержать ненормативную лексику. Обнаружено: «{value}”"
+  },
+  "profile.force-password-reset.admonition-body": {
+    "defaultMessage": "{username}Пароль пользователя будет немедленно удален, он выйдет из системы на каждом устройстве, а ссылка для установки нового будет отправлена на адрес электронной почты, указанный ниже. Если вы измените адрес электронной почты, он заменит тот, который указан в учетной записи. Срок действия ссылки истекает через 24 часа, и ее можно использовать, даже если учетная запись заблокирована."
+  },
+  "profile.reset-2fa.admonition-body": {
+    "defaultMessage": "{username}Аутентификатор и резервные коды пользователя будут удалены, и они будут уведомлены. Делайте это только после подтверждения своей личности."
+  },
+  "profile.revoke-sessions.admonition-body": {
+    "defaultMessage": "{username} будет выполнен выход из системы на каждом устройстве, и вам потребуется войти в систему снова. Токены личного доступа не затрагиваются."
+  },
+  "project.disclosure.derivative-work.show-more": {
+    "defaultMessage": "Показать {count} больше"
+  },
+  "servers.access-page.activity-log-filter.action.sftp-credentials-rolled": {
+    "defaultMessage": "Измененные учетные данные SFTP"
+  },
+  "servers.audit-log.event.sftp-credentials-rolled": {
+    "defaultMessage": "Измененные учетные данные SFTP"
+  },
+  "servers.files.server-locked": {
+    "defaultMessage": "Этот сервер заблокирован, и его файлы доступны только для чтения."
+  },
+  "servers.lock.modal.error-text": {
+    "defaultMessage": "Произошла ошибка при блокировке этого сервера. Пожалуйста, попробуйте еще раз."
+  },
+  "servers.lock.modal.error-title": {
+    "defaultMessage": "Не удалось заблокировать сервер"
+  },
+  "servers.lock.modal.header": {
+    "defaultMessage": "Блокировка {name}"
+  },
+  "servers.lock.modal.lock-button": {
+    "defaultMessage": "Блокировка сервера"
+  },
+  "servers.lock.modal.reason-label": {
+    "defaultMessage": "Причина"
+  },
+  "servers.lock.modal.reason-placeholder": {
+    "defaultMessage": "Видно другим администраторам"
+  },
+  "servers.lock.modal.success-text": {
+    "defaultMessage": "{name} был заблокирован."
+  },
+  "servers.lock.modal.success-title": {
+    "defaultMessage": "Сервер заблокирован"
+  },
+  "servers.lock.modal.warning-body": {
+    "defaultMessage": "{name} будет доступен только для чтения для его владельца и участников, пока он не будет разблокирован администратором."
+  },
+  "servers.lock.modal.warning-header": {
+    "defaultMessage": "Этот сервер станет доступен только для чтения"
+  },
+  "servers.manage.lock-server": {
+    "defaultMessage": "Блокировка сервера"
+  },
+  "servers.manage.locked.badge": {
+    "defaultMessage": "Заблокировано"
+  },
+  "servers.manage.locked.badge-tooltip": {
+    "defaultMessage": "Заблокировано с тех пор {date}"
+  },
+  "servers.manage.locked.header": {
+    "defaultMessage": "Сервер заблокирован службой поддержки"
+  },
+  "servers.manage.unlock-server": {
+    "defaultMessage": "Разблокировать сервер"
+  },
+  "servers.manage.locked.body": {
+    "defaultMessage": "Служба поддержки временно заблокировала этот сервер, поэтому вы не можете вносить какие-либо изменения. <support-link>Связаться со службой поддержки</support-link> если вы считаете, что это ошибка."
+  },
+  "servers.manage.unlock.error-text": {
+    "defaultMessage": "Произошла ошибка при разблокировке этого сервера. Пожалуйста, попробуйте еще раз."
+  },
+  "servers.manage.unlock.error-title": {
+    "defaultMessage": "Не удалось разблокировать сервер"
+  },
+  "servers.manage.unlock.success-text": {
+    "defaultMessage": "{name} был разблокирован."
+  },
+  "servers.manage.unlock.success-title": {
+    "defaultMessage": "Сервер разблокирован"
+  },
+  "servers.settings.support.action-log-title": {
+    "defaultMessage": "Журнал действий"
+  },
+  "servers.settings.support.clear-action-log-button": {
+    "defaultMessage": "Очистить журнал действий"
+  },
+  "servers.settings.support.clear-action-log-confirmation": {
+    "defaultMessage": "При этом все записи журнала действий для этого сервера будут удалены без возможности восстановления. Продолжать?"
+  },
+  "servers.settings.support.clear-action-log-description": {
+    "defaultMessage": "Удалите все записи журнала действий для этого сервера."
+  },
+  "servers.settings.support.clear-action-log-error": {
+    "defaultMessage": "Не удалось очистить журнал действий."
+  },
+  "servers.settings.support.clear-action-log-success": {
+    "defaultMessage": "Журнал действий очищен."
+  },
+  "servers.settings.support.clear-action-log-title": {
+    "defaultMessage": "Очистить журнал действий?"
+  },
+  "sharing.invite-players-modal.friends-heading": {
+    "defaultMessage": "Твои друзья - {count}"
   }
 }

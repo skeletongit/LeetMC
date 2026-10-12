@@ -2,6 +2,7 @@ import {
 	buildLocaleMessages,
 	createMessageCompiler,
 	type CrowdinMessages,
+	FALLBACK_LOCALE,
 	LOCALES,
 } from '@modrinth/ui'
 import englishUi from '@modrinth/ui/src/locales/en-US/index.json'
@@ -38,8 +39,8 @@ function applyLeetMCBranding(
 
 const i18n = createI18n({
 	legacy: false,
-	locale: 'en-US',
-	fallbackLocale: 'en-US',
+	locale: FALLBACK_LOCALE,
+	fallbackLocale: FALLBACK_LOCALE,
 	messageCompiler: createMessageCompiler(),
 	missingWarn: false,
 	fallbackWarn: false,
@@ -62,23 +63,26 @@ async function fetchMessages(url: string): Promise<CrowdinMessages> {
 
 export async function setLocale(requestedLocale: string): Promise<void> {
 	const request = ++localeRequest
-	const locale = LOCALES.some((candidate) => candidate.code === requestedLocale)
-		? requestedLocale
-		: 'en-US'
-	if (locale !== 'en-US' && locale !== i18n.global.locale.value) {
+	const locale =
+		requestedLocale === FALLBACK_LOCALE ||
+		LOCALES.some((candidate) => candidate.code === requestedLocale)
+			? requestedLocale
+			: FALLBACK_LOCALE
+	if (locale !== FALLBACK_LOCALE && locale !== i18n.global.locale.value) {
 		let pending = pendingLocales.get(locale)
 		if (!pending) {
 			pending = Promise.all([
 				fetchMessages(localeUrls[`./locales/${locale}/index.json`]),
 				fetchMessages(uiLocaleUrls[`../../../packages/ui/src/locales/${locale}/index.json`]),
 			])
-				.then(([app, ui]) =>
-					applyLeetMCBranding(
-						buildLocaleMessages({
-							[`./app/${locale}/index.json`]: { default: app },
-							[`./ui/${locale}/index.json`]: { default: ui },
-						}),
-					)[locale],
+				.then(
+					([app, ui]) =>
+						applyLeetMCBranding(
+							buildLocaleMessages({
+								[`./app/${locale}/index.json`]: { default: app },
+								[`./ui/${locale}/index.json`]: { default: ui },
+							}),
+						)[locale],
 				)
 				.finally(() => pendingLocales.delete(locale))
 			pendingLocales.set(locale, pending)
@@ -90,7 +94,7 @@ export async function setLocale(requestedLocale: string): Promise<void> {
 	if (request !== localeRequest) return
 	const previous = i18n.global.locale.value
 	i18n.global.locale.value = locale
-	if (previous !== locale && previous !== 'en-US') {
+	if (previous !== locale && previous !== FALLBACK_LOCALE) {
 		i18n.global.setLocaleMessage(previous, {})
 	}
 }

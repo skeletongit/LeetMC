@@ -35,29 +35,9 @@ export interface LocaleDefinition {
 	serverLanguageCode?: string
 }
 
+export const FALLBACK_LOCALE = 'en-US'
+
 export const LOCALES: LocaleDefinition[] = [
-	// Commented out as it's RTL - will enable when we have better RTL support
-	// {
-	// 	code: 'ar-SA',
-	// 	name: 'العربية (السعودية)',
-	// 	translatedName: defineMessage({ id: 'locale.ar-SA', defaultMessage: 'Arabic' }),
-	// 	dir: 'rtl',
-	// },
-	{
-		code: 'cs-CZ',
-		name: 'Čeština',
-		translatedName: defineMessage({ id: 'locale.cs-CZ', defaultMessage: 'Czech' }),
-	},
-	{
-		code: 'da-DK',
-		name: 'Dansk',
-		translatedName: defineMessage({ id: 'locale.da-DK', defaultMessage: 'Danish' }),
-	},
-	{
-		code: 'de-CH',
-		name: 'Deutsch (Schweiz)',
-		translatedName: defineMessage({ id: 'locale.de-CH', defaultMessage: 'German (Switzerland)' }),
-	},
 	{
 		code: 'de-DE',
 		name: 'Deutsch (Deutschland)',
@@ -72,101 +52,14 @@ export const LOCALES: LocaleDefinition[] = [
 		}),
 	},
 	{
-		code: 'es-419',
-		name: 'Español (Latinoamérica)',
-		translatedName: defineMessage({
-			id: 'locale.es-419',
-			defaultMessage: 'Spanish (Latin America)',
-		}),
-	},
-	{
 		code: 'es-ES',
 		name: 'Español (España)',
 		translatedName: defineMessage({ id: 'locale.es-ES', defaultMessage: 'Spanish (Spain)' }),
 	},
 	{
-		code: 'fi-FI',
-		name: 'Suomi',
-		translatedName: defineMessage({ id: 'locale.fi-FI', defaultMessage: 'Finnish' }),
-	},
-	{
-		code: 'fil-PH',
-		name: 'Filipino',
-		translatedName: defineMessage({ id: 'locale.fil-PH', defaultMessage: 'Filipino' }),
-		compactNumberPlural: 1,
-		serverLanguageCode: 'tl',
-	},
-	{
 		code: 'fr-FR',
 		name: 'Français',
 		translatedName: defineMessage({ id: 'locale.fr-FR', defaultMessage: 'French' }),
-	},
-	{
-		code: 'he-IL',
-		name: 'עברית',
-		translatedName: defineMessage({ id: 'locale.he-IL', defaultMessage: 'Hebrew' }),
-		dir: 'rtl',
-	},
-	{
-		code: 'hu-HU',
-		name: 'Magyar',
-		translatedName: defineMessage({ id: 'locale.hu-HU', defaultMessage: 'Hungarian' }),
-	},
-	{
-		code: 'id-ID',
-		name: 'Bahasa Indonesia',
-		translatedName: defineMessage({ id: 'locale.id-ID', defaultMessage: 'Indonesian' }),
-	},
-	{
-		code: 'it-IT',
-		name: 'Italiano (Italia)',
-		translatedName: defineMessage({ id: 'locale.it-IT', defaultMessage: 'Italian (Italy)' }),
-		numeric: 'always',
-	},
-	{
-		code: 'ja-JP',
-		name: '日本語',
-		translatedName: defineMessage({ id: 'locale.ja-JP', defaultMessage: 'Japanese' }),
-	},
-	{
-		code: 'ko-KR',
-		name: '한국어',
-		translatedName: defineMessage({ id: 'locale.ko-KR', defaultMessage: 'Korean' }),
-	},
-	{
-		code: 'ms-MY',
-		name: 'Bahasa Melayu',
-		translatedName: defineMessage({ id: 'locale.ms-MY', defaultMessage: 'Malay' }),
-	},
-	{
-		code: 'nl-NL',
-		name: 'Nederlands',
-		translatedName: defineMessage({ id: 'locale.nl-NL', defaultMessage: 'Dutch' }),
-	},
-	{
-		code: 'no-NO',
-		name: 'Norsk (Bokmål)',
-		translatedName: defineMessage({ id: 'locale.no-NO', defaultMessage: 'Norwegian Bokmål' }),
-	},
-	{
-		code: 'pl-PL',
-		name: 'Polski',
-		translatedName: defineMessage({ id: 'locale.pl-PL', defaultMessage: 'Polish' }),
-	},
-	{
-		code: 'pt-BR',
-		name: 'Português (Brasil)',
-		translatedName: defineMessage({ id: 'locale.pt-BR', defaultMessage: 'Portuguese (Brazil)' }),
-	},
-	{
-		code: 'pt-PT',
-		name: 'Português (Portugal)',
-		translatedName: defineMessage({ id: 'locale.pt-PT', defaultMessage: 'Portuguese (Portugal)' }),
-	},
-	{
-		code: 'ro-RO',
-		name: 'Română',
-		translatedName: defineMessage({ id: 'locale.ro-RO', defaultMessage: 'Romanian' }),
 	},
 	{
 		code: 'ru-RU',
@@ -175,44 +68,9 @@ export const LOCALES: LocaleDefinition[] = [
 		numeric: 'always',
 	},
 	{
-		code: 'sr-CS',
-		name: 'Srpski (latinica)',
-		translatedName: defineMessage({ id: 'locale.sr-CS', defaultMessage: 'Serbian (Latin)' }),
-	},
-	{
-		code: 'sv-SE',
-		name: 'Svenska',
-		translatedName: defineMessage({ id: 'locale.sv-SE', defaultMessage: 'Swedish' }),
-	},
-	{
-		code: 'th-TH',
-		name: 'ไทย',
-		translatedName: defineMessage({ id: 'locale.th-TH', defaultMessage: 'Thai' }),
-	},
-	{
-		code: 'tr-TR',
-		name: 'Türkçe',
-		translatedName: defineMessage({ id: 'locale.tr-TR', defaultMessage: 'Turkish' }),
-	},
-	{
 		code: 'uk-UA',
 		name: 'Українська',
 		translatedName: defineMessage({ id: 'locale.uk-UA', defaultMessage: 'Ukrainian' }),
-	},
-	{
-		code: 'vi-VN',
-		name: 'Tiếng Việt',
-		translatedName: defineMessage({ id: 'locale.vi-VN', defaultMessage: 'Vietnamese' }),
-	},
-	{
-		code: 'zh-CN',
-		name: '简体中文',
-		translatedName: defineMessage({ id: 'locale.zh-CN', defaultMessage: 'Chinese (Simplified)' }),
-	},
-	{
-		code: 'zh-TW',
-		name: '繁體中文',
-		translatedName: defineMessage({ id: 'locale.zh-TW', defaultMessage: 'Chinese (Traditional)' }),
 	},
 ]
 
@@ -231,7 +89,7 @@ export function transformCrowdinMessages(messages: CrowdinMessages): Record<stri
 	return result
 }
 
-const LOCALE_CODES = new Set(LOCALES.map((l) => l.code))
+const LOCALE_CODES = new Set([FALLBACK_LOCALE, ...LOCALES.map((l) => l.code)])
 
 /**
  * Builds locale messages from glob-imported modules.

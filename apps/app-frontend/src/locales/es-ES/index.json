@@ -131,21 +131,6 @@
   "app.action-bar.view-logs": {
     "message": "Ver registros"
   },
-  "app.ads-consent.accept": {
-    "message": "Aceptar todo"
-  },
-  "app.ads-consent.body": {
-    "message": "Los anuncios hacen que Modrinth sea posible y financian los pagos a los creadores. Nuestros socios pueden almacenar o acceder a cookies en la aplicación para personalizar los anuncios y medir el rendimiento."
-  },
-  "app.ads-consent.manage": {
-    "message": "Gestionar preferencias"
-  },
-  "app.ads-consent.reject": {
-    "message": "Rechazar todo"
-  },
-  "app.ads-consent.title": {
-    "message": "Tu privacidad y cómo los anuncios apoyan a Modrinth"
-  },
   "app.appearance-settings.compact-mode.description": {
     "message": "Muestra las instancias de la biblioteca en un diseño compacto de filas."
   },
@@ -703,9 +688,6 @@
   },
   "app.instance.share.remove-user-modal.effect-invite-again": {
     "message": "Puedes invitarlos de nuevo más tarde"
-  },
-  "app.instance.share.remove-user-modal.effect-last-user": {
-    "message": "Este es el último usuario, la opción de compartir se desactivará para esta instancia"
   },
   "app.instance.share.remove-user-modal.effects-label": {
     "message": "¿Qué ocurre?"
@@ -1303,12 +1285,6 @@
   },
   "app.navigation.next-image": {
     "message": "Siguiente imagen"
-  },
-  "app.news.title": {
-    "message": "Noticias"
-  },
-  "app.news.view-all": {
-    "message": "Ver todas las noticias"
   },
   "app.notification.warning": {
     "message": "Advertencia"
@@ -2641,9 +2617,6 @@
   },
   "app.settings.operating-system.macos": {
     "message": "macOS"
-  },
-  "app.settings.privacy.ads-consent.intro": {
-    "message": "Los anuncios hacen Modrinth posible y financian los pagos a los creadores. Nuestros socios pueden almacenar o acceder a cookies en la aplicación para personalizar los anuncios y medir el rendimiento. Puedes desactivar esta opción o modificar tus preferencias a continuación."
   },
   "app.settings.privacy.discord-rich-presence.description": {
     "message": "Mostrar Modrinth App como tu actividad actual en Discord.\nEsto no afecta tu Presencia Enriquecida añadida a instancias por mods. Requiere reiniciar la aplicación."
@@ -4453,5 +4426,128 @@
   },
   "settings.sidebar.label.display": {
     "message": "Pantalla"
+  },
+  "app.debug-export.canceling": {
+    "message": "Cancelando exportación…"
+  },
+  "app.debug-export.exporting": {
+    "message": "Exportando…"
+  },
+  "app.debug-export.finishing": {
+    "message": "Terminando…"
+  },
+  "app.debug-export.preparing": {
+    "message": "Preparando archivos…"
+  },
+  "app.modal.update-to-play.decline-button": {
+    "message": "Rechazar"
+  },
+  "app.nav.rooms": {
+    "message": "Salas"
+  },
+  "app.modal.shared-instance-update.description": {
+    "message": "El propietario de la sala ha modificado {name}. Recomendamos aceptar la actualización para que tus mods, paquetes de recursos y shaders coincidan con los de la sala. Si la rechazas, el juego no se iniciará."
+  },
+  "app.rooms.action.accept-changes": {
+    "message": "Aceptar cambios"
+  },
+  "app.rooms.action.manage": {
+    "message": "Administrar"
+  },
+  "app.rooms.action.open-instance": {
+    "message": "Abrir instancia"
+  },
+  "app.rooms.action.play": {
+    "message": "Jugar"
+  },
+  "app.rooms.action.send-changes": {
+    "message": "Sincronizar cambios"
+  },
+  "app.rooms.create": {
+    "message": "Crear sala"
+  },
+  "app.rooms.create.description": {
+    "message": "Elige la instancia que deseas compartir y luego invita a tus amigos."
+  },
+  "app.rooms.create.no-instances": {
+    "message": "Cada instancia disponible ya tiene una sala."
+  },
+  "app.rooms.create.unlink-required.description": {
+    "message": "{name} fue importado desde un archivo .mrpack. LeetMC debe desvincularlo del modpack original antes de crear una sala. Esto no eliminará ninguna modificación, configuración o mundo, pero esta instancia ya no recibirá actualizaciones de modpack."
+  },
+  "app.rooms.create.unlink-required.proceed": {
+    "message": "Desvincular y crear sala"
+  },
+  "app.rooms.create.unlink-required.title": {
+    "message": "¿Desvincular el modpack y crear una sala?"
+  },
+  "app.rooms.empty.description": {
+    "message": "Crea una sala desde una de tus instancias o acepta una invitación de un amigo."
+  },
+  "app.rooms.empty.title": {
+    "message": "Aún no hay salas"
+  },
+  "app.rooms.manage.header": {
+    "message": "Administrar «{name}»"
+  },
+  "app.rooms.manage.invite-header": {
+    "message": "Invitar a «{name}»"
+  },
+  "app.rooms.manage.unlink.button": {
+    "message": "Desvincular sala"
+  },
+  "app.rooms.manage.unlink.description": {
+    "message": "Esto cerrará la sala para todos y detendrá la sincronización futura. La instancia y todos sus archivos instalados permanecerán en este dispositivo."
+  },
+  "app.rooms.manage.unlink.title": {
+    "message": "¿Desvincular esta sala?"
+  },
+  "app.rooms.role.member": {
+    "message": "Miembro"
+  },
+  "app.rooms.role.owner": {
+    "message": "Propietario"
+  },
+  "app.rooms.status.applying": {
+    "message": "Aplicando actualización"
+  },
+  "app.rooms.manage.user-limit-reached": {
+    "message": "Esta sala ha alcanzado el límite de {limit} usuarios."
+  },
+  "app.rooms.status.changes-not-sent": {
+    "message": "No sincronizado"
+  },
+  "app.rooms.status.unknown": {
+    "message": "Estado no disponible"
+  },
+  "app.rooms.status.up-to-date": {
+    "message": "Sincronizado"
+  },
+  "app.rooms.status.update-available": {
+    "message": "Actualización disponible"
+  },
+  "app.rooms.title": {
+    "message": "Salas"
+  },
+  "app.settings.resource-management.debug-info.description": {
+    "message": "Exporte registros de aplicaciones y datos de diagnóstico a un archivo ZIP para compartir con el soporte de Modrinth."
+  },
+  "app.settings.resource-management.debug-info.export": {
+    "message": "Exportar información de depuración"
+  },
+  "app.settings.resource-management.debug-info.title": {
+    "message": "Información de depuración"
+  },
+  "app.skins.section.dungeons-hero": {
+    "message": "Héroe de mazmorras"
+  },
+  "app.skins.section.dungeons-ii-hero": {
+    "message": "Héroe de Mazmorras II"
+  },
+  "app.skins.section.wilderness-bound": {
+    "message": "Atado al desierto"
+  },
+  "app.welcome-screen.language": {
+    "message": "Idioma"
   }
 }

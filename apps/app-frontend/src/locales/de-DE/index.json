@@ -131,21 +131,6 @@
   "app.action-bar.view-logs": {
     "message": "Protokolle anzeigen"
   },
-  "app.ads-consent.accept": {
-    "message": "Alle akzeptieren"
-  },
-  "app.ads-consent.body": {
-    "message": "Werbung ermöglicht Modrinth und finanziert die Auszahlungen an die Ersteller. Unsere Partner speichern möglicherweise Cookies in der App oder greifen auf diese zu, um Werbung zu personalisieren und die Leistung zu messen."
-  },
-  "app.ads-consent.manage": {
-    "message": "Einstellungen verwalten"
-  },
-  "app.ads-consent.reject": {
-    "message": "Alle ablehnen"
-  },
-  "app.ads-consent.title": {
-    "message": "Deine Privatsphäre und wie Werbung Modrinth unterstützt"
-  },
   "app.appearance-settings.compact-mode.description": {
     "message": "Bibliotheksinstanzen in einem kompakten Zeilenlayout anzeigen."
   },
@@ -703,9 +688,6 @@
   },
   "app.instance.share.remove-user-modal.effect-invite-again": {
     "message": "Du kannst diese Person später erneut einladen"
-  },
-  "app.instance.share.remove-user-modal.effect-last-user": {
-    "message": "Dies ist der letzte Benutzer, das Teilen wird für diese Instanz deaktiviert"
   },
   "app.instance.share.remove-user-modal.effects-label": {
     "message": "Was passiert?"
@@ -1303,12 +1285,6 @@
   },
   "app.navigation.next-image": {
     "message": "Nächstes Bild"
-  },
-  "app.news.title": {
-    "message": "Neuigkeiten"
-  },
-  "app.news.view-all": {
-    "message": "Alle Neuigkeiten anzeigen"
   },
   "app.notification.warning": {
     "message": "Warnung"
@@ -2641,9 +2617,6 @@
   },
   "app.settings.operating-system.macos": {
     "message": "macOS"
-  },
-  "app.settings.privacy.ads-consent.intro": {
-    "message": "Werbung ermöglicht Modrinth und finanziert die Auszahlungen an die Ersteller. Unsere Partner speichern möglicherweise Cookies in der App oder greifen auf diese zu, um Werbung zu personalisieren und die Leistung zu messen. Du kannst dies unten deaktivieren oder deine Einstellungen verwalten."
   },
   "app.settings.privacy.discord-rich-presence.description": {
     "message": "Zeige Modrinth App als deine aktuelle Aktivität auf Discord. Dies betrifft nicht Rich Presence die von Mods zu Instanzen hinzugefügt wird. Benötigt einen Neustart der App."
@@ -4462,5 +4435,119 @@
   },
   "settings.sidebar.label.display": {
     "message": "Anzeige"
+  },
+  "app.debug-export.canceling": {
+    "message": "Export wird abgebrochen…"
+  },
+  "app.debug-export.exporting": {
+    "message": "Exportieren…"
+  },
+  "app.debug-export.finishing": {
+    "message": "Fertig..."
+  },
+  "app.debug-export.preparing": {
+    "message": "Dateien werden vorbereitet…"
+  },
+  "app.modal.update-to-play.decline-button": {
+    "message": "Ablehnen"
+  },
+  "app.nav.rooms": {
+    "message": "Räume"
+  },
+  "app.modal.shared-instance-update.description": {
+    "message": "Der Raumbesitzer hat {name} geändert. Wir empfehlen, das Update anzunehmen, damit deine Mods, Ressourcenpakete und Shader mit dem Raum übereinstimmen. Wenn du ablehnst, wird das Spiel nicht gestartet."
+  },
+  "app.rooms.action.accept-changes": {
+    "message": "Änderungen annehmen"
+  },
+  "app.rooms.action.manage": {
+    "message": "Verwalten"
+  },
+  "app.rooms.action.open-instance": {
+    "message": "Instanz öffnen"
+  },
+  "app.rooms.action.play": {
+    "message": "Spielen"
+  },
+  "app.rooms.action.send-changes": {
+    "message": "Änderungen synchronisieren"
+  },
+  "app.rooms.create": {
+    "message": "Raum erstellen"
+  },
+  "app.rooms.create.description": {
+    "message": "Wählen Sie die Instanz aus, die Sie teilen möchten, und laden Sie dann Ihre Freunde ein."
+  },
+  "app.rooms.create.no-instances": {
+    "message": "Jede verfügbare Instanz verfügt bereits über einen Raum."
+  },
+  "app.rooms.create.unlink-required.description": {
+    "message": "{name} wurde aus einer .mrpack-Datei importiert. LeetMC muss die Verknüpfung mit dem Original-Modpack aufheben, bevor ein Raum erstellt wird. Dadurch werden keine Mods, Einstellungen oder Welten gelöscht, aber diese Instanz erhält keine Modpack-Updates mehr."
+  },
+  "app.rooms.create.unlink-required.proceed": {
+    "message": "Verknüpfung aufheben und Raum erstellen"
+  },
+  "app.rooms.create.unlink-required.title": {
+    "message": "Modpack-Verknüpfung aufheben und Raum erstellen?"
+  },
+  "app.rooms.empty.description": {
+    "message": "Erstellen Sie einen Raum aus einer Ihrer Instanzen oder nehmen Sie eine Einladung von einem Freund an."
+  },
+  "app.rooms.empty.title": {
+    "message": "Noch keine Räume"
+  },
+  "app.rooms.manage.header": {
+    "message": "„{name}“ verwalten"
+  },
+  "app.rooms.manage.invite-header": {
+    "message": "Zu „{name}“ einladen"
+  },
+  "app.rooms.manage.unlink.button": {
+    "message": "Raumverknüpfung aufheben"
+  },
+  "app.rooms.manage.unlink.description": {
+    "message": "Dadurch wird der Raum für alle geschlossen und die zukünftige Synchronisierung gestoppt. Die Instanz und alle ihre installierten Dateien bleiben auf diesem Gerät."
+  },
+  "app.rooms.manage.unlink.title": {
+    "message": "Verknüpfung dieses Raums aufheben?"
+  },
+  "app.rooms.role.member": {
+    "message": "Mitglied"
+  },
+  "app.rooms.role.owner": {
+    "message": "Besitzer"
+  },
+  "app.rooms.status.applying": {
+    "message": "Update anwenden"
+  },
+  "app.rooms.status.changes-not-sent": {
+    "message": "Nicht synchronisiert"
+  },
+  "app.rooms.manage.user-limit-reached": {
+    "message": "Dieser Raum hat das Limit von {limit} Benutzern erreicht."
+  },
+  "app.rooms.status.unknown": {
+    "message": "Status nicht verfügbar"
+  },
+  "app.rooms.status.up-to-date": {
+    "message": "Synchronisiert"
+  },
+  "app.rooms.status.update-available": {
+    "message": "Update verfügbar"
+  },
+  "app.rooms.title": {
+    "message": "Räume"
+  },
+  "app.settings.resource-management.debug-info.description": {
+    "message": "Exportieren Sie App-Protokolle und Diagnosedaten in eine ZIP-Datei, um sie mit dem Modrinth-Support zu teilen."
+  },
+  "app.settings.resource-management.debug-info.export": {
+    "message": "Debug-Informationen exportieren"
+  },
+  "app.settings.resource-management.debug-info.title": {
+    "message": "Debug-Informationen"
+  },
+  "app.welcome-screen.language": {
+    "message": "Sprache"
   }
 }

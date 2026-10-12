@@ -2777,101 +2777,23 @@
   "layout.account-switcher.switching": {
     "defaultMessage": "Changement de compte en cours..."
   },
-  "locale.cs-CZ": {
-    "defaultMessage": "Tchèque"
-  },
-  "locale.da-DK": {
-    "defaultMessage": "Danois"
-  },
-  "locale.de-CH": {
-    "defaultMessage": "Allemand (Suisse)"
-  },
   "locale.de-DE": {
     "defaultMessage": "Allemand (Allemagne)"
   },
   "locale.en-US": {
     "defaultMessage": "Anglais (États-Unis)"
   },
-  "locale.es-419": {
-    "defaultMessage": "Espagnol (Amérique latine)"
-  },
   "locale.es-ES": {
     "defaultMessage": "Espagnol (Espagne)"
-  },
-  "locale.fi-FI": {
-    "defaultMessage": "Finnois"
-  },
-  "locale.fil-PH": {
-    "defaultMessage": "Philippin"
   },
   "locale.fr-FR": {
     "defaultMessage": "Français"
   },
-  "locale.he-IL": {
-    "defaultMessage": "Hébreu"
-  },
-  "locale.hu-HU": {
-    "defaultMessage": "Hongrois"
-  },
-  "locale.id-ID": {
-    "defaultMessage": "Indonésien"
-  },
-  "locale.it-IT": {
-    "defaultMessage": "Italien (Italie)"
-  },
-  "locale.ja-JP": {
-    "defaultMessage": "Japonais"
-  },
-  "locale.ko-KR": {
-    "defaultMessage": "Coréen"
-  },
-  "locale.ms-MY": {
-    "defaultMessage": "Malais"
-  },
-  "locale.nl-NL": {
-    "defaultMessage": "Néerlandais"
-  },
-  "locale.no-NO": {
-    "defaultMessage": "Norvégien (Bokmål)"
-  },
-  "locale.pl-PL": {
-    "defaultMessage": "Polonais"
-  },
-  "locale.pt-BR": {
-    "defaultMessage": "Portugais (Brésil)"
-  },
-  "locale.pt-PT": {
-    "defaultMessage": "Portugais (Portugal)"
-  },
-  "locale.ro-RO": {
-    "defaultMessage": "Roumain"
-  },
   "locale.ru-RU": {
     "defaultMessage": "Russe"
   },
-  "locale.sr-CS": {
-    "defaultMessage": "Serbe (Latin)"
-  },
-  "locale.sv-SE": {
-    "defaultMessage": "Suédois"
-  },
-  "locale.th-TH": {
-    "defaultMessage": "Thaïlandais"
-  },
-  "locale.tr-TR": {
-    "defaultMessage": "Turc"
-  },
   "locale.uk-UA": {
     "defaultMessage": "Ukrainien"
-  },
-  "locale.vi-VN": {
-    "defaultMessage": "Vietnamien"
-  },
-  "locale.zh-CN": {
-    "defaultMessage": "Chinois (simplifié)"
-  },
-  "locale.zh-TW": {
-    "defaultMessage": "Chinois (traditionnel)"
   },
   "markdown-editor.default-image-alt-text": {
     "defaultMessage": "Remplacez ceci par une description"
@@ -7000,5 +6922,278 @@
   },
   "version.supplementary-resources.type": {
     "defaultMessage": "Type"
+  },
+  "content.page-layout.failed-to-load-changelog": {
+    "defaultMessage": "Échec du chargement du journal des modifications"
+  },
+  "content.page-layout.failed-to-load-updates": {
+    "defaultMessage": "Failed to load available updates"
+  },
+  "external-files.permissions-card.editor.select-license-label": {
+    "defaultMessage": "Rechercher des licences..."
+  },
+  "external-files.permissions-card.license.all-rights": {
+    "defaultMessage": "All Rights Reserved/No License"
+  },
+  "files.layout.selected-count": {
+    "defaultMessage": "{count} sélectionné"
+  },
+  "hosting.save-banner.resolve-errors": {
+    "defaultMessage": "Veuillez résoudre les erreurs dans vos modifications avant d'enregistrer."
+  },
+  "files.conflict-modal.overwrite-warning": {
+    "defaultMessage": "Ce qui suit {count} les fichiers existent déjà sur votre serveur et seront écrasés si vous procédez à l'extraction."
+  },
+  "hosting.settings.properties.motd-profanity": {
+    "defaultMessage": "En raison des directives d'utilisation de Minecraft, le MOTD de votre serveur ne peut pas contenir de grossièretés. Détecté : «{value}”."
+  },
+  "hosting.settings.properties.motd-profanity-save-error": {
+    "defaultMessage": "En raison des directives d'utilisation de Minecraft, le MOTD de votre serveur ne peut pas contenir de grossièretés. Détecté : «{value}”"
+  },
+  "profile.button.force-password-reset": {
+    "defaultMessage": "Forcer la réinitialisation du mot de passe"
+  },
+  "profile.button.lock": {
+    "defaultMessage": "Verrouiller le compte"
+  },
+  "profile.button.reset-2fa": {
+    "defaultMessage": "Reset two-factor authentication"
+  },
+  "profile.button.revoke-sessions": {
+    "defaultMessage": "Révoquer toutes les sessions"
+  },
+  "profile.button.unlock": {
+    "defaultMessage": "Débloquer le compte"
+  },
+  "profile.force-password-reset.admonition-body": {
+    "defaultMessage": "{username}Le mot de passe de sera immédiatement supprimé, ils seront déconnectés sur chaque appareil et un lien pour en définir un nouveau sera envoyé à l'e-mail ci-dessous. Si vous modifiez l'email, il remplace celui du compte. Le lien expire après 24 heures et peut être utilisé même lorsque le compte est verrouillé."
+  },
+  "profile.force-password-reset.admonition-title": {
+    "defaultMessage": "Le mot de passe actuel cessera de fonctionner"
+  },
+  "profile.force-password-reset.email-placeholder": {
+    "defaultMessage": "Laisser vide pour utiliser l'email du compte"
+  },
+  "profile.force-password-reset.error-description": {
+    "defaultMessage": "Une erreur s'est produite lors de la réinitialisation du mot de passe. Veuillez réessayer."
+  },
+  "profile.force-password-reset.error-title": {
+    "defaultMessage": "Échec de la réinitialisation du mot de passe"
+  },
+  "profile.force-password-reset.success-title": {
+    "defaultMessage": "Réinitialisation du mot de passe"
+  },
+  "profile.force-password-reset.title": {
+    "defaultMessage": "Forcer la réinitialisation du mot de passe pour {username}"
+  },
+  "profile.force-password-reset.success-description": {
+    "defaultMessage": "Un lien de réinitialisation du mot de passe a été envoyé à {username}."
+  },
+  "profile.label.locked": {
+    "defaultMessage": "Verrouillé"
+  },
+  "profile.reset-2fa.admonition-body": {
+    "defaultMessage": "{username}L'authentificateur et les codes de sauvegarde de seront supprimés et ils en seront informés. Ne le faites qu’après avoir vérifié leur identité."
+  },
+  "profile.reset-2fa.admonition-title": {
+    "defaultMessage": "Êtes-vous sûr de vouloir réinitialiser l'authentification à deux facteurs ?"
+  },
+  "profile.reset-2fa.button": {
+    "defaultMessage": "Réinitialiser 2FA"
+  },
+  "profile.reset-2fa.error-description": {
+    "defaultMessage": "Une erreur s'est produite lors de la réinitialisation de l'authentification à deux facteurs. Veuillez réessayer."
+  },
+  "profile.reset-2fa.error-title": {
+    "defaultMessage": "Échec de la réinitialisation de l'authentification à deux facteurs"
+  },
+  "profile.reset-2fa.success-description": {
+    "defaultMessage": "{username}L'authentification à deux facteurs de a été supprimée."
+  },
+  "profile.reset-2fa.success-title": {
+    "defaultMessage": "Réinitialisation de l'authentification à deux facteurs"
+  },
+  "profile.reset-2fa.title": {
+    "defaultMessage": "Réinitialiser l'authentification à deux facteurs pour {username}"
+  },
+  "profile.revoke-sessions.admonition-body": {
+    "defaultMessage": "{username} sera déconnecté sur chaque appareil et devra se reconnecter. Les jetons d'accès personnels ne sont pas affectés."
+  },
+  "profile.revoke-sessions.admonition-title": {
+    "defaultMessage": "Êtes-vous sûr de vouloir révoquer toutes les sessions ?"
+  },
+  "profile.revoke-sessions.button": {
+    "defaultMessage": "Révoquer des sessions"
+  },
+  "profile.revoke-sessions.error-description": {
+    "defaultMessage": "Une erreur s'est produite lors de la révocation des sessions. Veuillez réessayer."
+  },
+  "profile.revoke-sessions.error-title": {
+    "defaultMessage": "Échec de la révocation des sessions"
+  },
+  "profile.revoke-sessions.success-description": {
+    "defaultMessage": "{username} a été déconnecté partout."
+  },
+  "profile.revoke-sessions.success-title": {
+    "defaultMessage": "Séances révoquées"
+  },
+  "profile.revoke-sessions.title": {
+    "defaultMessage": "Révoquer les sessions pour {username}"
+  },
+  "profile.unlock-user.error-description": {
+    "defaultMessage": "Une erreur s'est produite lors du déverrouillage de ce compte. Veuillez réessayer."
+  },
+  "profile.unlock-user.error-title": {
+    "defaultMessage": "Échec du déverrouillage du compte"
+  },
+  "profile.unlock-user.success-description": {
+    "defaultMessage": "{username}Le compte de a été débloqué."
+  },
+  "profile.unlock-user.success-title": {
+    "defaultMessage": "Compte débloqué"
+  },
+  "servers.access-page.activity-log-filter.action.sftp-credentials-rolled": {
+    "defaultMessage": "Identifiants SFTP pivotés"
+  },
+  "servers.audit-log.event.sftp-credentials-rolled": {
+    "defaultMessage": "Identifiants SFTP pivotés"
+  },
+  "servers.files.server-locked": {
+    "defaultMessage": "Ce serveur est verrouillé et ses fichiers sont en lecture seule."
+  },
+  "servers.lock.modal.error-text": {
+    "defaultMessage": "Une erreur s'est produite lors du verrouillage de ce serveur. Veuillez réessayer."
+  },
+  "servers.lock.modal.error-title": {
+    "defaultMessage": "Échec du verrouillage du serveur"
+  },
+  "servers.lock.modal.header": {
+    "defaultMessage": "Verrouiller {name}"
+  },
+  "servers.lock.modal.lock-button": {
+    "defaultMessage": "Serveur de verrouillage"
+  },
+  "servers.lock.modal.reason-label": {
+    "defaultMessage": "Raison"
+  },
+  "servers.lock.modal.reason-placeholder": {
+    "defaultMessage": "Visible par les autres administrateurs"
+  },
+  "servers.lock.modal.success-text": {
+    "defaultMessage": "{name} a été verrouillé."
+  },
+  "servers.lock.modal.success-title": {
+    "defaultMessage": "Serveur verrouillé"
+  },
+  "servers.lock.modal.warning-body": {
+    "defaultMessage": "{name} sera en lecture seule pour son propriétaire et ses membres jusqu'à ce qu'il soit déverrouillé par un administrateur."
+  },
+  "servers.lock.modal.warning-header": {
+    "defaultMessage": "Ce serveur deviendra en lecture seule"
+  },
+  "servers.manage.lock-server": {
+    "defaultMessage": "Serveur de verrouillage"
+  },
+  "servers.manage.locked.badge": {
+    "defaultMessage": "Verrouillé"
+  },
+  "servers.manage.locked.badge-tooltip": {
+    "defaultMessage": "Verrouillé depuis {date}"
+  },
+  "servers.manage.locked.header": {
+    "defaultMessage": "Serveur verrouillé par le support"
+  },
+  "servers.manage.unlock-server": {
+    "defaultMessage": "Déverrouiller le serveur"
+  },
+  "servers.manage.unlock.error-text": {
+    "defaultMessage": "Une erreur s'est produite lors du déverrouillage de ce serveur. Veuillez réessayer."
+  },
+  "servers.manage.locked.body": {
+    "defaultMessage": "Le support a temporairement verrouillé ce serveur, vous ne pouvez donc apporter aucune modification. <support-link>Contacter l'assistance</support-link> si vous pensez que c'est une erreur."
+  },
+  "servers.manage.unlock.error-title": {
+    "defaultMessage": "Échec du déverrouillage du serveur"
+  },
+  "servers.manage.unlock.success-text": {
+    "defaultMessage": "{name} a été débloqué."
+  },
+  "servers.manage.unlock.success-title": {
+    "defaultMessage": "Serveur débloqué"
+  },
+  "servers.settings.support.action-log-title": {
+    "defaultMessage": "Journal des actions"
+  },
+  "servers.settings.support.clear-action-log-button": {
+    "defaultMessage": "Effacer le journal des actions"
+  },
+  "servers.settings.support.clear-action-log-confirmation": {
+    "defaultMessage": "Cela supprime définitivement toutes les entrées du journal d'actions pour ce serveur. Continuer?"
+  },
+  "servers.settings.support.clear-action-log-description": {
+    "defaultMessage": "Supprimez toutes les entrées du journal des actions pour ce serveur."
+  },
+  "servers.settings.support.clear-action-log-error": {
+    "defaultMessage": "Échec de l'effacement du journal des actions"
+  },
+  "servers.settings.support.clear-action-log-success": {
+    "defaultMessage": "Journal des actions effacé"
+  },
+  "servers.settings.support.clear-action-log-title": {
+    "defaultMessage": "Effacer le journal des actions ?"
+  },
+  "settings.profile.public-information.description": {
+    "defaultMessage": "Les informations de votre profil sont publiques <profile-link>visible sur Modrinth</profile-link> et à travers le <docs-link>API Modrinth</docs-link>."
+  },
+  "update-all-modal.changelog-for": {
+    "defaultMessage": "Journal des modifications pour {project}"
+  },
+  "update-all-modal.changelog-loaded": {
+    "defaultMessage": "Journal des modifications chargé."
+  },
+  "update-all-modal.close-changelog": {
+    "defaultMessage": "Fermer le journal des modifications"
+  },
+  "update-all-modal.current-version": {
+    "defaultMessage": "Version actuelle"
+  },
+  "update-all-modal.empty": {
+    "defaultMessage": "Aucune mise à jour disponible."
+  },
+  "update-all-modal.header": {
+    "defaultMessage": "Mettre à jour les projets"
+  },
+  "update-all-modal.loading": {
+    "defaultMessage": "Chargement des mises à jour…"
+  },
+  "update-all-modal.loading-changelog": {
+    "defaultMessage": "Chargement du journal des modifications…"
+  },
+  "update-all-modal.no-compatible-updates": {
+    "defaultMessage": "No compatible updates available."
+  },
+  "update-all-modal.no-version": {
+    "defaultMessage": "Aucune mise à jour compatible"
+  },
+  "update-all-modal.select-all": {
+    "defaultMessage": "Sélectionnez tous les projets"
+  },
+  "update-all-modal.select-version": {
+    "defaultMessage": "Nouvelle version pour {project}"
+  },
+  "update-all-modal.versions": {
+    "defaultMessage": "Current version / New version"
+  },
+  "update-all-modal.view-changelog": {
+    "defaultMessage": "Afficher le journal des modifications pour {project}"
+  },
+  "update-all-modal.warning": {
+    "defaultMessage": "Nous ne pouvons pas garantir que les mises à jour soient sans danger pour vos mondes. Review the changelogs and consider a backup."
+  },
+  "update-all-modal.select-project": {
+    "defaultMessage": "Sélectionnez {project} pour mise à jour"
+  },
+  "update-all-modal.warning-server": {
+    "defaultMessage": "Nous ne pouvons pas garantir que les mises à jour seront sécurisées pour votre serveur. Review the changelogs and consider a backup."
   }
 }

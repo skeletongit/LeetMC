@@ -591,10 +591,7 @@ function generateLanguageCoverage(
 				sourceEntries.length > 0
 					? Math.round((translatedMessages / sourceEntries.length) * 100)
 					: 100
-			const percentage =
-				locale === 'en-US'
-					? 100
-					: Math.round((interfaceCoverage * translationCoverage) / 100)
+			const percentage = translationCoverage
 
 			coverage[product][locale] = {
 				percentage,

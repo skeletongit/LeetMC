@@ -2795,101 +2795,23 @@
   "layout.account-switcher.switching": {
     "defaultMessage": "Konten werden gewechselt..."
   },
-  "locale.cs-CZ": {
-    "defaultMessage": "Tschechisch"
-  },
-  "locale.da-DK": {
-    "defaultMessage": "Dänisch"
-  },
-  "locale.de-CH": {
-    "defaultMessage": "Deutsch (Schweiz)"
-  },
   "locale.de-DE": {
     "defaultMessage": "Deutsch (Deutschland)"
   },
   "locale.en-US": {
     "defaultMessage": "Englisch (Vereinigte Staaten)"
   },
-  "locale.es-419": {
-    "defaultMessage": "Spanisch (Lateinamerika)"
-  },
   "locale.es-ES": {
     "defaultMessage": "Spanisch (Spanien)"
-  },
-  "locale.fi-FI": {
-    "defaultMessage": "Finnisch"
-  },
-  "locale.fil-PH": {
-    "defaultMessage": "Philippinisch"
   },
   "locale.fr-FR": {
     "defaultMessage": "Französisch"
   },
-  "locale.he-IL": {
-    "defaultMessage": "Hebräisch"
-  },
-  "locale.hu-HU": {
-    "defaultMessage": "Ungarisch"
-  },
-  "locale.id-ID": {
-    "defaultMessage": "Indonesisch"
-  },
-  "locale.it-IT": {
-    "defaultMessage": "Italienisch (Italien)"
-  },
-  "locale.ja-JP": {
-    "defaultMessage": "Japanisch"
-  },
-  "locale.ko-KR": {
-    "defaultMessage": "Koreanisch"
-  },
-  "locale.ms-MY": {
-    "defaultMessage": "Malaiisch"
-  },
-  "locale.nl-NL": {
-    "defaultMessage": "Niederländisch"
-  },
-  "locale.no-NO": {
-    "defaultMessage": "Norwegisch Bokmål"
-  },
-  "locale.pl-PL": {
-    "defaultMessage": "Polnisch"
-  },
-  "locale.pt-BR": {
-    "defaultMessage": "Portugiesisch (Brasilien)"
-  },
-  "locale.pt-PT": {
-    "defaultMessage": "Portugiesisch (Portugal)"
-  },
-  "locale.ro-RO": {
-    "defaultMessage": "Rumänisch"
-  },
   "locale.ru-RU": {
     "defaultMessage": "Russisch"
   },
-  "locale.sr-CS": {
-    "defaultMessage": "Serbisch (Latein)"
-  },
-  "locale.sv-SE": {
-    "defaultMessage": "Schwedisch"
-  },
-  "locale.th-TH": {
-    "defaultMessage": "Thailändisch"
-  },
-  "locale.tr-TR": {
-    "defaultMessage": "Türkisch"
-  },
   "locale.uk-UA": {
     "defaultMessage": "Ukrainisch"
-  },
-  "locale.vi-VN": {
-    "defaultMessage": "Vietnamesisch"
-  },
-  "locale.zh-CN": {
-    "defaultMessage": "Chinesisch (Vereinfacht)"
-  },
-  "locale.zh-TW": {
-    "defaultMessage": "Chinesisch (Traditionell)"
   },
   "markdown-editor.default-image-alt-text": {
     "defaultMessage": "Ersetze dies durch eine Beschreibung"
@@ -7174,5 +7096,104 @@
   },
   "version.supplementary-resources.type": {
     "defaultMessage": "Typ"
+  },
+  "hosting.save-banner.resolve-errors": {
+    "defaultMessage": "Bitte beheben Sie die Fehler in Ihren Änderungen, bevor Sie sie speichern."
+  },
+  "hosting.settings.properties.motd-profanity": {
+    "defaultMessage": "Aufgrund der Minecraft-Nutzungsrichtlinien darf die MOTD Ihres Servers keine Obszönitäten enthalten. Erkannt: „{value}”."
+  },
+  "hosting.settings.properties.motd-profanity-save-error": {
+    "defaultMessage": "Aufgrund der Minecraft-Nutzungsrichtlinien darf die MOTD Ihres Servers keine Obszönitäten enthalten. Erkannt: „{value}”"
+  },
+  "servers.access-page.activity-log-filter.action.sftp-credentials-rolled": {
+    "defaultMessage": "Rotierte SFTP-Anmeldeinformationen"
+  },
+  "servers.audit-log.event.sftp-credentials-rolled": {
+    "defaultMessage": "Rotierte SFTP-Anmeldeinformationen"
+  },
+  "servers.files.server-locked": {
+    "defaultMessage": "This server is locked and its files are read-only."
+  },
+  "servers.lock.modal.error-text": {
+    "defaultMessage": "Beim Sperren dieses Servers ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "servers.lock.modal.error-title": {
+    "defaultMessage": "Server konnte nicht gesperrt werden"
+  },
+  "servers.lock.modal.header": {
+    "defaultMessage": "Sperren {name}"
+  },
+  "servers.lock.modal.lock-button": {
+    "defaultMessage": "Server sperren"
+  },
+  "servers.lock.modal.reason-label": {
+    "defaultMessage": "Grund"
+  },
+  "servers.lock.modal.reason-placeholder": {
+    "defaultMessage": "Für andere Administratoren sichtbar"
+  },
+  "servers.lock.modal.success-text": {
+    "defaultMessage": "{name} wurde gesperrt."
+  },
+  "servers.lock.modal.success-title": {
+    "defaultMessage": "Server gesperrt"
+  },
+  "servers.lock.modal.warning-body": {
+    "defaultMessage": "{name} will be read-only for its owner and members until it is unlocked by an admin."
+  },
+  "servers.lock.modal.warning-header": {
+    "defaultMessage": "Dieser Server wird schreibgeschützt"
+  },
+  "servers.manage.lock-server": {
+    "defaultMessage": "Server sperren"
+  },
+  "servers.manage.locked.badge": {
+    "defaultMessage": "Gesperrt"
+  },
+  "servers.manage.locked.badge-tooltip": {
+    "defaultMessage": "Seitdem gesperrt {date}"
+  },
+  "servers.manage.locked.header": {
+    "defaultMessage": "Server vom Support gesperrt"
+  },
+  "servers.manage.unlock-server": {
+    "defaultMessage": "Server entsperren"
+  },
+  "servers.manage.unlock.error-text": {
+    "defaultMessage": "Beim Entsperren dieses Servers ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+  },
+  "servers.manage.unlock.error-title": {
+    "defaultMessage": "Server konnte nicht entsperrt werden"
+  },
+  "servers.manage.unlock.success-text": {
+    "defaultMessage": "{name} wurde entsperrt."
+  },
+  "servers.manage.locked.body": {
+    "defaultMessage": "Support has temporarily locked this server, so you cannot make any changes. <support-link>Kontaktieren Sie den Support</support-link> wenn Sie glauben, dass dies ein Fehler ist."
+  },
+  "servers.manage.unlock.success-title": {
+    "defaultMessage": "Server entsperrt"
+  },
+  "servers.settings.support.action-log-title": {
+    "defaultMessage": "Aktionsprotokoll"
+  },
+  "servers.settings.support.clear-action-log-button": {
+    "defaultMessage": "Aktionsprotokoll löschen"
+  },
+  "servers.settings.support.clear-action-log-confirmation": {
+    "defaultMessage": "This permanently deletes all action log entries for this server. Weitermachen?"
+  },
+  "servers.settings.support.clear-action-log-description": {
+    "defaultMessage": "Löschen Sie alle Aktionsprotokolleinträge für diesen Server."
+  },
+  "servers.settings.support.clear-action-log-error": {
+    "defaultMessage": "Aktionsprotokoll konnte nicht gelöscht werden"
+  },
+  "servers.settings.support.clear-action-log-success": {
+    "defaultMessage": "Aktionsprotokoll gelöscht"
+  },
+  "servers.settings.support.clear-action-log-title": {
+    "defaultMessage": "Aktionsprotokoll löschen?"
   }
 }
