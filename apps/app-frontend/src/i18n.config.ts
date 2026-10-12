@@ -20,6 +20,22 @@ const uiLocaleUrls = import.meta.glob<string>('../../../packages/ui/src/locales/
 	import: 'default',
 })
 
+function applyLeetMCBranding(
+	messages: Record<string, Record<string, string>>,
+): Record<string, Record<string, string>> {
+	return Object.fromEntries(
+		Object.entries(messages).map(([locale, localeMessages]) => [
+			locale,
+			Object.fromEntries(
+				Object.entries(localeMessages).map(([key, message]) => [
+					key,
+					message.replaceAll('Modrinth', 'LeetMC'),
+				]),
+			),
+		]),
+	)
+}
+
 const i18n = createI18n({
 	legacy: false,
 	locale: 'en-US',
@@ -27,10 +43,12 @@ const i18n = createI18n({
 	messageCompiler: createMessageCompiler(),
 	missingWarn: false,
 	fallbackWarn: false,
-	messages: buildLocaleMessages({
-		'./app/en-US/index.json': { default: englishApp },
-		'./ui/en-US/index.json': { default: englishUi },
-	}),
+	messages: applyLeetMCBranding(
+		buildLocaleMessages({
+			'./app/en-US/index.json': { default: englishApp },
+			'./ui/en-US/index.json': { default: englishUi },
+		}),
+	),
 })
 
 const pendingLocales = new Map<string, Promise<Record<string, string>>>()
@@ -54,12 +72,13 @@ export async function setLocale(requestedLocale: string): Promise<void> {
 				fetchMessages(localeUrls[`./locales/${locale}/index.json`]),
 				fetchMessages(uiLocaleUrls[`../../../packages/ui/src/locales/${locale}/index.json`]),
 			])
-				.then(
-					([app, ui]) =>
+				.then(([app, ui]) =>
+					applyLeetMCBranding(
 						buildLocaleMessages({
 							[`./app/${locale}/index.json`]: { default: app },
 							[`./ui/${locale}/index.json`]: { default: ui },
-						})[locale],
+						}),
+					)[locale],
 				)
 				.finally(() => pendingLocales.delete(locale))
 			pendingLocales.set(locale, pending)

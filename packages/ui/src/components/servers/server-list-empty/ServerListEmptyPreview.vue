@@ -111,7 +111,7 @@
 						</p>
 						<p class="m-0 flex items-center gap-1">
 							<Avatar :src="modrinthSmpIcon" size="1.25rem" no-shadow />
-							<span class="font-medium text-contrast">Modrinth SMP</span>
+							<span class="font-medium text-contrast">LeetMC SMP</span>
 							<span>{{ formatMessage(messages.serverSuffix) }}</span>
 						</p>
 					</div>

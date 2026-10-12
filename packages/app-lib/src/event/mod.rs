@@ -90,8 +90,6 @@ impl EventState {
         Ok(value.loading_bars.clone())
     }
 
-    /// The ads child webview makes the main window a multi-webview window,
-    /// so Tauri's single-webview window lookup no longer returns it.
     #[cfg(feature = "tauri")]
     pub async fn get_main_window() -> crate::Result<Option<tauri::Window>> {
         use tauri::Manager;
@@ -130,7 +128,6 @@ pub enum AppEvent {
         #[cfg_attr(feature = "export-ts", ts(type = "unknown"))] String,
     ),
     Log(LogPayload),
-    AdsConsentRequired(bool),
 }
 
 #[cfg(feature = "export-ts")]

@@ -534,7 +534,7 @@ function modpackEntityFromMetadata(
 
 		return {
 			id: projectId || versionId || 'modrinth',
-			label: label || 'Modrinth modpack',
+			label: label || 'LeetMC modpack',
 			secondaryLabel: versionLabel,
 			icon: PackageIcon,
 			iconUrl: project?.icon_url || undefined,

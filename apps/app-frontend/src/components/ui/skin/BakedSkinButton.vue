@@ -21,7 +21,7 @@ useIntersectionObserver(
 	([entry]) => {
 		visible.value = entry?.isIntersecting ?? false
 	},
-	{ rootMargin: '200px' },
+	{ rootMargin: '0px' },
 )
 
 watch(
