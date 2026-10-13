@@ -117,11 +117,35 @@ function getPreviewClass(option: T): string {
 		}
 
 		&.dark-mode {
-			@extend .dark-mode;
+			--surface-1: #000000;
+			--surface-1-5: #050506;
+			--surface-2: #09090a;
+			--surface-2-5: #0c0d11;
+			--surface-3: #101013;
+			--surface-4: #1b1b20;
+			--surface-5: #25262b;
+			--color-bg: var(--surface-1);
+			--color-raised-bg: var(--surface-3);
+			--color-super-raised-bg: var(--surface-4);
+			--color-button-bg: var(--surface-4);
+			--color-base: #b0bac5;
+			--color-secondary: #96a2b0;
 		}
 
 		&.oled-mode {
-			@extend .oled-mode;
+			--surface-1: #0b1211;
+			--surface-1-5: #0e1715;
+			--surface-2: #101a18;
+			--surface-2-5: #13201d;
+			--surface-3: #16231f;
+			--surface-4: #1c302b;
+			--surface-5: #29473f;
+			--color-bg: var(--surface-1);
+			--color-raised-bg: var(--surface-3);
+			--color-super-raised-bg: var(--surface-4);
+			--color-button-bg: var(--surface-4);
+			--color-base: #b8c7c3;
+			--color-secondary: #91a8a3;
 		}
 
 		&.retro-mode {
