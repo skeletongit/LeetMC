@@ -5,7 +5,6 @@ import {
 	type ButtonMenuOption,
 	defineMessages,
 	injectI18n,
-	IntlFormatted,
 	LOCALES,
 	TeleportOverflowMenu,
 	useVIntl,
@@ -27,15 +26,11 @@ const messages = defineMessages({
 	},
 	welcomeDescription: {
 		id: 'app.welcome-screen.description',
-		defaultMessage: 'Ready to start playing?',
+		defaultMessage: 'Created by players, for players',
 	},
 	createInstance: {
 		id: 'app.welcome-screen.create-instance',
 		defaultMessage: 'Create an instance',
-	},
-	quickCreateHint: {
-		id: 'app.welcome-screen.quick-create-hint',
-		defaultMessage: 'Press <shortcut>N</shortcut> to quick create an instance',
 	},
 	importPrompt: {
 		id: 'app.welcome-screen.import-prompt',
@@ -118,10 +113,6 @@ onUnmounted(() => {
 	<div class="flex flex-col min-h-full px-6 pb-6 pt-16">
 		<div class="relative flex grow items-center justify-center">
 			<div class="relative isolate flex flex-col items-center gap-6">
-				<div
-					class="dot-pattern pointer-events-none absolute left-1/2 -top-52 -z-10 h-[29.875rem] w-[min(25.9375rem,80vw)] -translate-x-1/2 rounded-2xl [@media(max-height:700px)]:h-[23rem]"
-					aria-hidden="true"
-				/>
 				<div class="size-[6.25rem]">
 					<ModrinthIcon aria-hidden="true" class="pointer-events-none size-full" />
 				</div>
@@ -145,17 +136,15 @@ onUnmounted(() => {
 						<PlusIcon />
 						{{ formatMessage(messages.createInstance) }}
 					</Button>
-					<span class="flex items-center gap-1 text-sm leading-5 text-secondary">
-						<IntlFormatted :message-id="messages.quickCreateHint">
-							<template #shortcut="{ children }">
-								<kbd
-									class="inline-flex h-5 min-w-5 items-center justify-center rounded-md border border-solid border-surface-5 bg-button-bg px-1 text-xs font-normal leading-4 text-primary"
-								>
-									<component :is="() => children" />
-								</kbd>
-							</template>
-						</IntlFormatted>
-					</span>
+					<TeleportOverflowMenu
+						:label="formatMessage(messages.language)"
+						:options="languageOptions"
+						:icon-only="false"
+						placement="bottom-center"
+					>
+						<LanguagesIcon />
+						{{ currentLanguageName }}
+					</TeleportOverflowMenu>
 				</div>
 			</div>
 		</div>
@@ -167,31 +156,6 @@ onUnmounted(() => {
 				<ImportIcon />
 				{{ formatMessage(messages.importFromLauncher) }}
 			</Button>
-			<TeleportOverflowMenu
-				:label="formatMessage(messages.language)"
-				:options="languageOptions"
-				:icon-only="false"
-				placement="top-center"
-			>
-				<LanguagesIcon />
-				{{ currentLanguageName }}
-			</TeleportOverflowMenu>
 		</div>
 	</div>
 </template>
-
-<style scoped>
-.dot-pattern {
-	background-image: radial-gradient(
-		circle,
-		color-mix(in srgb, var(--color-text-primary) 25%, transparent) 0.5px,
-		transparent 0.75px
-	);
-	background-size: 0.5625rem 0.5625rem;
-	opacity: 0.8;
-	-webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 68%);
-	mask-image: radial-gradient(ellipse at center, black 10%, transparent 68%);
-	-webkit-mask-repeat: no-repeat;
-	mask-repeat: no-repeat;
-}
-</style>

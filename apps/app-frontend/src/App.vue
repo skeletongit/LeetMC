@@ -79,6 +79,7 @@ import FriendsList from '@/components/ui/friends/FriendsList.vue'
 import AddServerToInstanceModal from '@/components/ui/install_flow/AddServerToInstanceModal.vue'
 import UnknownPackWarningModal from '@/components/ui/install_flow/UnknownPackWarningModal.vue'
 import IconEditorModal from '@/components/ui/instance_settings/icon-editor-modal/index.vue'
+import InteractiveDotBackground from '@/components/ui/InteractiveDotBackground.vue'
 import MinecraftAuthErrorModal from '@/components/ui/minecraft-auth-error-modal/MinecraftAuthErrorModal.vue'
 import MinecraftRequiredModal from '@/components/ui/minecraft-required-modal/MinecraftRequiredModal.vue'
 import AppSettingsModal from '@/components/ui/modal/AppSettingsModal.vue'
@@ -2016,6 +2017,10 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 			'disable-advanced-rendering': !appTheme.advancedRendering,
 		}"
 	>
+		<InteractiveDotBackground
+			:animated="appTheme.advancedRendering"
+			:right-inset="sidebarVisible ? APP_SIDEBAR_WIDTH : 0"
+		/>
 		<div class="app-viewport flex-grow router-view">
 			<SurveyPopup />
 			<div
@@ -2214,6 +2219,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 .app-contents {
 	position: absolute;
 	z-index: 1;
+	isolation: isolate;
 	left: var(--left-bar-width);
 	top: var(--top-bar-height);
 	right: 0;

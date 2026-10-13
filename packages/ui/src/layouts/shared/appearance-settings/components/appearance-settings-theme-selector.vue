@@ -32,7 +32,7 @@ const themeLabels = defineMessages({
 	},
 	oled: {
 		id: 'settings.display.theme.oled',
-		defaultMessage: 'OLED',
+		defaultMessage: 'Ender Pearl',
 	},
 	retro: {
 		id: 'settings.display.theme.retro',
