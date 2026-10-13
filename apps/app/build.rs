@@ -14,6 +14,7 @@ fn main() {
                     .commands(&[
                         "check_reachable",
                         "login",
+                        "login_offline",
                         "remove_user",
                         "get_default_user",
                         "set_default_user",
@@ -123,6 +124,9 @@ fn main() {
                         "flush_pending_skin_change_for_profile",
                         "normalize_skin_texture",
                         "get_dragged_skin_data",
+                        "search_player_skin",
+                        "search_catalog_skins",
+                        "download_skin_bytes",
                     ])
                     .default_permission(
                         DefaultPermissionRule::AllowAllCommands,

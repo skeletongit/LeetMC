@@ -2,7 +2,8 @@ use crate::api::Result;
 
 use std::path::Path;
 use theseus::minecraft_skins::{
-    self, Bytes, Cape, MinecraftSkinVariant, Skin, UrlOrBlob,
+    self, Bytes, Cape, CatalogSearchResult, MinecraftSkinVariant, SearchedSkin,
+    Skin, UrlOrBlob,
 };
 
 pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
@@ -20,6 +21,9 @@ pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
             flush_pending_skin_change_for_profile,
             normalize_skin_texture,
             get_dragged_skin_data,
+            search_player_skin,
+            search_catalog_skins,
+            download_skin_bytes,
         ])
         .build()
 }
@@ -144,4 +148,22 @@ pub async fn normalize_skin_texture(texture: UrlOrBlob) -> Result<Bytes> {
 pub async fn get_dragged_skin_data(path: String) -> Result<Bytes> {
     let path = Path::new(&path);
     Ok(minecraft_skins::get_dragged_skin_data(path).await?)
+}
+
+#[tauri::command]
+pub async fn search_player_skin(query: String) -> Result<Option<SearchedSkin>> {
+    Ok(minecraft_skins::search_player_skin(query).await?)
+}
+
+#[tauri::command]
+pub async fn search_catalog_skins(
+    query: Option<String>,
+    page: Option<u32>,
+) -> Result<CatalogSearchResult> {
+    Ok(minecraft_skins::search_catalog_skins(query, page).await?)
+}
+
+#[tauri::command]
+pub async fn download_skin_bytes(url: String) -> Result<Vec<u8>> {
+    Ok(minecraft_skins::download_skin_bytes(url).await?)
 }

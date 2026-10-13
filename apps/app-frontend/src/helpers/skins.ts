@@ -192,3 +192,38 @@ export async function get_dragged_skin_data(path: string): Promise<Uint8Array> {
 	const data = await invoke('plugin:minecraft-skins|get_dragged_skin_data', { path })
 	return new Uint8Array(data)
 }
+
+export interface SearchedSkin {
+	id: string
+	name: string
+	texture_url: string
+	texture_key: string
+	variant: SkinModel
+	texture_base64: string
+	tags: string[]
+	source_type: string
+}
+
+export interface CatalogSearchResult {
+	skins: SearchedSkin[]
+	total: number
+	page: number
+	total_pages: number
+}
+
+export async function search_player_skin(query: string): Promise<SearchedSkin | null> {
+	return await invoke('plugin:minecraft-skins|search_player_skin', { query })
+}
+
+export async function search_catalog_skins(
+	query?: string,
+	page?: number,
+): Promise<CatalogSearchResult> {
+	return await invoke('plugin:minecraft-skins|search_catalog_skins', { query, page })
+}
+
+export async function download_skin_bytes(url: string): Promise<Uint8Array> {
+	const data = await invoke('plugin:minecraft-skins|download_skin_bytes', { url })
+	return new Uint8Array(data as number[])
+}
+

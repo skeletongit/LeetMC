@@ -20,27 +20,33 @@
 		</div>
 
 		<div class="flex flex-col gap-6 px-6 pb-6">
-			<div class="grid grid-cols-2 gap-2">
-				<ButtonLink href="https://support.modrinth.com" @click="modal?.hide()">
-					<MessagesSquareIcon />
-					{{ formatMessage(messages.getSupport) }}
-				</ButtonLink>
-				<Button type="colored" color="brand" :disabled="loadingSignIn" @click="signIn">
-					<SpinnerIcon v-if="loadingSignIn" class="animate-spin" />
-					<svg
-						v-else
-						width="20"
-						height="20"
-						viewBox="0 0 20 20"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-					>
-						<rect width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
-						<rect x="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
-						<rect y="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
-						<rect x="10.75" y="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
-					</svg>
-					{{ formatMessage(messages.signIn) }}
+			<div class="flex flex-col gap-2">
+				<div class="grid grid-cols-2 gap-2">
+					<ButtonLink href="https://support.modrinth.com" @click="modal?.hide()">
+						<MessagesSquareIcon />
+						{{ formatMessage(messages.getSupport) }}
+					</ButtonLink>
+					<Button type="colored" color="brand" :disabled="loadingSignIn" @click="signIn">
+						<SpinnerIcon v-if="loadingSignIn" class="animate-spin" />
+						<svg
+							v-else
+							width="20"
+							height="20"
+							viewBox="0 0 20 20"
+							fill="none"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<rect width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
+							<rect x="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
+							<rect y="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
+							<rect x="10.75" y="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
+						</svg>
+						{{ formatMessage(messages.signIn) }}
+					</Button>
+				</div>
+				<Button class="w-full !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]" @click="openOffline">
+					<UserIcon />
+					{{ formatMessage(messages.offlineSignIn) }}
 				</Button>
 			</div>
 			<p class="m-0 text-center text-sm text-secondary">
@@ -57,7 +63,7 @@
 </template>
 
 <script setup lang="ts">
-import { MessagesSquareIcon, SpinnerIcon } from '@modrinth/assets'
+import { MessagesSquareIcon, SpinnerIcon, UserIcon } from '@modrinth/assets'
 import { Button, ButtonLink, defineMessages, NewModal, useVIntl } from '@modrinth/ui'
 import { inject, type Ref, ref } from 'vue'
 
@@ -100,6 +106,10 @@ const messages = defineMessages({
 		id: 'minecraft-required.get-minecraft',
 		defaultMessage: 'Get Minecraft',
 	},
+	offlineSignIn: {
+		id: 'minecraft-required.offline-sign-in',
+		defaultMessage: 'Add offline account',
+	},
 })
 
 const modal = ref<InstanceType<typeof NewModal>>()
@@ -107,6 +117,11 @@ const loadingSignIn = ref(false)
 
 function show() {
 	modal.value?.show()
+}
+
+function openOffline() {
+	modal.value?.hide()
+	accountsCard.value?.openOfflineLogin()
 }
 
 async function signIn() {

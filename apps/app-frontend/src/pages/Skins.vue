@@ -3,8 +3,10 @@ import {
 	CheckIcon,
 	EditIcon,
 	EyeIcon,
+	GlobeIcon,
 	InfoIcon,
 	RotateCounterClockwiseIcon,
+	SearchIcon,
 	ShirtIcon,
 	SpinnerIcon,
 	WindowsIcon,
@@ -31,6 +33,7 @@ import { computed, inject, onMounted, onUnmounted, ref, useTemplateRef, watch } 
 import EarsModIcon from '@/assets/skins/ears-mod.png'
 import type AccountsCard from '@/components/ui/AccountsCard.vue'
 import EditSkinModal from '@/components/ui/skin/EditSkinModal.vue'
+import SkinCatalogModal from '@/components/ui/skin/SkinCatalogModal.vue'
 import VirtualSkinSectionList from '@/components/ui/skin/VirtualSkinSectionList.vue'
 import { useAppSettings } from '@/composables/use-app-settings.ts'
 import { handleSevereError } from '@/composables/use-error.js'
@@ -212,9 +215,22 @@ const messages = defineMessages({
 		id: 'app.skins.sign-in.button',
 		defaultMessage: 'Sign in to Microsoft',
 	},
+	skinCatalogBannerTitle: {
+		id: 'app.skins.catalog-banner.title',
+		defaultMessage: 'Skin Catalog (NameMC)',
+	},
+	skinCatalogBannerDescription: {
+		id: 'app.skins.catalog-banner.description',
+		defaultMessage: 'Search player skins or browse a massive catalog in one click',
+	},
+	skinCatalogBannerButton: {
+		id: 'app.skins.catalog-banner.button',
+		defaultMessage: 'Search & Catalog',
+	},
 })
 
 const editSkinModal = useTemplateRef('editSkinModal')
+const skinCatalogModal = useTemplateRef<InstanceType<typeof SkinCatalogModal>>('skinCatalogModal')
 const addSkinFileInput = useTemplateRef<HTMLInputElement>('addSkinFileInput')
 const skinSectionList = useTemplateRef<VirtualSkinSectionListExpose>('skinSectionList')
 
@@ -1099,6 +1115,11 @@ await loadSkins()
 		:proceed-label="formatMessage(commonMessages.deleteLabel)"
 		@proceed="deleteSkin"
 	/>
+	<SkinCatalogModal
+		ref="skinCatalogModal"
+		@equipped="() => loadSkins()"
+		@saved="() => loadSkins()"
+	/>
 
 	<div class="skin-layout box-border grow p-4" :class="{ 'pb-40': !currentUser }">
 		<div class="sticky top-6 self-start p-2 pt-0">
@@ -1257,6 +1278,21 @@ await loadSkins()
 		</div>
 
 		<div class="pt-2">
+			<div class="mb-4 flex flex-wrap items-center justify-between gap-3 p-3.5 bg-surface-2 rounded-2xl border border-surface-5">
+				<div class="flex items-center gap-3">
+					<div class="size-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center shrink-0">
+						<GlobeIcon class="size-5" />
+					</div>
+					<div class="flex flex-col">
+						<span class="text-sm font-bold text-contrast">{{ formatMessage(messages.skinCatalogBannerTitle) }}</span>
+						<span class="text-xs text-secondary">{{ formatMessage(messages.skinCatalogBannerDescription) }}</span>
+					</div>
+				</div>
+				<Button type="colored" color="brand" @click="skinCatalogModal?.show()">
+					<SearchIcon /> {{ formatMessage(messages.skinCatalogBannerButton) }}
+				</Button>
+			</div>
+
 			<VirtualSkinSectionList
 				ref="skinSectionList"
 				:saved-skins="savedSkins"

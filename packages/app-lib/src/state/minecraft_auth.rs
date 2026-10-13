@@ -197,6 +197,71 @@ pub async fn login_finish(
     Ok(credentials)
 }
 
+pub fn offline_uuid(username: &str) -> Uuid {
+    let mut hash = *md5::compute(format!("OfflinePlayer:{username}").as_bytes());
+    hash[6] = (hash[6] & 0x0f) | 0x30;
+    hash[8] = (hash[8] & 0x3f) | 0x80;
+    Uuid::from_bytes(hash)
+}
+
+pub async fn login_offline(
+    username: &str,
+    exec: impl sqlx::Executor<'_, Database = sqlx::Sqlite> + Copy,
+) -> crate::Result<Credentials> {
+    let username = username.trim();
+    if username.is_empty() {
+        return Err(crate::ErrorKind::InputError("Username cannot be empty".to_string()).into());
+    }
+
+    let id = offline_uuid(username);
+    let credentials = Credentials {
+        offline_profile: MinecraftProfile {
+            id,
+            name: username.to_string(),
+            skins: vec![],
+            capes: vec![],
+            fetch_time: None,
+        },
+        access_token: "0".to_string(),
+        refresh_token: "offline".to_string(),
+        expires: Utc::now() + Duration::days(365 * 100),
+        active: true,
+    };
+
+    credentials.upsert(exec).await?;
+    Ok(credentials)
+}
+
+pub async fn update_offline_profile_cache(
+    id: Uuid,
+    name: &str,
+    texture_key: &str,
+    skin_url: Url,
+    variant: MinecraftSkinVariant,
+) {
+    let profile = MinecraftProfile {
+        id,
+        name: name.to_string(),
+        skins: vec![MinecraftSkin {
+            id: Uuid::new_v4(),
+            state: MinecraftCharacterExpressionState::Active,
+            url: Arc::new(skin_url),
+            texture_key: Some(Arc::from(texture_key)),
+            variant,
+            name: None,
+        }],
+        capes: vec![],
+        fetch_time: Some(Instant::now()),
+    };
+    let mut profile_cache = PROFILE_CACHE.lock().await;
+    profile_cache.insert(id, ProfileCacheEntry::Hit(Arc::new(profile)));
+}
+
+pub async fn clear_offline_profile_cache(id: Uuid) {
+    let mut profile_cache = PROFILE_CACHE.lock().await;
+    profile_cache.remove(&id);
+}
+
 #[derive(Deserialize, Debug)]
 pub struct Credentials {
     /// The offline profile of the user these credentials are for.
@@ -265,6 +330,10 @@ impl OnlineProfileCacheIntent {
 }
 
 impl Credentials {
+    pub fn is_offline(&self) -> bool {
+        self.refresh_token == "offline"
+    }
+
     /// Refreshes the authentication tokens for this user if they are expired, or
     /// very close to expiration.
     async fn refresh(
@@ -274,7 +343,7 @@ impl Credentials {
         // Use a margin of 5 minutes to give e.g. Minecraft and potentially
         // other operations that depend on a fresh token 5 minutes to complete
         // from now, and deal with some classes of clock skew
-        if self.expires > Utc::now() + Duration::minutes(5) {
+        if self.is_offline() || self.expires > Utc::now() + Duration::minutes(5) {
             return Ok(());
         }
 
@@ -351,6 +420,14 @@ impl Credentials {
         &self,
         cache_intent: OnlineProfileCacheIntent,
     ) -> Option<Arc<MinecraftProfile>> {
+        if self.is_offline() {
+            let profile_cache = PROFILE_CACHE.lock().await;
+            if let Some(ProfileCacheEntry::Hit(profile)) = profile_cache.get(&self.offline_profile.id) {
+                return Some(Arc::clone(profile));
+            }
+            return None;
+        }
+
         let max_age = cache_intent.max_age();
         let stale_profile = {
             let mut profile_cache = PROFILE_CACHE.lock().await;

@@ -1,88 +1,118 @@
 <template>
-	<div
-		v-if="accounts.length === 0"
-		class="flex flex-col gap-3 bg-button-bg border border-solid border-surface-5 rounded-xl p-3 mt-2"
-	>
-		<span>{{ formatMessage(messages.notSignedIn) }}</span>
-		<Button type="colored" color="brand" :disabled="loginDisabled" @click="login()">
-			<LogInIcon v-if="!loginDisabled" />
-			<SpinnerIcon v-else class="animate-spin" />
-			{{ formatMessage(messages.signInToMinecraft) }}
-		</Button>
-	</div>
-	<Accordion
-		v-else
-		class="w-full mt-2 bg-button-bg border border-solid border-surface-5 rounded-xl overflow-clip"
-		button-class="button-base w-full bg-transparent px-3 py-2 border-0 cursor-pointer"
-		:open-by-default="false"
-	>
-		<template #title>
-			<div class="flex gap-2 w-full min-w-0">
-				<Avatar
-					size="36px"
-					:src="
-						selectedAccount
-							? avatarUrl
-							: 'https://launcher-files.modrinth.com/assets/steve_head.png'
-					"
-				/>
-				<div class="flex flex-col items-start w-full min-w-0">
-					<span class="truncate w-full text-left">{{
-						selectedAccount ? selectedAccount.profile.name : formatMessage(messages.selectAccount)
-					}}</span>
-					<span class="text-secondary text-xs">{{ formatMessage(messages.minecraftAccount) }}</span>
-				</div>
-			</div>
-		</template>
-		<div class="bg-button-bg pt-1 pb-2 border-0 border-t border-solid border-surface-5">
-			<template v-if="accounts.length > 0">
-				<div v-for="account in accounts" :key="account.profile.id" class="flex gap-1 items-center">
-					<button
-						class="flex items-center flex-shrink flex-grow overflow-clip gap-2 p-2 border-0 bg-transparent cursor-pointer button-base min-w-0"
-						@click="setAccount(account)"
-					>
-						<RadioButtonCheckedIcon
-							v-if="selectedAccount && selectedAccount.profile.id === account.profile.id"
-							class="w-5 h-5 text-brand shrink-0"
-						/>
-						<RadioButtonIcon v-else class="w-5 h-5 text-secondary shrink-0" />
-						<Avatar :src="getAccountAvatarUrl(account)" size="24px" />
-						<p
-							class="m-0 truncate min-w-0"
-							:class="
-								selectedAccount && selectedAccount.profile.id === account.profile.id
-									? 'text-contrast font-semibold'
-									: 'text-primary'
-							"
-						>
-							{{ account.profile.name }}
-						</p>
-					</button>
-					<IconButton
-						v-tooltip="formatMessage(messages.removeAccount)"
-						type="quiet"
-						color="red"
-						:label="formatMessage(messages.removeAccount)"
-						class="mr-2 !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)] hover:!bg-red focus-visible:!bg-red hover:!text-[var(--color-accent-contrast)] focus-visible:!text-[var(--color-accent-contrast)]"
-						@click="logout(account.profile.id)"
-					>
-						<TrashIcon />
-					</IconButton>
+	<div>
+		<div
+			v-if="accounts.length === 0"
+			class="flex flex-col gap-2 bg-button-bg border border-solid border-surface-5 rounded-xl p-3 mt-2"
+		>
+			<span>{{ formatMessage(messages.notSignedIn) }}</span>
+			<Button type="colored" color="brand" :disabled="loginDisabled" @click="login()">
+				<LogInIcon v-if="!loginDisabled" />
+				<SpinnerIcon v-else class="animate-spin" />
+				{{ formatMessage(messages.signInToMinecraft) }}
+			</Button>
+			<Button class="!bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]" :disabled="loginDisabled" @click="openOfflineLogin()">
+				<UserIcon />
+				{{ formatMessage(messages.addOfflineAccount) }}
+			</Button>
+		</div>
+		<Accordion
+			v-else
+			class="w-full mt-2 bg-button-bg border border-solid border-surface-5 rounded-xl overflow-clip"
+			button-class="button-base w-full bg-transparent px-3 py-2 border-0 cursor-pointer"
+			:open-by-default="false"
+		>
+			<template #title>
+				<div class="flex gap-2 w-full min-w-0">
+					<Avatar
+						size="36px"
+						:src="
+							selectedAccount
+								? avatarUrl
+								: 'https://launcher-files.modrinth.com/assets/steve_head.png'
+						"
+					/>
+					<div class="flex flex-col items-start w-full min-w-0">
+						<span class="truncate w-full text-left">{{
+							selectedAccount ? selectedAccount.profile.name : formatMessage(messages.selectAccount)
+						}}</span>
+						<span class="text-secondary text-xs">
+							{{
+								selectedAccount?.refresh_token === 'offline'
+									? formatMessage(messages.offlineAccountLabel)
+									: formatMessage(messages.minecraftAccount)
+							}}
+						</span>
+					</div>
 				</div>
 			</template>
-			<div class="flex flex-col gap-2 px-2 pt-2">
-				<Button
-					v-if="accounts.length > 0"
-					class="w-full !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]"
-					:disabled="loginDisabled"
-					@click="login()"
-				>
-					<PlusIcon />
-					{{ formatMessage(messages.addAccount) }}
-				</Button>
+			<div class="bg-button-bg pt-1 pb-2 border-0 border-t border-solid border-surface-5">
+				<template v-if="accounts.length > 0">
+					<div v-for="account in accounts" :key="account.profile.id" class="flex gap-1 items-center">
+						<button
+							class="flex items-center flex-shrink flex-grow overflow-clip gap-2 p-2 border-0 bg-transparent cursor-pointer button-base min-w-0"
+							@click="setAccount(account)"
+						>
+							<RadioButtonCheckedIcon
+								v-if="selectedAccount && selectedAccount.profile.id === account.profile.id"
+								class="w-5 h-5 text-brand shrink-0"
+							/>
+							<RadioButtonIcon v-else class="w-5 h-5 text-secondary shrink-0" />
+							<Avatar :src="getAccountAvatarUrl(account)" size="24px" />
+							<div class="flex flex-col items-start truncate min-w-0">
+								<p
+									class="m-0 truncate min-w-0"
+									:class="
+										selectedAccount && selectedAccount.profile.id === account.profile.id
+											? 'text-contrast font-semibold'
+											: 'text-primary'
+									"
+								>
+									{{ account.profile.name }}
+								</p>
+								<span
+									v-if="account.refresh_token === 'offline'"
+									class="text-[10px] text-secondary leading-none uppercase font-semibold"
+								>
+									{{ formatMessage(messages.offlineBadge) }}
+								</span>
+							</div>
+						</button>
+						<IconButton
+							v-tooltip="formatMessage(messages.removeAccount)"
+							type="quiet"
+							color="red"
+							:label="formatMessage(messages.removeAccount)"
+							class="mr-2 !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)] hover:!bg-red focus-visible:!bg-red hover:!text-[var(--color-accent-contrast)] focus-visible:!text-[var(--color-accent-contrast)]"
+							@click="logout(account.profile.id)"
+						>
+							<TrashIcon />
+						</IconButton>
+					</div>
+				</template>
+				<div class="flex flex-col gap-2 px-2 pt-2">
+					<Button
+						v-if="accounts.length > 0"
+						class="w-full !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]"
+						:disabled="loginDisabled"
+						@click="login()"
+					>
+						<PlusIcon />
+						{{ formatMessage(messages.addAccount) }}
+					</Button>
+					<Button
+						v-if="accounts.length > 0"
+						class="w-full !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]"
+						:disabled="loginDisabled"
+						@click="openOfflineLogin()"
+					>
+						<UserIcon />
+						{{ formatMessage(messages.addOfflineAccount) }}
+					</Button>
+				</div>
 			</div>
-		</div>
-	</Accordion>
+		</Accordion>
+		<OfflineLoginModal ref="offlineModal" @logged-in="handleOfflineLoggedIn" />
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -93,6 +123,7 @@ import {
 	RadioButtonIcon,
 	SpinnerIcon,
 	TrashIcon,
+	UserIcon,
 } from '@modrinth/assets'
 import {
 	Accordion,
@@ -106,6 +137,7 @@ import {
 import type { Ref } from 'vue'
 import { computed, onUnmounted, ref } from 'vue'
 
+import OfflineLoginModal from '@/components/ui/modal/OfflineLoginModal.vue'
 import { useAppEvent } from '@/composables/use-app-event'
 import { handleSevereError } from '@/composables/use-error.js'
 import { trackEvent } from '@/helpers/analytics'
@@ -132,6 +164,7 @@ type MinecraftCredential = {
 		id: string
 		name: string
 	}
+	refresh_token?: string
 }
 
 const accounts: Ref<MinecraftCredential[]> = ref([])
@@ -187,11 +220,25 @@ function setLoginDisabled(value: boolean) {
 	loginDisabled.value = value
 }
 
+const offlineModal = ref<InstanceType<typeof OfflineLoginModal>>()
+
+function openOfflineLogin() {
+	offlineModal.value?.show()
+}
+
+async function handleOfflineLoggedIn(account: MinecraftCredential) {
+	await refreshValues()
+	if (account?.profile?.id) {
+		await setAccount(account)
+	}
+}
+
 defineExpose({
 	refreshValues,
 	setEquippedSkin,
 	setLoginDisabled,
 	login,
+	openOfflineLogin,
 	loginDisabled,
 })
 
@@ -288,6 +335,18 @@ const messages = defineMessages({
 	signInToMinecraft: {
 		id: 'minecraft-account.sign-in',
 		defaultMessage: 'Sign in to Minecraft',
+	},
+	addOfflineAccount: {
+		id: 'minecraft-account.add-offline-account',
+		defaultMessage: 'Add offline account',
+	},
+	offlineBadge: {
+		id: 'minecraft-account.offline-badge',
+		defaultMessage: 'Offline',
+	},
+	offlineAccountLabel: {
+		id: 'minecraft-account.offline-account-label',
+		defaultMessage: 'Offline account',
 	},
 })
 </script>

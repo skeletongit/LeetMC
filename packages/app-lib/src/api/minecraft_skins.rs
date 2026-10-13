@@ -1201,6 +1201,19 @@ async fn execute_pending_skin_change(
             cape_id,
             local_texture_key,
         } => {
+            if selected_credentials.is_offline() {
+                if let Some(data_url) = png_util::blob_to_data_url(texture_blob.to_vec()) {
+                    crate::state::update_offline_profile_cache(
+                        selected_credentials.offline_profile.id,
+                        &selected_credentials.offline_profile.name,
+                        local_texture_key,
+                        (*data_url).clone(),
+                        *variant,
+                    )
+                    .await;
+                }
+                return Ok(());
+            }
             add_and_equip_custom_skin_now(
                 selected_credentials,
                 Bytes::clone(texture_blob),
@@ -1213,10 +1226,32 @@ async fn execute_pending_skin_change(
         PendingSkinChange::Equip {
             selected_credentials,
             skin,
-        } => equip_skin_now(selected_credentials, skin).await,
+        } => {
+            if selected_credentials.is_offline() {
+                crate::state::update_offline_profile_cache(
+                    selected_credentials.offline_profile.id,
+                    &selected_credentials.offline_profile.name,
+                    &skin.texture_key,
+                    skin.texture.as_ref().clone(),
+                    skin.variant,
+                )
+                .await;
+                return Ok(());
+            }
+            equip_skin_now(selected_credentials, skin).await
+        }
         PendingSkinChange::Unequip {
             selected_credentials,
-        } => unequip_skin_now(selected_credentials).await,
+        } => {
+            if selected_credentials.is_offline() {
+                crate::state::clear_offline_profile_cache(
+                    selected_credentials.offline_profile.id,
+                )
+                .await;
+                return Ok(());
+            }
+            unequip_skin_now(selected_credentials).await
+        }
     }
 }
 
@@ -1429,3 +1464,314 @@ async fn sync_cape(
 
     Ok(())
 }
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct SearchedSkin {
+	pub id: String,
+	pub name: String,
+	pub texture_url: String,
+	pub texture_key: String,
+	pub variant: MinecraftSkinVariant,
+	pub texture_base64: String,
+	pub tags: Vec<String>,
+	pub source_type: String,
+}
+
+#[derive(Clone, Serialize, Deserialize, Debug)]
+pub struct CatalogSearchResult {
+	pub skins: Vec<SearchedSkin>,
+	pub total: u64,
+	pub page: u32,
+	pub total_pages: u32,
+}
+
+#[tracing::instrument]
+pub async fn search_player_skin(query: String) -> crate::Result<Option<SearchedSkin>> {
+	let trimmed = query.trim();
+	if trimmed.is_empty() {
+		return Ok(None);
+	}
+
+	let client = reqwest::Client::builder()
+		.timeout(std::time::Duration::from_secs(10))
+		.user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+		.build()
+		.unwrap_or_default();
+
+	let cleaned_query = if let Some(stripped) = trimmed.strip_prefix("https://namemc.com/profile/") {
+		stripped.trim_matches('/')
+	} else if let Some(stripped) = trimmed.strip_prefix("namemc.com/profile/") {
+		stripped.trim_matches('/')
+	} else if let Some(stripped) = trimmed.strip_prefix("https://namemc.com/skin/") {
+		let hash = stripped.trim_matches('/');
+		return search_skin_by_texture_hash(&client, hash).await;
+	} else if let Some(stripped) = trimmed.strip_prefix("https://textures.minecraft.net/texture/") {
+		let hash = stripped.trim_matches('/');
+		return search_skin_by_texture_hash(&client, hash).await;
+	} else {
+		trimmed
+	};
+
+	if cleaned_query.len() == 64 && cleaned_query.chars().all(|c| c.is_ascii_hexdigit()) {
+		return search_skin_by_texture_hash(&client, cleaned_query).await;
+	}
+
+	let mojang_url = format!("https://api.mojang.com/users/profiles/minecraft/{}", cleaned_query);
+	let mojang_res = client.get(&mojang_url).send().await;
+
+	let (uuid, player_name) = match mojang_res {
+		Ok(resp) if resp.status().is_success() => {
+			#[derive(Deserialize)]
+			struct MojangProfileResp {
+				id: String,
+				name: String,
+			}
+			if let Ok(data) = resp.json::<MojangProfileResp>().await {
+				(data.id, data.name)
+			} else {
+				(cleaned_query.replace('-', ""), cleaned_query.to_string())
+			}
+		}
+		_ => (cleaned_query.replace('-', ""), cleaned_query.to_string()),
+	};
+
+	let session_url = format!("https://sessionserver.mojang.com/session/minecraft/profile/{}", uuid);
+	if let Ok(resp) = client.get(&session_url).send().await {
+		if resp.status().is_success() {
+			#[derive(Deserialize)]
+			struct SessionProp {
+				name: String,
+				value: String,
+			}
+			#[derive(Deserialize)]
+			struct SessionResp {
+				id: String,
+				name: String,
+				properties: Vec<SessionProp>,
+			}
+
+			if let Ok(session_data) = resp.json::<SessionResp>().await {
+				if let Some(tex_prop) = session_data.properties.iter().find(|p| p.name == "textures") {
+					use base64::Engine;
+					if let Ok(decoded) = base64::engine::general_purpose::STANDARD.decode(&tex_prop.value) {
+						if let Ok(tex_json) = serde_json::from_slice::<serde_json::Value>(&decoded) {
+							if let Some(skin_obj) = tex_json.get("textures").and_then(|t| t.get("SKIN")) {
+								if let Some(url_str) = skin_obj.get("url").and_then(|u| u.as_str()) {
+									let is_slim = skin_obj
+										.get("metadata")
+										.and_then(|m| m.get("model"))
+										.and_then(|m| m.as_str())
+										.map_or(false, |m| m == "slim");
+									let variant = if is_slim {
+										MinecraftSkinVariant::Slim
+									} else {
+										MinecraftSkinVariant::Classic
+									};
+
+									if let Ok(png_resp) = client.get(url_str).send().await {
+										if let Ok(bytes) = png_resp.bytes().await {
+											let tex_data_url = png_util::blob_to_data_url(&bytes)
+												.map(|u| u.as_str().to_string())
+												.unwrap_or_default();
+											let tex_key = url_str.rsplit('/').next().unwrap_or(&session_data.id).to_string();
+
+											return Ok(Some(SearchedSkin {
+												id: session_data.id,
+												name: session_data.name,
+												texture_url: url_str.to_string(),
+												texture_key: tex_key,
+												variant,
+												texture_base64: tex_data_url,
+												tags: vec![],
+												source_type: "player".to_string(),
+											}));
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	let ely_url = format!("http://skinsystem.ely.by/textures/{}", player_name);
+	if let Ok(resp) = client.get(&ely_url).send().await {
+		if resp.status().is_success() {
+			if let Ok(val) = resp.json::<serde_json::Value>().await {
+				if let Some(skin_url) = val.get("SKIN").and_then(|s| s.get("url")).and_then(|u| u.as_str()) {
+					if let Ok(png_resp) = client.get(skin_url).send().await {
+						if let Ok(bytes) = png_resp.bytes().await {
+							let tex_data_url = png_util::blob_to_data_url(&bytes)
+								.map(|u| u.as_str().to_string())
+								.unwrap_or_default();
+							let tex_key = skin_url.rsplit('/').next().unwrap_or(&player_name).to_string();
+
+							return Ok(Some(SearchedSkin {
+								id: uuid,
+								name: player_name,
+								texture_url: skin_url.to_string(),
+								texture_key: tex_key,
+								variant: MinecraftSkinVariant::Classic,
+								texture_base64: tex_data_url,
+								tags: vec![],
+								source_type: "player".to_string(),
+							}));
+						}
+					}
+				}
+			}
+		}
+	}
+
+	Ok(None)
+}
+
+async fn search_skin_by_texture_hash(client: &reqwest::Client, hash: &str) -> crate::Result<Option<SearchedSkin>> {
+	let url = format!("https://textures.minecraft.net/texture/{}", hash);
+	if let Ok(resp) = client.get(&url).send().await {
+		if resp.status().is_success() {
+			if let Ok(bytes) = resp.bytes().await {
+				let tex_data_url = png_util::blob_to_data_url(&bytes)
+					.map(|u| u.as_str().to_string())
+					.unwrap_or_default();
+				return Ok(Some(SearchedSkin {
+					id: hash.to_string(),
+					name: format!("Skin {}", &hash[..8.min(hash.len())]),
+					texture_url: url,
+					texture_key: hash.to_string(),
+					variant: MinecraftSkinVariant::Classic,
+					texture_base64: tex_data_url,
+					tags: vec![],
+					source_type: "namemc".to_string(),
+				}));
+			}
+		}
+	}
+	Ok(None)
+}
+
+#[tracing::instrument]
+pub async fn search_catalog_skins(
+	query: Option<String>,
+	page: Option<u32>,
+) -> crate::Result<CatalogSearchResult> {
+	let page_num = page.unwrap_or(1).max(1);
+	let client = reqwest::Client::builder()
+		.timeout(std::time::Duration::from_secs(10))
+		.user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+		.build()
+		.unwrap_or_default();
+
+	let mut url = format!("https://ely.by/api/legacy/skins?page={}", page_num);
+	if let Some(ref q) = query {
+		let trimmed = q.trim();
+		if !trimmed.is_empty() {
+			let encoded: String = url::form_urlencoded::byte_serialize(trimmed.as_bytes()).collect();
+			url.push_str("&tags[]=");
+			url.push_str(&encoded);
+		}
+	}
+
+	#[derive(Deserialize)]
+	struct ElySkinItem {
+		id: u64,
+		skin_url: String,
+		is_slim: bool,
+		tags: Option<Vec<String>>,
+	}
+
+	#[derive(Deserialize)]
+	struct ElyCatalogResp {
+		#[serde(alias = "skins")]
+		items: Vec<ElySkinItem>,
+		total_items: Option<u64>,
+		last: Option<u32>,
+	}
+
+	let resp = client
+		.get(&url)
+		.send()
+		.await
+		.map_err(|e| crate::ErrorKind::OtherError(e.to_string()))?;
+
+	if !resp.status().is_success() {
+		return Ok(CatalogSearchResult {
+			skins: vec![],
+			total: 0,
+			page: page_num,
+			total_pages: 0,
+		});
+	}
+
+	let catalog: ElyCatalogResp = resp
+		.json()
+		.await
+		.map_err(|e| crate::ErrorKind::OtherError(e.to_string()))?;
+
+	let skins = catalog
+		.items
+		.into_iter()
+		.map(|item| {
+			let tags = item.tags.unwrap_or_default();
+			let name = tags
+				.first()
+				.cloned()
+				.unwrap_or_else(|| format!("Skin #{}", item.id));
+			let tex_key = item
+				.skin_url
+				.rsplit('/')
+				.next()
+				.unwrap_or("")
+				.trim_end_matches(".png")
+				.to_string();
+			let variant = if item.is_slim {
+				MinecraftSkinVariant::Slim
+			} else {
+				MinecraftSkinVariant::Classic
+			};
+
+			SearchedSkin {
+				id: item.id.to_string(),
+				name,
+				texture_url: item.skin_url,
+				texture_key: tex_key,
+				variant,
+				texture_base64: String::new(),
+				tags,
+				source_type: "catalog".to_string(),
+			}
+		})
+		.collect();
+
+	Ok(CatalogSearchResult {
+		skins,
+		total: catalog.total_items.unwrap_or(0),
+		page: page_num,
+		total_pages: catalog.last.unwrap_or(1),
+	})
+}
+
+#[tracing::instrument]
+pub async fn download_skin_bytes(url: String) -> crate::Result<Vec<u8>> {
+	let client = reqwest::Client::builder()
+		.timeout(std::time::Duration::from_secs(15))
+		.user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+		.build()
+		.unwrap_or_default();
+
+	let resp = client
+		.get(&url)
+		.send()
+		.await
+		.map_err(|e| crate::ErrorKind::OtherError(e.to_string()))?;
+
+	let bytes = resp
+		.bytes()
+		.await
+		.map_err(|e| crate::ErrorKind::OtherError(e.to_string()))?;
+
+	Ok(bytes.to_vec())
+}
+

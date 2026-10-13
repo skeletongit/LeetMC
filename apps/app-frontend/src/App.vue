@@ -9,7 +9,6 @@ import {
 	VerboseLoggingFeature,
 } from '@modrinth/api-client'
 import {
-	ArrowBigUpDashIcon,
 	ArrowLeftRightIcon,
 	ChevronLeftIcon,
 	ChevronRightIcon,
@@ -105,7 +104,7 @@ import { isDarkTheme, useTheme } from '@/composables/use-theme.ts'
 import { config } from '@/config'
 import NewUpdateModal from '@/features/updates/new-update-modal/index.vue'
 import { getAccountAppearance, rememberAccountAppearance } from '@/helpers/account-appearance.ts'
-import { debugAnalytics, initAnalytics, trackEvent } from '@/helpers/analytics'
+import { trackEvent } from '@/helpers/analytics'
 import { check_reachable } from '@/helpers/auth.js'
 import { get_user, get_user_many, get_version } from '@/helpers/cache.js'
 import { gameSettingsQueryOptions } from '@/helpers/game-options'
@@ -142,7 +141,6 @@ import {
 	syncedServersQueryOptions,
 } from '@/helpers/synced-options'
 import { syncedPackQueryOptions } from '@/helpers/synced-packs'
-import { hasActivePride26Midas, hasMidasBadge } from '@/helpers/user-campaigns.ts'
 import { get_user_preferences } from '@/helpers/user-preferences.ts'
 import { parse_modrinth_user_link } from '@/helpers/users'
 import {
@@ -293,12 +291,6 @@ useQuery({
 	refetchOnWindowFocus: false,
 	refetchOnReconnect: false,
 })
-const hasPlus = computed(
-	() =>
-		!!credentials.value?.user &&
-		(hasMidasBadge(credentials.value.user) ||
-			hasActivePride26Midas(authenticatedModrinthUser.value?.campaigns?.pride_26)),
-)
 providePageContext({
 	hierarchicalSidebarAvailable: ref(true),
 	showAds: ref(false),
@@ -565,10 +557,6 @@ const messages = defineMessages({
 		id: 'app.restarting',
 		defaultMessage: 'Restarting...',
 	},
-	upgradeToModrinthPlus: {
-		id: 'app.nav.upgrade-to-modrinth-plus',
-		defaultMessage: 'Upgrade to Modrinth+',
-	},
 	playingAs: {
 		id: 'app.sidebar.playing-as',
 		defaultMessage: 'Playing as',
@@ -673,12 +661,6 @@ async function setupApp() {
 			isFullscreen.value = await getCurrentWindow().isFullscreen()
 		}),
 	)
-
-	if (telemetry) {
-		initAnalytics()
-		if (dev) debugAnalytics()
-		trackEvent('Launched', { version, dev })
-	}
 
 	const osType = await traceStartupStep('Read operating system type', async () => type())
 	if (osType === 'macos') {
@@ -1253,16 +1235,6 @@ const modrinthAccountMenuOptions = computed(() => [
 		label: formatMessage(messages.viewProfile),
 		icon: UserIcon,
 		action: () => router.push(`/user/${encodeURIComponent(credentials.value.user.username)}`),
-	},
-	{
-		id: 'plus',
-		label: formatMessage(messages.upgradeToModrinthPlus),
-		icon: ArrowBigUpDashIcon,
-		type: 'link',
-		href: 'https://modrinth.plus?app',
-		target: '_blank',
-		tone: 'purple',
-		shown: !hasPlus.value,
 	},
 	{
 		id: 'add-friend',

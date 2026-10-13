@@ -62,6 +62,7 @@ path-util = { workspace = true }
 pathdiff = { workspace = true }
 phf = { workspace = true }
 png = { workspace = true }
+md5 = { workspace = true }
 postcard = { workspace = true, optional = true }
 postcard-bindgen = { workspace = true, features = ["generating", "std"], optional = true }
 quartz_nbt = { workspace = true, features = ["serde"] }
