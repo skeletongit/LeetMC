@@ -253,7 +253,7 @@ onUnmounted(() => {
 	bottom: 0;
 	left: 0;
 	height: 100%;
-	z-index: -1;
+	z-index: 0;
 	pointer-events: none;
 	color: var(--color-text-primary);
 }

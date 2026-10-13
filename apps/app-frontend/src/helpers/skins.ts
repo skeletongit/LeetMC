@@ -226,4 +226,3 @@ export async function download_skin_bytes(url: string): Promise<Uint8Array> {
 	const data = await invoke('plugin:minecraft-skins|download_skin_bytes', { url })
 	return new Uint8Array(data as number[])
 }
-

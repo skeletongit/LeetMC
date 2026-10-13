@@ -462,17 +462,22 @@ defineExpose({ getAddSkinButtonElement })
 									<Button
 										type="colored"
 										color="brand"
+										size="sm"
 										:aria-label="formatMessage(messages.editSkinButton)"
-										class="pointer-events-auto"
+										class="skin-card-edit-button pointer-events-auto !flex-1 overflow-hidden"
 										@click.stop="(event: MouseEvent) => emit('edit', skin, event)"
 									>
-										<EditIcon /> {{ formatMessage(commonMessages.editButton) }}
+										<EditIcon />
+										<span class="skin-card-edit-label truncate">{{
+											formatMessage(commonMessages.editButton)
+										}}</span>
 									</Button>
 									<IconButton
 										v-show="!skin.is_equipped"
 										v-tooltip="formatMessage(messages.deleteSkinButton)"
 										type="colored"
 										color="red"
+										size="sm"
 										:label="formatMessage(messages.deleteSkinButton)"
 										class="!rounded-[100%] pointer-events-auto"
 										@click.stop="emit('delete', skin)"
@@ -504,17 +509,22 @@ defineExpose({ getAddSkinButtonElement })
 									<Button
 										type="colored"
 										color="brand"
+										size="sm"
 										:aria-label="formatMessage(messages.editSkinButton)"
-										class="pointer-events-auto"
+										class="skin-card-edit-button pointer-events-auto !flex-1 overflow-hidden"
 										@click.stop="(event: MouseEvent) => emit('edit', skin, event)"
 									>
-										<EditIcon /> {{ formatMessage(commonMessages.editButton) }}
+										<EditIcon />
+										<span class="skin-card-edit-label truncate">{{
+											formatMessage(commonMessages.editButton)
+										}}</span>
 									</Button>
 									<IconButton
 										v-show="!skin.is_equipped"
 										v-tooltip="formatMessage(messages.deleteSkinButton)"
 										type="colored"
 										color="red"
+										size="sm"
 										:label="formatMessage(messages.deleteSkinButton)"
 										class="!rounded-[100%] pointer-events-auto"
 										@click.stop="emit('delete', skin)"
@@ -548,11 +558,15 @@ defineExpose({ getAddSkinButtonElement })
 							<Button
 								type="colored"
 								color="brand"
+								size="sm"
 								:aria-label="formatMessage(messages.editSkinButton)"
-								class="pointer-events-auto"
+								class="skin-card-edit-button pointer-events-auto !flex-1 overflow-hidden"
 								@click.stop="(event: MouseEvent) => emit('edit', skin, event)"
 							>
-								<EditIcon /> {{ formatMessage(commonMessages.editButton) }}
+								<EditIcon />
+								<span class="skin-card-edit-label truncate">{{
+									formatMessage(commonMessages.editButton)
+								}}</span>
 							</Button>
 						</template>
 					</BakedSkinButton>
@@ -574,5 +588,17 @@ defineExpose({ getAddSkinButtonElement })
 :global(.skin-reorder-fallback) {
 	opacity: 0.9;
 	pointer-events: none;
+}
+
+@container (max-width: 11rem) {
+	.skin-card-edit-button {
+		flex: 0 0 2rem !important;
+		width: 2rem;
+		padding-inline: 0;
+	}
+
+	.skin-card-edit-label {
+		display: none;
+	}
 }
 </style>

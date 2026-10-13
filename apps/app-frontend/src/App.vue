@@ -41,7 +41,6 @@ import {
 	defineMessages,
 	I18nDebugPanel,
 	IconButton,
-	LoadingBar,
 	NotificationPanel,
 	PopupNotificationPanel,
 	provideModalBehavior,
@@ -211,7 +210,6 @@ function updateHistoryNavigationState() {
 
 updateHistoryNavigationState()
 
-const APP_LEFT_NAV_WIDTH = '4rem'
 const APP_SIDEBAR_WIDTH = 300
 const PRIDE_FUNDRAISER_END_DATE = new Date('2026-07-01T00:00:00Z').getTime()
 const credentials = ref()
@@ -275,7 +273,7 @@ const tauriApiClient = new TauriModrinthClient({
 	],
 })
 provideModrinthClient(tauriApiClient)
-const { data: authenticatedModrinthUser } = useQuery({
+useQuery({
 	queryKey: computed(() => ['authenticated-user', 'campaigns', credentials.value?.user?.id]),
 	queryFn: () => tauriApiClient.labrinth.users_v3.getAuthenticated(),
 	enabled: () => !!credentials.value?.session,
@@ -296,7 +294,7 @@ providePageContext({
 	showAds: ref(false),
 	adConsentAvailable: ref(false),
 	floatingActionBarOffsets: {
-		left: ref(APP_LEFT_NAV_WIDTH),
+		left: ref('0px'),
 		right: computed(() => (sidebarVisible.value ? `${APP_SIDEBAR_WIDTH}px` : '0px')),
 	},
 	featureFlags: {
@@ -571,7 +569,7 @@ async function setupApp() {
 		native_decorations,
 		theme,
 		locale,
-		telemetry,
+		telemetry: _telemetry,
 		hide_nametag_skins_page,
 		advanced_rendering,
 		toggle_sidebar,
@@ -1765,8 +1763,15 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	<div
 		v-if="stateInitialized"
 		class="app-grid-layout relative"
-		:class="{ 'disable-advanced-rendering': !appTheme.advancedRendering }"
+		:class="{
+			'disable-advanced-rendering': !appTheme.advancedRendering,
+			'sidebar-enabled': sidebarVisible,
+		}"
 	>
+		<InteractiveDotBackground
+			:animated="appTheme.advancedRendering"
+			:right-inset="sidebarVisible ? APP_SIDEBAR_WIDTH : 0"
+		/>
 		<Transition name="fade">
 			<div
 				v-if="restarting"
@@ -1807,9 +1812,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 			@saved="onCreationIconSaved"
 		/>
 		<UnknownPackWarningModal ref="unknownPackWarningModal" />
-		<div
-			class="app-grid-navbar bg-bg-raised flex flex-col p-[0.5rem] pt-0 gap-[0.25rem] w-[--left-bar-width]"
-		>
+		<div class="app-grid-navbar">
 			<NavButton
 				v-tooltip.right="formatMessage(messages.home)"
 				to="/"
@@ -1849,7 +1852,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 				<ImageIcon />
 			</NavButton>
 			<suspense>
-				<QuickInstanceSwitcher>
+				<QuickInstanceSwitcher horizontal>
 					<NavButton
 						v-tooltip.right="formatMessage(messages.createNewInstance)"
 						:to="() => installationModal?.show()"
@@ -1989,22 +1992,8 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 			'disable-advanced-rendering': !appTheme.advancedRendering,
 		}"
 	>
-		<InteractiveDotBackground
-			:animated="appTheme.advancedRendering"
-			:right-inset="sidebarVisible ? APP_SIDEBAR_WIDTH : 0"
-		/>
 		<div class="app-viewport flex-grow router-view">
 			<SurveyPopup />
-			<div
-				class="loading-indicator-container h-8 fixed z-50 pointer-events-none"
-				:style="{
-					top: 'calc(var(--top-bar-height))',
-					left: 'calc(var(--left-bar-width))',
-					width: 'calc(100% - var(--left-bar-width) - var(--right-bar-width))',
-				}"
-			>
-				<LoadingBar position="absolute" />
-			</div>
 			<div
 				v-if="appSettings.featureFlags.page_path"
 				class="absolute bottom-0 left-0 m-2 bg-tooltip-bg text-tooltip-text font-semibold rounded-full px-2 py-1 text-xs z-50"
@@ -2013,7 +2002,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 			</div>
 			<div
 				id="background-teleport-target"
-				class="absolute h-full -z-10 rounded-tl-[--radius-xl] overflow-hidden"
+				class="absolute h-full -z-10 overflow-hidden"
 				:style="{
 					width: 'calc(100% - var(--right-bar-width))',
 				}"
@@ -2040,14 +2029,24 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 			<RouterView v-slot="{ Component }">
 				<template v-if="Component">
 					<Suspense @pending="onSuspensePending" @resolve="onSuspenseResolve">
-						<component :is="Component"></component>
+						<Transition name="page-transition">
+							<component :is="Component" :key="route.path"></component>
+						</Transition>
 					</Suspense>
 				</template>
 			</RouterView>
 		</div>
+		<div v-show="sidebarVisible" class="w-[--right-bar-width] shrink-0 pointer-events-none"></div>
 		<div
-			class="app-sidebar mt-px shrink-0 flex flex-col border-0 border-l-[1px] border-[--brand-gradient-border] border-solid"
+			v-show="sidebarVisible"
+			class="app-sidebar shrink-0 flex flex-col border-0 border-l-[1px] border-[--brand-gradient-border] border-solid"
 		>
+			<div
+				data-tauri-drag-region
+				class="app-sidebar-header h-[--top-bar-height] shrink-0 flex items-center justify-end px-3 border-0 border-b-[1px] border-[--liquid-glass-border] border-solid"
+			>
+				<div class="shrink-0 w-[var(--window-controls-width,100px)] pointer-events-none"></div>
+			</div>
 			<div
 				v-overlay-scrollbars="sidebarOverlayScrollbarsOptions"
 				class="app-sidebar-scrollable flex-grow shrink relative"
@@ -2151,37 +2150,134 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 .app-grid-layout,
 .app-contents {
 	--top-bar-height: 3rem;
-	--left-bar-width: 4rem;
+	--left-bar-width: 0rem;
+	--navigation-bar-height: 4rem;
+	--content-top-offset: calc(var(--top-bar-height) + var(--navigation-bar-height));
 	--right-bar-width: 300px;
 }
 
 .app-grid-layout {
-	display: grid;
-	grid-template: 'status status' 'nav dummy';
-	grid-template-columns: auto 1fr;
-	grid-template-rows: auto minmax(0, 1fr);
 	position: relative;
-	//z-index: 0;
-	background-color: var(--color-raised-bg);
+	isolation: isolate;
+	background-color: var(--color-bg);
 	height: 100vh;
 }
 
+.app-grid-layout.sidebar-enabled::after {
+	content: '';
+	position: absolute;
+	z-index: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: var(--right-bar-width);
+	pointer-events: none;
+	background: var(--liquid-glass-bg);
+	border-left: 1px solid var(--liquid-glass-border);
+	box-shadow: var(--liquid-glass-shadow);
+	backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+	-webkit-backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+}
+
 .app-grid-navbar {
-	grid-area: nav;
-	min-height: 0;
-	position: relative;
-	z-index: 2;
+	position: absolute;
+	z-index: 40;
+	display: flex;
+	gap: 0.25rem;
+	padding: 0.5rem;
+	box-sizing: border-box;
+	background: var(--liquid-glass-bg);
+	border: 1px solid var(--liquid-glass-border);
+	box-shadow: var(--liquid-glass-shadow);
+	backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+	-webkit-backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+	top: calc(var(--top-bar-height) + 0.75rem);
+	left: 0.5rem;
+	right: 0.5rem;
+	height: calc(var(--navigation-bar-height) - 0.5rem);
+	flex-direction: row;
+	align-items: center;
+	border-radius: 1rem;
 
 	> :deep(*) {
 		flex-shrink: 0;
 	}
 }
 
+.sidebar-enabled .app-grid-navbar {
+	right: calc(var(--right-bar-width, 300px) + 0.5rem);
+}
+
+.app-grid-navbar :deep(.nav-button.router-link-active)::before,
+.app-grid-navbar :deep(.nav-button.subpage-active)::before {
+	opacity: 0 !important;
+}
+
+.app-grid-navbar :deep(.nav-button) {
+	transition: color 120ms ease-out;
+}
+
+.app-grid-navbar :deep(.nav-button:hover),
+.app-grid-navbar :deep(.nav-button.router-link-active),
+.app-grid-navbar :deep(.nav-button.subpage-active) {
+	background-color: transparent !important;
+}
+
+.app-grid-navbar :deep(.nav-button.router-link-active svg),
+.app-grid-navbar :deep(.nav-button.subpage-active svg) {
+	filter: none;
+}
+
+.page-transition-enter-active {
+	transition: opacity 120ms ease-out;
+}
+
+.page-transition-leave-active {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	transition: opacity 80ms ease-in;
+}
+
+.page-transition-enter-from {
+	opacity: 0;
+}
+
+.page-transition-leave-to {
+	opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.app-grid-navbar :deep(.nav-button),
+	.page-transition-enter-active,
+	.page-transition-leave-active {
+		transition: none;
+	}
+}
+
 .app-grid-statusbar {
-	grid-area: status;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
 	padding-right: var(--window-controls-width, 0px);
-	position: relative;
 	z-index: 2;
+	background: var(--liquid-glass-bg) !important;
+	border-bottom: 1px solid var(--liquid-glass-border);
+	box-shadow: var(--liquid-glass-shadow);
+	backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+	-webkit-backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+}
+
+.sidebar-enabled .app-grid-statusbar {
+	right: var(--right-bar-width, 300px);
+	padding-right: 0.75rem;
 }
 
 [data-tauri-drag-region-exclude] {
@@ -2193,12 +2289,11 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	z-index: 1;
 	isolation: isolate;
 	left: var(--left-bar-width);
-	top: var(--top-bar-height);
+	top: var(--content-top-offset);
 	right: 0;
 	bottom: 0;
-	height: calc(100vh - var(--top-bar-height));
-	background-color: var(--color-bg);
-	border-top-left-radius: var(--radius-xl);
+	height: calc(100vh - var(--content-top-offset));
+	background-color: transparent;
 
 	display: grid;
 	grid-template-columns: 1fr 0px;
@@ -2209,17 +2304,22 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	}
 }
 
-.loading-indicator-container {
-	border-top-left-radius: var(--radius-xl);
-	overflow: hidden;
-}
-
 .app-sidebar {
-	overflow: visible;
-	width: 300px;
-	position: relative;
-	height: calc(100vh - var(--top-bar-height));
-	background: var(--brand-gradient-bg);
+	overflow: hidden;
+	width: var(--right-bar-width, 300px);
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	height: 100vh;
+	z-index: 45;
+	background: var(--liquid-glass-bg);
+	border-left: 1px solid var(--liquid-glass-border);
+	box-shadow: var(--liquid-glass-shadow);
+	backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+	-webkit-backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
 
 	--color-button-bg: var(--brand-gradient-button);
 	--surface-4: var(--brand-gradient-button);
@@ -2227,6 +2327,16 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	--surface-5: var(--brand-gradient-border);
 	--color-divider: var(--brand-gradient-border);
 	--color-divider-dark: var(--brand-gradient-border);
+}
+
+.app-sidebar-header {
+	background: var(--liquid-glass-bg);
+	border-bottom: 1px solid var(--liquid-glass-border);
+}
+
+.app-sidebar-scrollable {
+	height: calc(100vh - var(--top-bar-height));
+	overflow: auto;
 }
 
 .disable-advanced-rendering {
@@ -2269,13 +2379,14 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	content: '';
 	position: fixed;
 	left: var(--left-bar-width);
-	top: var(--top-bar-height);
+	top: var(--content-top-offset);
 	right: calc(-1 * var(--left-bar-width));
 	bottom: calc(-1 * var(--left-bar-width));
-	border-radius: var(--radius-xl);
 	box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.1) inset;
 	border-color: var(--surface-5);
 	border-width: 1px;
+	border-top-width: 0;
+	border-left-width: 0;
 	border-style: solid;
 	pointer-events: none;
 }
@@ -2357,6 +2468,18 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 
 .app-grid-statusbar {
 	padding-left: 0.25rem;
+}
+
+html.dark-mode .modal-overlay.standard {
+	background: linear-gradient(180deg, rgb(10 11 12 / 58%) 0%, rgb(3 4 5 / 76%) 100%);
+}
+
+html.oled-mode .modal-overlay.standard {
+	background: linear-gradient(180deg, rgb(7 18 15 / 56%) 0%, rgb(2 8 7 / 76%) 100%);
+}
+
+html.light-mode .modal-overlay.standard {
+	background: linear-gradient(180deg, rgb(57 43 47 / 34%) 0%, rgb(31 23 26 / 48%) 100%);
 }
 
 .mac-traffic-lights {

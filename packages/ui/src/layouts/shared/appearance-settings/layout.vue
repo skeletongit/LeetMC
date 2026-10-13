@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Toggle from '#ui/components/base/Toggle.vue'
+import Slider from '#ui/components/base/Slider.vue'
 import { useVIntl } from '#ui/composables'
 
 import AppearanceSettingsThemeSelector from './components/appearance-settings-theme-selector.vue'
@@ -17,6 +18,8 @@ const themeOptions = theme.options
 const systemTheme = theme.system
 const preferredDarkTheme = theme.preferredDark
 const advancedRendering = appearance.advancedRendering.value
+const liquidGlassIntensity = appearance.liquidGlassIntensity
+const liquidGlassIntensityValue = liquidGlassIntensity?.value
 const nativeDecorations = appearance.nativeDecorations
 const nativeDecorationsValue = nativeDecorations?.value
 const projectLayouts = appearance.projectLayouts
@@ -48,6 +51,27 @@ const sidebarPreferenceValues = sidebarPreferences?.value
 				:preferred-dark-theme="preferredDarkTheme"
 				@update:model-value="theme.update"
 			/>
+
+			<div v-if="liquidGlassIntensity" class="mt-6">
+				<h3 id="liquid-glass-intensity-label" class="m-0 text-lg font-semibold text-contrast">
+					{{ formatMessage(messages.liquidGlassTitle) }}
+				</h3>
+				<p class="mb-2 mt-1 text-secondary">
+					{{ formatMessage(messages.liquidGlassDescription) }}
+				</p>
+				<Slider
+					:model-value="liquidGlassIntensityValue ?? 100"
+					:min="0"
+					:max="100"
+					:step="1"
+					:snap-points="[0, 25, 50, 75, 100]"
+					:snap-range="4"
+					min-label="0%"
+					max-label="100%"
+					:aria-label="formatMessage(messages.liquidGlassTitle)"
+					@update:model-value="liquidGlassIntensity.update"
+				/>
+			</div>
 		</section>
 
 		<section v-if="projectLayouts" class="mt-8 border-0 border-t border-solid border-divider pt-6">

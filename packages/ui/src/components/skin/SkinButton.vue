@@ -117,7 +117,7 @@ watch(
 
 		<span
 			v-if="$slots['overlay-buttons'] && !disabled"
-			class="pointer-events-none absolute inset-x-0 bottom-3 z-30 flex translate-y-2 items-center justify-start gap-1.5 px-3 opacity-0 transition-all duration-200 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100"
+			class="pointer-events-none absolute inset-x-0 bottom-3 z-30 flex min-w-0 max-w-full translate-y-2 items-center justify-start gap-1.5 px-3 opacity-0 transition-all duration-200 group-focus-within:translate-y-0 group-focus-within:opacity-100 group-hover:translate-y-0 group-hover:opacity-100"
 		>
 			<slot name="overlay-buttons" />
 		</span>
@@ -152,6 +152,7 @@ watch(
 
 .skin-button {
 	aspect-ratio: 31 / 40;
+	container-type: inline-size;
 	border-color: var(--surface-4);
 	border-radius: 20px;
 	background: var(--surface-3);

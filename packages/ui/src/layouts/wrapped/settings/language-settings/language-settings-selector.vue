@@ -49,18 +49,6 @@ const messages = defineMessages({
 		id: 'settings.language.categories.search-result',
 		defaultMessage: 'Search results',
 	},
-	coverageLabel: {
-		id: 'settings.language.coverage.label',
-		defaultMessage: '{percentage}% supported',
-	},
-	appCoverageTooltip: {
-		id: 'settings.language.coverage.app-tooltip',
-		defaultMessage: 'About {percentage}% of the Modrinth App is available in this language.',
-	},
-	websiteCoverageTooltip: {
-		id: 'settings.language.coverage.website-tooltip',
-		defaultMessage: 'About {percentage}% of the website is available in this language.',
-	},
 })
 
 const localeMetas = buildLocaleMessages(metaLocaleModules)
@@ -74,7 +62,6 @@ type LocaleInfo = {
 	translatedName: string
 	flagUrl?: string
 	searchTerms?: string[]
-	coverage?: LanguageCoverageStats
 }
 
 function getFlagUrl(tag: string): string | undefined {
@@ -101,11 +88,10 @@ const $locales = computed(() => {
 			translatedName,
 			flagUrl: getFlagUrl(tag),
 			searchTerms,
-			coverage: props.coverageByLocale?.[tag],
 		})
 	}
 
-	return result.sort((a, b) => (b.coverage?.percentage ?? -1) - (a.coverage?.percentage ?? -1))
+	return result.sort((a, b) => a.displayName.localeCompare(b.displayName))
 })
 
 const $query = ref('')
@@ -186,20 +172,8 @@ function showTranslatedName(loc: LocaleInfo): boolean {
 }
 
 function getItemLabel(loc: LocaleInfo) {
-	const coverageLabel = loc.coverage
-		? `. ${formatMessage(messages.coverageLabel, { percentage: loc.coverage.percentage })}`
-		: ''
 	const translatedName = showTranslatedName(loc) ? `. ${loc.translatedName}` : ''
-	return `${loc.displayName}${translatedName}${coverageLabel}`
-}
-
-function getCoverageTooltip(coverage: LanguageCoverageStats): string {
-	const message =
-		props.product === 'app' ? messages.appCoverageTooltip : messages.websiteCoverageTooltip
-
-	return formatMessage(message, {
-		percentage: coverage.percentage,
-	})
+	return `${loc.displayName}${translatedName}`
 }
 
 function getCategoryName(category: Category): string {
@@ -279,14 +253,6 @@ function getCategoryName(category: Category): string {
 							>
 								{{ loc.translatedName }}
 							</span>
-						</span>
-
-						<span
-							v-if="loc.coverage"
-							v-tooltip="getCoverageTooltip(loc.coverage)"
-							class="ml-auto shrink-0 text-xs font-normal text-secondary sm:text-sm"
-						>
-							{{ loc.coverage.percentage }}%
 						</span>
 					</CheckCircleButton>
 				</template>

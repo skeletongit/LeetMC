@@ -34,6 +34,12 @@ import { showInstanceInFolder } from '@/helpers/utils'
 import { instanceListQueryOptions } from '@/pages/instance/query-options'
 
 const ITEM_SIZE = 52
+const props = defineProps({
+	horizontal: {
+		type: Boolean,
+		default: false,
+	},
+})
 const { handleError } = injectNotificationManager()
 const { notifySharedInstanceError, notifySharedInstanceUnavailable } = useSharedInstanceErrors()
 const instancesQuery = useQuery(instanceListQueryOptions())
@@ -82,14 +88,16 @@ const showOverdrag = ref(false)
 const updateMaxAuto = () => {
 	if (!container.value) return
 	const rem = Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
-	const dividerHeight = rem + 1
 	const gap = rem / 4
-	const footerHeight = (footer.value?.clientHeight ?? 0) + gap
+	const dividerSize = rem + 1
+	const footerSize =
+		(props.horizontal ? footer.value?.clientWidth : footer.value?.clientHeight) ?? 0
+	const containerSize = props.horizontal
+		? container.value.clientWidth
+		: container.value.clientHeight
 	maxAuto.value = Math.max(
 		0,
-		Math.floor(
-			(container.value.clientHeight - footerHeight - 2 * dividerHeight - gap) / (3 * rem + gap),
-		),
+		Math.floor((containerSize - footerSize - gap - 2 * dividerSize) / (3 * rem + gap)),
 	)
 }
 
@@ -113,7 +121,7 @@ const nudgeLimit = (delta) => {
 	setLimit(target)
 }
 
-let dragStartY = 0
+let dragStartPosition = 0
 let dragStartCount = 0
 let wasOverdragging = false
 let overdragTimeout = null
@@ -145,7 +153,7 @@ const onDividerPointerDown = (event) => {
 	dragging.value = true
 	wasOverdragging = false
 	clearOverdragFlash()
-	dragStartY = event.clientY
+	dragStartPosition = props.horizontal ? event.clientX : event.clientY
 	dragStartCount = visibleCount.value
 	document.body.classList.add('quick-instance-dragging')
 	event.currentTarget.setPointerCapture(event.pointerId)
@@ -155,7 +163,8 @@ const onDividerPointerMove = (event) => {
 	if (!dragging.value) {
 		return
 	}
-	const delta = event.clientY - dragStartY
+	const currentPosition = props.horizontal ? event.clientX : event.clientY
+	const delta = currentPosition - dragStartPosition
 	const target = dragStartCount + Math.round(delta / ITEM_SIZE)
 	const isOverdragging = target < 0 || target > maxAuto.value
 	if (isOverdragging && !wasOverdragging) {
@@ -324,17 +333,26 @@ function openContextMenu(event, instance) {
 </script>
 
 <template>
-	<div ref="container" class="flex min-h-0 flex-1 flex-col gap-1">
+	<div
+		ref="container"
+		class="quick-instance-container flex min-h-0 flex-1 gap-1"
+		:class="horizontal ? 'horizontal min-w-0 flex-row items-center' : 'flex-col'"
+	>
 		<Transition name="top-divider">
 			<div
 				v-if="recentInstances.length > 0"
 				class="top-divider shrink-0 flex items-center justify-center overflow-hidden"
 			>
-				<div class="h-px w-8 bg-surface-5 shrink-0"></div>
+				<div :class="horizontal ? 'h-8 w-px' : 'h-px w-8'" class="bg-surface-5 shrink-0"></div>
 			</div>
 		</Transition>
 		<div :aria-label="formatMessage(messages.title)">
-			<TransitionGroup name="quick-instance" tag="div" class="flex shrink-0 flex-col items-center">
+			<TransitionGroup
+				name="quick-instance"
+				tag="div"
+				class="flex shrink-0 items-center"
+				:class="horizontal ? 'flex-row' : 'flex-col'"
+			>
 				<NavButton
 					v-for="instance in recentInstances"
 					:key="instance.id"
@@ -363,13 +381,20 @@ function openContextMenu(event, instance) {
 		<div
 			v-tooltip.right="dividerTooltip"
 			role="separator"
-			aria-orientation="horizontal"
+			:aria-orientation="horizontal ? 'vertical' : 'horizontal'"
 			:tabindex="canDrag ? 0 : undefined"
 			:aria-valuemin="canDrag ? 0 : undefined"
 			:aria-valuemax="canDrag ? maxVisible : undefined"
 			:aria-valuenow="canDrag ? visibleCount : undefined"
-			class="flex shrink-0 items-center justify-center py-2 select-none"
-			:class="canDrag ? 'cursor-ns-resize touch-none group' : ''"
+			class="flex shrink-0 items-center justify-center select-none"
+			:class="[
+				horizontal ? 'px-2' : 'py-2',
+				canDrag
+					? horizontal
+						? 'cursor-ew-resize touch-none group'
+						: 'cursor-ns-resize touch-none group'
+					: '',
+			]"
 			@pointerdown="onDividerPointerDown"
 			@pointermove="onDividerPointerMove"
 			@pointerup="onDividerPointerUp"
@@ -378,17 +403,22 @@ function openContextMenu(event, instance) {
 			@keydown.down.prevent="nudgeLimit(1)"
 		>
 			<div
-				class="h-px w-8 transition-colors duration-200"
-				:class="
+				class="transition-colors duration-200"
+				:class="[
+					horizontal ? 'h-8 w-px' : 'h-px w-8',
 					showOverdrag
 						? 'bg-red'
 						: canDrag
 							? 'bg-surface-5 group-hover:bg-secondary group-focus-visible:bg-secondary'
-							: 'bg-surface-5'
-				"
+							: 'bg-surface-5',
+				]"
 			></div>
 		</div>
-		<div ref="footer" class="flex shrink-0 flex-col items-center">
+		<div
+			ref="footer"
+			class="flex shrink-0 items-center"
+			:class="horizontal ? 'flex-row' : 'flex-col'"
+		>
 			<slot />
 		</div>
 	</div>
@@ -401,6 +431,11 @@ function openContextMenu(event, instance) {
 <style scoped lang="scss">
 .top-divider {
 	height: calc(1rem + 1px);
+}
+
+.horizontal .top-divider {
+	width: calc(1rem + 1px);
+	height: auto;
 }
 
 .top-divider-enter-active,

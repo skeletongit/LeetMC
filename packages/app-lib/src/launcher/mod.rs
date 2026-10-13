@@ -34,6 +34,7 @@ mod args;
 pub(crate) mod hooks;
 
 pub mod download;
+pub mod offline_skin_server;
 pub mod quick_play_version;
 
 // All nones -> disallowed
@@ -1100,6 +1101,33 @@ pub async fn launch_minecraft(
 
     let rpc_server = RpcServerBuilder::new().launch().await?;
 
+	let offline_agent_arg = if credentials.is_offline() {
+		match offline_skin_server::ensure_authlib_injector(&state.directories).await {
+			Ok(injector_path) => {
+				match offline_skin_server::SkinServer::get_or_init().await {
+					Ok(server) => {
+						let injector_canonical = dunce::canonicalize(&injector_path).unwrap_or(injector_path);
+						Some(format!(
+							"-javaagent:{}={}",
+							injector_canonical.to_string_lossy(),
+							format!("http://127.0.0.1:{}", server.port())
+						))
+					}
+					Err(e) => {
+						tracing::warn!("Failed to start offline skin server: {e}");
+						None
+					}
+				}
+			}
+			Err(e) => {
+				tracing::warn!("Failed to ensure authlib-injector: {e}");
+				None
+			}
+		}
+	} else {
+		None
+	};
+
     command.args(
         args::get_jvm_arguments(
             args.get(&d::minecraft::ArgumentType::Jvm)
@@ -1115,6 +1143,7 @@ pub async fn launch_minecraft(
                 minecraft_updated,
             )?,
             &main_class_path,
+            offline_agent_arg.as_deref(),
             &version_jar,
             *memory,
             Vec::from(java_args),

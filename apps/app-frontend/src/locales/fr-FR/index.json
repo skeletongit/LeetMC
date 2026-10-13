@@ -1265,9 +1265,6 @@
   "app.nav.switch-account": {
     "message": "Changer de compte"
   },
-  "app.nav.upgrade-to-modrinth-plus": {
-    "message": "Passer à Modrinth+"
-  },
   "app.nav.view-profile": {
     "message": "Voir le profil"
   },
@@ -2621,12 +2618,6 @@
   "app.settings.privacy.discord-rich-presence.title": {
     "message": "Discord Rich Presence"
   },
-  "app.settings.privacy.telemetry.description": {
-    "message": "Modrinth collecte des données d'analyse et d'utilisation anonymes afin d'améliorer l'expérience utilisateur et de personnaliser votre expérience. En désactivant cette option, vous choisissez de ne plus participer et vos données ne seront plus collectées."
-  },
-  "app.settings.privacy.telemetry.title": {
-    "message": "Télémétrie"
-  },
   "app.settings.resource-management.always-show-copy-details.description": {
     "message": "Afficher l’action Copier les détails lorsqu’une installation est en attente ou en cours. Elle est toujours disponible pour les installations échouées ou interrompues."
   },
@@ -2887,6 +2878,153 @@
   },
   "app.skins.apply-button": {
     "message": "Appliquer"
+  },
+  "app.skins.catalog-banner.button": {
+    "message": "Recherche et catalogue"
+  },
+  "app.skins.catalog-banner.description": {
+    "message": "Recherchez des skins de joueurs ou parcourez un immense catalogue en un clic"
+  },
+  "app.skins.catalog-banner.title": {
+    "message": "Catalogue de skins (NameMC)"
+  },
+  "app.skins.catalog.arm.classic": {
+    "message": "Classique"
+  },
+  "app.skins.catalog.arm.slim": {
+    "message": "Fin"
+  },
+  "app.skins.catalog.button.download-png": {
+    "message": "Télécharger le PNG"
+  },
+  "app.skins.catalog.button.equip": {
+    "message": "Équiper le skin"
+  },
+  "app.skins.catalog.button.save-to-library": {
+    "message": "Enregistrer dans la bibliothèque"
+  },
+  "app.skins.catalog.download.error-text": {
+    "message": "Impossible de télécharger le fichier du skin"
+  },
+  "app.skins.catalog.download.error-title": {
+    "message": "Erreur de téléchargement"
+  },
+  "app.skins.catalog.empty": {
+    "message": "Aucun skin trouvé. Essayez avec un autre tag."
+  },
+  "app.skins.catalog.equip.error-title": {
+    "message": "Impossible d’équiper le skin"
+  },
+  "app.skins.catalog.equip.success-text": {
+    "message": "Le skin « {name} » a été équipé sur votre compte."
+  },
+  "app.skins.catalog.equip.success-title": {
+    "message": "Skin équipé !"
+  },
+  "app.skins.catalog.error.catalog-default": {
+    "message": "Impossible de charger le catalogue de skins"
+  },
+  "app.skins.catalog.error.catalog-title": {
+    "message": "Erreur du catalogue"
+  },
+  "app.skins.catalog.error.not-selected": {
+    "message": "Aucun skin sélectionné"
+  },
+  "app.skins.catalog.error.player-default": {
+    "message": "Impossible de trouver le skin du joueur"
+  },
+  "app.skins.catalog.error.player-title": {
+    "message": "Erreur de recherche du joueur"
+  },
+  "app.skins.catalog.pagination.info": {
+    "message": "Page {page} sur {totalPages}"
+  },
+  "app.skins.catalog.player-search.button": {
+    "message": "Rechercher un skin"
+  },
+  "app.skins.catalog.player-search.found": {
+    "message": "Skin trouvé et prêt à être équipé !"
+  },
+  "app.skins.catalog.player-search.hint": {
+    "message": "Saisissez le nom d’un joueur pour charger instantanément son skin depuis Minecraft !"
+  },
+  "app.skins.catalog.player-search.model": {
+    "message": "Modèle : {model}"
+  },
+  "app.skins.catalog.player-search.not-found": {
+    "message": "Joueur introuvable ou sans skin personnalisé."
+  },
+  "app.skins.catalog.player-search.placeholder": {
+    "message": "Saisissez le nom du joueur (par ex. Notch ou Dream) ou un lien NameMC"
+  },
+  "app.skins.catalog.player-search.searching": {
+    "message": "Recherche sur Mojang et NameMC..."
+  },
+  "app.skins.catalog.preview.arm-style": {
+    "message": "Type de bras :"
+  },
+  "app.skins.catalog.preview.select-hint": {
+    "message": "Sélectionnez un skin"
+  },
+  "app.skins.catalog.preview.title": {
+    "message": "Aperçu"
+  },
+  "app.skins.catalog.save.error-title": {
+    "message": "Impossible d’enregistrer le skin"
+  },
+  "app.skins.catalog.save.success-text": {
+    "message": "Le skin « {name} » a été ajouté à votre bibliothèque."
+  },
+  "app.skins.catalog.save.success-title": {
+    "message": "Skin enregistré !"
+  },
+  "app.skins.catalog.search.placeholder": {
+    "message": "Rechercher par tags (anime, creeper, chevalier, garçon, PvP...)"
+  },
+  "app.skins.catalog.tab.catalog": {
+    "message": "Catalogue et tendances"
+  },
+  "app.skins.catalog.tab.player": {
+    "message": "Recherche de joueur"
+  },
+  "app.skins.catalog.tags.all": {
+    "message": "Tous"
+  },
+  "app.skins.catalog.tags.anime": {
+    "message": "Anime"
+  },
+  "app.skins.catalog.tags.boy": {
+    "message": "Garçon"
+  },
+  "app.skins.catalog.tags.cat": {
+    "message": "Chats"
+  },
+  "app.skins.catalog.tags.cool": {
+    "message": "Stylés"
+  },
+  "app.skins.catalog.tags.creeper": {
+    "message": "Creeper"
+  },
+  "app.skins.catalog.tags.cute": {
+    "message": "Mignons"
+  },
+  "app.skins.catalog.tags.femboy": {
+    "message": "Femboy"
+  },
+  "app.skins.catalog.tags.girl": {
+    "message": "Fille"
+  },
+  "app.skins.catalog.tags.knight": {
+    "message": "Chevalier"
+  },
+  "app.skins.catalog.tags.pvp": {
+    "message": "PvP"
+  },
+  "app.skins.catalog.tags.steve": {
+    "message": "Steve"
+  },
+  "app.skins.catalog.title": {
+    "message": "Catalogue de skins (NameMC)"
   },
   "app.skins.delete-button": {
     "message": "Supprimer le skin"
@@ -3190,9 +3328,6 @@
   },
   "app.welcome-screen.import-from-launcher": {
     "message": "Importer à partir d'un launcher"
-  },
-  "app.welcome-screen.quick-create-hint": {
-    "message": "Appuyez sur <shortcut>N</shortcut> pour rapidement créer une instance"
   },
   "app.welcome-screen.title": {
     "message": "Bienvenue sur Modrinth"
@@ -4072,6 +4207,42 @@
   },
   "minecraft-account.add-account": {
     "message": "Ajouter un compte"
+  },
+  "minecraft-account.add-offline-account": {
+    "message": "Ajouter un compte hors ligne"
+  },
+  "minecraft-account.offline-account-label": {
+    "message": "Compte hors ligne"
+  },
+  "minecraft-account.offline-badge": {
+    "message": "Hors ligne"
+  },
+  "minecraft-account.offline-login.description": {
+    "message": "Saisissez un nom de joueur pour jouer sans compte Microsoft. Vous pouvez jouer en solo, sur des serveurs hors ligne et configurer les skins."
+  },
+  "minecraft-account.offline-login.error.characters": {
+    "message": "Le nom ne peut contenir que des lettres latines, des chiffres et des tirets bas"
+  },
+  "minecraft-account.offline-login.error.length": {
+    "message": "Le nom doit comporter entre 3 et 16 caractères"
+  },
+  "minecraft-account.offline-login.error.required": {
+    "message": "Saisissez un nom de joueur"
+  },
+  "minecraft-account.offline-login.header": {
+    "message": "Connexion hors ligne"
+  },
+  "minecraft-account.offline-login.submit": {
+    "message": "Se connecter"
+  },
+  "minecraft-account.offline-login.username-label": {
+    "message": "Nom du joueur"
+  },
+  "minecraft-account.offline-login.username-placeholder": {
+    "message": "Par exemple, Steve"
+  },
+  "minecraft-required.offline-sign-in": {
+    "message": "Ajouter un compte hors ligne"
   },
   "minecraft-account.label": {
     "message": "Compte Minecraft"

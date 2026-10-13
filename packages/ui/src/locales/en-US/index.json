@@ -6071,15 +6071,6 @@
   "settings.language.categories.search-result": {
     "defaultMessage": "Search results"
   },
-  "settings.language.coverage.app-tooltip": {
-    "defaultMessage": "About {percentage}% of the Modrinth App is available in this language."
-  },
-  "settings.language.coverage.label": {
-    "defaultMessage": "{percentage}% supported"
-  },
-  "settings.language.coverage.website-tooltip": {
-    "defaultMessage": "About {percentage}% of the website is available in this language."
-  },
   "settings.language.description": {
     "defaultMessage": "Choose your preferred language for the {platform}. Translations are contributed by volunteers <crowdin-link>on Crowdin</crowdin-link>."
   },
@@ -6352,6 +6343,9 @@
   },
   "sharing.invite-players-toast.server-suffix": {
     "defaultMessage": "server."
+  },
+  "skins.preview.drag-to-rotate": {
+    "defaultMessage": "Drag to rotate"
   },
   "skins.select": {
     "defaultMessage": "Select skin"

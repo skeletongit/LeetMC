@@ -23,7 +23,7 @@ function toggle() {
 
 <template>
 	<SmartClickable
-		class="flex w-full flex-col overflow-clip rounded-2xl border border-solid border-surface-4 bg-surface-3"
+		class="liquid-glass-panel flex w-full flex-col overflow-clip rounded-2xl border border-solid border-surface-4 bg-surface-3"
 		:disabled="isToggleLocked"
 	>
 		<template #clickable>

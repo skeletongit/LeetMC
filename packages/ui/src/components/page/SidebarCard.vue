@@ -9,7 +9,7 @@ defineProps<{
 </script>
 <template>
 	<div
-		class="flex flex-col gap-3 p-4 pt-3"
+		class="liquid-glass-panel flex flex-col gap-3 p-4 pt-3"
 		:class="{
 			'card-shadow mb-4 last:mb-0 rounded-2xl bg-surface-3 border border-solid border-surface-4':
 				!hierarchicalSidebarAvailable,

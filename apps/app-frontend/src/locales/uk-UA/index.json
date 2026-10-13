@@ -1259,9 +1259,6 @@
   "app.nav.switch-account": {
     "message": "Змінити обліковий запис"
   },
-  "app.nav.upgrade-to-modrinth-plus": {
-    "message": "Покращитися до Modrinth+"
-  },
   "app.nav.view-profile": {
     "message": "Переглянути профіль"
   },
@@ -2615,12 +2612,6 @@
   "app.settings.privacy.discord-rich-presence.title": {
     "message": "Discord Rich Presence"
   },
-  "app.settings.privacy.telemetry.description": {
-    "message": "Modrinth збирає анонімізовану аналітику та дані про використання для покращення зручності та адаптації сервісу. Вимкнувши цю опцію, ви відмовляєтеся від збору, і ваші дані більше не збиратимуться."
-  },
-  "app.settings.privacy.telemetry.title": {
-    "message": "Телеметрія"
-  },
   "app.settings.resource-management.always-show-copy-details.description": {
     "message": "Показувати кнопку «Копіювати деталі», коли встановлення перебуває в черзі або виконується. Вона завжди доступна для невдалих або перерваних встановлень."
   },
@@ -3008,6 +2999,153 @@
   "app.skins.apply-button": {
     "message": "Застосувати"
   },
+  "app.skins.catalog-banner.button": {
+    "message": "Пошук і каталог"
+  },
+  "app.skins.catalog-banner.description": {
+    "message": "Шукайте скіни гравців або переглядайте великий каталог одним натисканням"
+  },
+  "app.skins.catalog-banner.title": {
+    "message": "Каталог скінів (NameMC)"
+  },
+  "app.skins.catalog.arm.classic": {
+    "message": "Класичні"
+  },
+  "app.skins.catalog.arm.slim": {
+    "message": "Тонкі"
+  },
+  "app.skins.catalog.button.download-png": {
+    "message": "Завантажити PNG"
+  },
+  "app.skins.catalog.button.equip": {
+    "message": "Одягнути скін"
+  },
+  "app.skins.catalog.button.save-to-library": {
+    "message": "Зберегти до бібліотеки"
+  },
+  "app.skins.catalog.download.error-text": {
+    "message": "Не вдалося завантажити файл скіна"
+  },
+  "app.skins.catalog.download.error-title": {
+    "message": "Помилка завантаження"
+  },
+  "app.skins.catalog.empty": {
+    "message": "Скінів не знайдено. Спробуйте пошукати за іншим тегом."
+  },
+  "app.skins.catalog.equip.error-title": {
+    "message": "Не вдалося одягнути скін"
+  },
+  "app.skins.catalog.equip.success-text": {
+    "message": "Скін «{name}» успішно встановлено для вашого облікового запису."
+  },
+  "app.skins.catalog.equip.success-title": {
+    "message": "Скін установлено!"
+  },
+  "app.skins.catalog.error.catalog-default": {
+    "message": "Не вдалося завантажити каталог скінів"
+  },
+  "app.skins.catalog.error.catalog-title": {
+    "message": "Помилка каталогу"
+  },
+  "app.skins.catalog.error.not-selected": {
+    "message": "Скін не вибрано"
+  },
+  "app.skins.catalog.error.player-default": {
+    "message": "Не вдалося знайти скін гравця"
+  },
+  "app.skins.catalog.error.player-title": {
+    "message": "Помилка пошуку гравця"
+  },
+  "app.skins.catalog.pagination.info": {
+    "message": "Сторінка {page} з {totalPages}"
+  },
+  "app.skins.catalog.player-search.button": {
+    "message": "Знайти скін"
+  },
+  "app.skins.catalog.player-search.found": {
+    "message": "Скін знайдено й готово до встановлення!"
+  },
+  "app.skins.catalog.player-search.hint": {
+    "message": "Введіть ім’я будь-якого гравця, щоб миттєво завантажити його скін із Minecraft!"
+  },
+  "app.skins.catalog.player-search.model": {
+    "message": "Модель: {model}"
+  },
+  "app.skins.catalog.player-search.not-found": {
+    "message": "Гравця не знайдено або він не має власного скіна."
+  },
+  "app.skins.catalog.player-search.placeholder": {
+    "message": "Введіть ім’я гравця (наприклад, Notch або Dream) чи посилання NameMC"
+  },
+  "app.skins.catalog.player-search.searching": {
+    "message": "Пошук у Mojang і NameMC..."
+  },
+  "app.skins.catalog.preview.arm-style": {
+    "message": "Тип рук:"
+  },
+  "app.skins.catalog.preview.select-hint": {
+    "message": "Виберіть скін"
+  },
+  "app.skins.catalog.preview.title": {
+    "message": "Попередній перегляд"
+  },
+  "app.skins.catalog.save.error-title": {
+    "message": "Не вдалося зберегти скін"
+  },
+  "app.skins.catalog.save.success-text": {
+    "message": "Скін «{name}» додано до вашої бібліотеки."
+  },
+  "app.skins.catalog.save.success-title": {
+    "message": "Скін збережено!"
+  },
+  "app.skins.catalog.search.placeholder": {
+    "message": "Пошук за тегами (аніме, кріпер, лицар, хлопець, PvP...)"
+  },
+  "app.skins.catalog.tab.catalog": {
+    "message": "Каталог і популярне"
+  },
+  "app.skins.catalog.tab.player": {
+    "message": "Пошук гравця"
+  },
+  "app.skins.catalog.tags.all": {
+    "message": "Усі"
+  },
+  "app.skins.catalog.tags.anime": {
+    "message": "Аніме"
+  },
+  "app.skins.catalog.tags.boy": {
+    "message": "Хлопець"
+  },
+  "app.skins.catalog.tags.cat": {
+    "message": "Коти"
+  },
+  "app.skins.catalog.tags.cool": {
+    "message": "Круті"
+  },
+  "app.skins.catalog.tags.creeper": {
+    "message": "Кріпер"
+  },
+  "app.skins.catalog.tags.cute": {
+    "message": "Милі"
+  },
+  "app.skins.catalog.tags.femboy": {
+    "message": "Фембой"
+  },
+  "app.skins.catalog.tags.girl": {
+    "message": "Дівчина"
+  },
+  "app.skins.catalog.tags.knight": {
+    "message": "Лицар"
+  },
+  "app.skins.catalog.tags.pvp": {
+    "message": "PvP"
+  },
+  "app.skins.catalog.tags.steve": {
+    "message": "Стів"
+  },
+  "app.skins.catalog.title": {
+    "message": "Каталог скінів (NameMC)"
+  },
   "app.skins.delete-button": {
     "message": "Видалити скін"
   },
@@ -3361,9 +3499,6 @@
   },
   "app.welcome-screen.import-prompt": {
     "message": "Змінили запускач?"
-  },
-  "app.welcome-screen.quick-create-hint": {
-    "message": "Натисніть <shortcut>N</shortcut> для створення примірника"
   },
   "app.welcome-screen.title": {
     "message": "Вітаємо в Modrinth"
@@ -4324,6 +4459,42 @@
   },
   "minecraft-account.add-account": {
     "message": "Додати обліковий запис"
+  },
+  "minecraft-account.add-offline-account": {
+    "message": "Додати офлайн-акаунт"
+  },
+  "minecraft-account.offline-account-label": {
+    "message": "Офлайн-акаунт"
+  },
+  "minecraft-account.offline-badge": {
+    "message": "Офлайн"
+  },
+  "minecraft-account.offline-login.description": {
+    "message": "Введіть ім’я гравця, щоб грати без облікового запису Microsoft. Ви зможете грати в одиночному режимі, на офлайн-серверах і налаштовувати скіни."
+  },
+  "minecraft-account.offline-login.error.characters": {
+    "message": "Ім’я може містити лише латинські літери, цифри та символи підкреслення"
+  },
+  "minecraft-account.offline-login.error.length": {
+    "message": "Ім’я має містити від 3 до 16 символів"
+  },
+  "minecraft-account.offline-login.error.required": {
+    "message": "Введіть ім’я гравця"
+  },
+  "minecraft-account.offline-login.header": {
+    "message": "Вхід в офлайн-акаунт"
+  },
+  "minecraft-account.offline-login.submit": {
+    "message": "Увійти"
+  },
+  "minecraft-account.offline-login.username-label": {
+    "message": "Ім’я гравця"
+  },
+  "minecraft-account.offline-login.username-placeholder": {
+    "message": "Наприклад, Steve"
+  },
+  "minecraft-required.offline-sign-in": {
+    "message": "Додати офлайн-акаунт"
   },
   "minecraft-account.label": {
     "message": "Обліковий запис Minecraft"

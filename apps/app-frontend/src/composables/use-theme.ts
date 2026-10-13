@@ -11,6 +11,7 @@ type NativeTheme = 'light' | 'dark'
 
 const PREFERRED_THEME_KEY = 'modrinth-theme'
 const PREFERRED_DARK_THEME_KEY = 'modrinth-preferred-dark-theme'
+const LIQUID_GLASS_INTENSITY_KEY = 'leetmc-liquid-glass-intensity'
 
 export function isDarkTheme(theme: string): theme is DarkTheme {
 	return (DARK_THEMES as readonly string[]).includes(theme)
@@ -48,9 +49,25 @@ function loadPreferredDarkTheme(): DarkTheme {
 	return 'dark'
 }
 
+function loadLiquidGlassIntensity(): number {
+	try {
+		const rawStored = window.localStorage.getItem(LIQUID_GLASS_INTENSITY_KEY)
+		const stored = rawStored === null ? Number.NaN : Number(rawStored)
+		if (Number.isFinite(stored)) {
+			return Math.max(0, Math.min(100, stored))
+		}
+	} catch {
+		// storage blocked or full
+	}
+
+	return 100
+}
+
 const preferred = ref<ColorTheme>(loadPreferredTheme())
 const preview = ref<ColorTheme | null>(null)
 const preferredDark = ref<DarkTheme>(loadPreferredDarkTheme())
+const liquidGlassIntensity = ref(loadLiquidGlassIntensity())
+const liquidGlassPreview = ref<number | null>(null)
 const advancedRendering = ref(true)
 const syncAcrossDevices = ref(false)
 const nativeThemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -63,6 +80,9 @@ const active = computed<Theme>(() => {
 
 	return native.value === 'light' ? 'light' : preferredDark.value
 })
+const activeLiquidGlassIntensity = computed(
+	() => liquidGlassPreview.value ?? liquidGlassIntensity.value,
+)
 
 nativeThemeQuery.addEventListener('change', (event) => {
 	native.value = event.matches ? 'dark' : 'light'
@@ -94,6 +114,26 @@ watch(preferredDark, (theme) => {
 		// storage blocked or full
 	}
 })
+
+watch(
+	liquidGlassIntensity,
+	(intensity) => {
+		try {
+			window.localStorage.setItem(LIQUID_GLASS_INTENSITY_KEY, String(intensity))
+		} catch {
+			// storage blocked or full
+		}
+	},
+	{ immediate: true },
+)
+
+watch(
+	activeLiquidGlassIntensity,
+	(intensity) => {
+		document.documentElement.style.setProperty('--liquid-glass-level', String(intensity / 100))
+	},
+	{ immediate: true },
+)
 
 watch(
 	active,
@@ -130,6 +170,8 @@ const theme = reactive({
 	preferred,
 	preview,
 	preferredDark,
+	liquidGlassIntensity,
+	liquidGlassPreview,
 	active,
 	native,
 	syncAcrossDevices,

@@ -39,12 +39,22 @@
 							<rect width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
 							<rect x="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
 							<rect y="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
-							<rect x="10.75" y="10.75" width="9.25" height="9.25" fill="black" fill-opacity="0.9" />
+							<rect
+								x="10.75"
+								y="10.75"
+								width="9.25"
+								height="9.25"
+								fill="black"
+								fill-opacity="0.9"
+							/>
 						</svg>
 						{{ formatMessage(messages.signIn) }}
 					</Button>
 				</div>
-				<Button class="w-full !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]" @click="openOffline">
+				<Button
+					class="w-full !bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]"
+					@click="openOffline"
+				>
 					<UserIcon />
 					{{ formatMessage(messages.offlineSignIn) }}
 				</Button>

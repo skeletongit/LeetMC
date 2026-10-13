@@ -115,8 +115,9 @@ pub fn get_jvm_arguments(
     libraries_path: &Path,
     log_configs_path: &Path,
     class_paths: &str,
-    agent_path: &Path,
-    version_name: &str,
+	agent_path: &Path,
+	offline_agent: Option<&str>,
+	version_name: &str,
     memory: MemorySettings,
     custom_args: Vec<String>,
     java_arch: &str,
@@ -180,6 +181,10 @@ pub fn get_jvm_arguments(
             })?
             .to_string_lossy()
     ));
+
+	if let Some(offline_agent) = offline_agent {
+		parsed_arguments.push(offline_agent.to_string());
+	}
 
     parsed_arguments
         .push(format!("-Dmodrinth.internal.ipc.host={}", ipc_addr.ip()));

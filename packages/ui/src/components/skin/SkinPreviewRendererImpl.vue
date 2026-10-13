@@ -11,10 +11,12 @@
 			:style="previewControlsPositionStyle"
 		>
 			<span
-				class="flex items-center justify-center gap-1.5 text-base font-medium leading-6 text-primary"
+				class="relative flex items-center justify-center text-base font-medium leading-6 text-primary"
 			>
-				<UnfoldHorizontalIcon class="size-5 shrink-0" />
-				Drag to rotate
+				<UnfoldHorizontalIcon
+					class="absolute right-[calc(100%+0.375rem)] top-1/2 size-5 shrink-0 -translate-y-1/2"
+				/>
+				<span class="min-w-0 text-center">{{ formatMessage(messages.dragToRotate) }}</span>
 			</span>
 		</div>
 		<div
@@ -131,7 +133,16 @@ import {
 } from '#ui/composables/skin-rendering'
 
 import { useDynamicFontSize } from '../../composables'
+import { defineMessages, useVIntl } from '../../composables/i18n'
 import { createRadialSpotlightShader, syncDamageFlashShader } from './skin-preview-shader'
+
+const { formatMessage } = useVIntl()
+const messages = defineMessages({
+	dragToRotate: {
+		id: 'skins.preview.drag-to-rotate',
+		defaultMessage: 'Drag to rotate',
+	},
+})
 
 const props = withDefaults(
 	defineProps<{

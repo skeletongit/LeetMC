@@ -4,7 +4,11 @@ import * as path from 'path'
 let REPO_ROOT_CACHE: string | null = null
 export function getRepoRoot(): string {
 	if (REPO_ROOT_CACHE) return REPO_ROOT_CACHE
-	return (REPO_ROOT_CACHE = execSync('git rev-parse --show-toplevel').toString().trim())
+	try {
+		return (REPO_ROOT_CACHE = execSync('git rev-parse --show-toplevel').toString().trim())
+	} catch {
+		return (REPO_ROOT_CACHE = path.resolve(__dirname, '../..'))
+	}
 }
 
 export function repoPath(...segments: string[]): string {

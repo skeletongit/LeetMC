@@ -1,4 +1,5 @@
 use crate::ErrorKind;
+use crate::State;
 use crate::util::fetch::INSECURE_REQWEST_CLIENT;
 use base64::Engine;
 use base64::prelude::{BASE64_STANDARD, BASE64_URL_SAFE_NO_PAD};
@@ -233,33 +234,60 @@ pub async fn login_offline(
 }
 
 pub async fn update_offline_profile_cache(
-    id: Uuid,
-    name: &str,
-    texture_key: &str,
-    skin_url: Url,
-    variant: MinecraftSkinVariant,
+	id: Uuid,
+	name: &str,
+	texture_key: &str,
+	skin_url: Url,
+	variant: MinecraftSkinVariant,
 ) {
-    let profile = MinecraftProfile {
-        id,
-        name: name.to_string(),
-        skins: vec![MinecraftSkin {
-            id: Uuid::new_v4(),
-            state: MinecraftCharacterExpressionState::Active,
-            url: Arc::new(skin_url),
-            texture_key: Some(Arc::from(texture_key)),
-            variant,
-            name: None,
-        }],
-        capes: vec![],
-        fetch_time: Some(Instant::now()),
-    };
-    let mut profile_cache = PROFILE_CACHE.lock().await;
-    profile_cache.insert(id, ProfileCacheEntry::Hit(Arc::new(profile)));
+	let profile = MinecraftProfile {
+		id,
+		name: name.to_string(),
+		skins: vec![MinecraftSkin {
+			id: Uuid::new_v4(),
+			state: MinecraftCharacterExpressionState::Active,
+			url: Arc::new(skin_url.clone()),
+			texture_key: Some(Arc::from(texture_key)),
+			variant,
+			name: None,
+		}],
+		capes: vec![],
+		fetch_time: Some(Instant::now()),
+	};
+	let mut profile_cache = PROFILE_CACHE.lock().await;
+	profile_cache.insert(id, ProfileCacheEntry::Hit(Arc::new(profile)));
+
+	if let Ok(state) = State::get().await {
+		crate::launcher::offline_skin_server::ensure_tables().await;
+		let user_id_hyphen = id.hyphenated().to_string();
+		let variant_str = match variant {
+			MinecraftSkinVariant::Classic => "CLASSIC",
+			MinecraftSkinVariant::Slim => "SLIM",
+			_ => "UNKNOWN",
+		};
+		let _ = sqlx::query(
+			"INSERT OR REPLACE INTO offline_equipped_skins (minecraft_user_uuid, texture_key, variant, url) VALUES (?, ?, ?, ?)"
+		)
+		.bind(&user_id_hyphen)
+		.bind(texture_key)
+		.bind(variant_str)
+		.bind(skin_url.as_str())
+		.execute(&state.pool)
+		.await;
+	}
 }
 
 pub async fn clear_offline_profile_cache(id: Uuid) {
-    let mut profile_cache = PROFILE_CACHE.lock().await;
-    profile_cache.remove(&id);
+	let mut profile_cache = PROFILE_CACHE.lock().await;
+	profile_cache.remove(&id);
+
+	if let Ok(state) = State::get().await {
+		let user_id_hyphen = id.hyphenated().to_string();
+		let _ = sqlx::query("DELETE FROM offline_equipped_skins WHERE minecraft_user_uuid = ?")
+			.bind(&user_id_hyphen)
+			.execute(&state.pool)
+			.await;
+	}
 }
 
 #[derive(Deserialize, Debug)]
@@ -421,12 +449,54 @@ impl Credentials {
         cache_intent: OnlineProfileCacheIntent,
     ) -> Option<Arc<MinecraftProfile>> {
         if self.is_offline() {
-            let profile_cache = PROFILE_CACHE.lock().await;
-            if let Some(ProfileCacheEntry::Hit(profile)) = profile_cache.get(&self.offline_profile.id) {
-                return Some(Arc::clone(profile));
-            }
-            return None;
-        }
+			let profile_cache = PROFILE_CACHE.lock().await;
+			if let Some(ProfileCacheEntry::Hit(profile)) = profile_cache.get(&self.offline_profile.id) {
+				return Some(Arc::clone(profile));
+			}
+			drop(profile_cache);
+
+			if let Ok(state) = State::get().await {
+				use sqlx::Row;
+				crate::launcher::offline_skin_server::ensure_tables().await;
+				let user_id_hyphen = self.offline_profile.id.hyphenated().to_string();
+				if let Ok(Some(row)) = sqlx::query("SELECT texture_key, variant, url FROM offline_equipped_skins WHERE minecraft_user_uuid = ?")
+					.bind(&user_id_hyphen)
+					.fetch_optional(&state.pool)
+					.await
+				{
+					let texture_key: String = row.try_get("texture_key").unwrap_or_default();
+					let variant_str: String = row.try_get("variant").unwrap_or_default();
+					let url_str: String = row.try_get("url").unwrap_or_default();
+					let variant = if variant_str.eq_ignore_ascii_case("SLIM") {
+						MinecraftSkinVariant::Slim
+					} else {
+						MinecraftSkinVariant::Classic
+					};
+					if let Ok(url) = Url::parse(&url_str) {
+						let profile = MinecraftProfile {
+							id: self.offline_profile.id,
+							name: self.offline_profile.name.clone(),
+							skins: vec![MinecraftSkin {
+								id: Uuid::new_v4(),
+								state: MinecraftCharacterExpressionState::Active,
+								url: Arc::new(url),
+								texture_key: Some(Arc::from(texture_key.as_str())),
+								variant,
+								name: None,
+							}],
+							capes: vec![],
+							fetch_time: Some(Instant::now()),
+						};
+						let arc_profile = Arc::new(profile);
+						let mut profile_cache = PROFILE_CACHE.lock().await;
+						profile_cache.insert(self.offline_profile.id, ProfileCacheEntry::Hit(Arc::clone(&arc_profile)));
+						return Some(arc_profile);
+					}
+				}
+			}
+
+			return None;
+		}
 
         let max_age = cache_intent.max_age();
         let stale_profile = {

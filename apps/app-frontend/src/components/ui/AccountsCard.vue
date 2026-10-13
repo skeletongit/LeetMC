@@ -10,7 +10,11 @@
 				<SpinnerIcon v-else class="animate-spin" />
 				{{ formatMessage(messages.signInToMinecraft) }}
 			</Button>
-			<Button class="!bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]" :disabled="loginDisabled" @click="openOfflineLogin()">
+			<Button
+				class="!bg-button-bg !text-primary ![box-shadow:var(--shadow-button)]"
+				:disabled="loginDisabled"
+				@click="openOfflineLogin()"
+			>
 				<UserIcon />
 				{{ formatMessage(messages.addOfflineAccount) }}
 			</Button>
@@ -47,7 +51,11 @@
 			</template>
 			<div class="bg-button-bg pt-1 pb-2 border-0 border-t border-solid border-surface-5">
 				<template v-if="accounts.length > 0">
-					<div v-for="account in accounts" :key="account.profile.id" class="flex gap-1 items-center">
+					<div
+						v-for="account in accounts"
+						:key="account.profile.id"
+						class="flex gap-1 items-center"
+					>
 						<button
 							class="flex items-center flex-shrink flex-grow overflow-clip gap-2 p-2 border-0 bg-transparent cursor-pointer button-base min-w-0"
 							@click="setAccount(account)"

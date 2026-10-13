@@ -28,7 +28,12 @@
 					<XIcon />
 					{{ formatMessage(commonMessages.cancelButton) }}
 				</Button>
-				<Button type="colored" color="brand" :disabled="loading || !username.trim()" @click="submit">
+				<Button
+					type="colored"
+					color="brand"
+					:disabled="loading || !username.trim()"
+					@click="submit"
+				>
 					<SpinnerIcon v-if="loading" class="animate-spin" />
 					<UserIcon v-else />
 					{{ formatMessage(messages.submitButton) }}
@@ -40,14 +45,7 @@
 
 <script setup lang="ts">
 import { SpinnerIcon, UserIcon, XIcon } from '@modrinth/assets'
-import {
-	Button,
-	commonMessages,
-	defineMessages,
-	Input,
-	NewModal,
-	useVIntl,
-} from '@modrinth/ui'
+import { Button, commonMessages, defineMessages, Input, NewModal, useVIntl } from '@modrinth/ui'
 import { ref } from 'vue'
 
 import { login_offline } from '@/helpers/auth.js'
@@ -91,7 +89,7 @@ const messages = defineMessages({
 })
 
 const emit = defineEmits<{
-	(e: 'logged-in', account: any): void
+	(e: 'logged-in', account: unknown): void
 }>()
 
 const modal = ref<InstanceType<typeof NewModal>>()
@@ -131,8 +129,8 @@ async function submit() {
 		const account = await login_offline(trimmed)
 		emit('logged-in', account)
 		hide()
-	} catch (err: any) {
-		errorMessage.value = err?.message ?? String(err)
+	} catch (err: unknown) {
+		errorMessage.value = err instanceof Error ? err.message : String(err)
 	} finally {
 		loading.value = false
 	}

@@ -25,6 +25,7 @@ type AppearanceSettingsState = {
 	theme: ColorTheme
 	syncAcrossDevices: boolean
 	advancedRendering: boolean
+	liquidGlassIntensity: number
 	nativeDecorations: boolean
 }
 
@@ -33,6 +34,7 @@ function getAppearanceSettingsState(): AppearanceSettingsState {
 		theme: theme.preferred,
 		syncAcrossDevices: theme.syncAcrossDevices,
 		advancedRendering: theme.advancedRendering,
+		liquidGlassIntensity: theme.liquidGlassIntensity,
 		nativeDecorations: appSettings.nativeDecorations,
 	}
 }
@@ -66,6 +68,7 @@ const { saved, current, changes, saving, hasChanges, reset, save } = useSavable(
 		theme.preferred = value.theme
 		theme.syncAcrossDevices = value.syncAcrossDevices
 		theme.advancedRendering = value.advancedRendering
+		theme.liquidGlassIntensity = value.liquidGlassIntensity
 		appSettings.nativeDecorations = value.nativeDecorations
 	},
 )
@@ -92,6 +95,10 @@ function setAdvancedRendering(enabled: boolean): void {
 	current.value.advancedRendering = enabled
 }
 
+function setLiquidGlassIntensity(intensity: number): void {
+	current.value.liquidGlassIntensity = intensity
+}
+
 function setNativeDecorations(enabled: boolean): void {
 	current.value.nativeDecorations = enabled
 }
@@ -100,6 +107,14 @@ watch(
 	[() => current.value.theme, () => saved.value.theme],
 	([selectedTheme, savedTheme]) => {
 		theme.preview = selectedTheme === savedTheme ? null : selectedTheme
+	},
+	{ immediate: true },
+)
+
+watch(
+	[() => current.value.liquidGlassIntensity, () => saved.value.liquidGlassIntensity],
+	([selectedIntensity, savedIntensity]) => {
+		theme.liquidGlassPreview = selectedIntensity === savedIntensity ? null : selectedIntensity
 	},
 	{ immediate: true },
 )
@@ -125,6 +140,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
 	theme.preview = null
+	theme.liquidGlassPreview = null
 	settingsModal?.registerUnsavedChangesController(null)
 })
 
@@ -145,6 +161,10 @@ provideAppearanceSettings({
 	advancedRendering: {
 		value: computed(() => current.value.advancedRendering),
 		set: setAdvancedRendering,
+	},
+	liquidGlassIntensity: {
+		value: computed(() => current.value.liquidGlassIntensity),
+		set: setLiquidGlassIntensity,
 	},
 	nativeDecorations:
 		os !== 'macos'

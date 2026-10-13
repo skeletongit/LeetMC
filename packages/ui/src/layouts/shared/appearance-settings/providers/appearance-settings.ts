@@ -43,6 +43,7 @@ interface SidebarSettings {
 export interface AppearanceSettingsContext {
 	theme: ThemeSettings
 	advancedRendering: AppearanceSetting<boolean>
+	liquidGlassIntensity?: AppearanceSetting<number>
 	nativeDecorations?: AppearanceSetting<boolean>
 	projectLayouts?: ProjectLayoutSettings
 	externalLinksNewTab?: AppearanceSetting<boolean>
@@ -61,6 +62,7 @@ export interface AppearanceSettingsProviderOptions {
 		syncDisabled: AppearanceRef<boolean>
 	}
 	advancedRendering: WritableAppearanceSetting<boolean>
+	liquidGlassIntensity?: WritableAppearanceSetting<number>
 	nativeDecorations?: WritableAppearanceSetting<boolean>
 	projectLayouts?: {
 		value: AppearanceRef<readonly ProjectLayoutSetting[]>
@@ -208,6 +210,9 @@ export function provideAppearanceSettings(
 			},
 		},
 		advancedRendering: createSetting(options.advancedRendering),
+		liquidGlassIntensity: options.liquidGlassIntensity
+			? createSetting(options.liquidGlassIntensity)
+			: undefined,
 		nativeDecorations: options.nativeDecorations
 			? createSetting(options.nativeDecorations)
 			: undefined,

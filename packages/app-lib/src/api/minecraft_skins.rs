@@ -73,15 +73,15 @@ use crate::{
 
 use super::data::Credentials;
 
-mod assets {
-    mod default {
-        mod default_skins;
-        pub use default_skins::DEFAULT_SKINS;
-    }
-    pub use default::DEFAULT_SKINS;
+pub(crate) mod assets {
+	pub(crate) mod default {
+		pub(crate) mod default_skins;
+		pub use default_skins::DEFAULT_SKINS;
+	}
+	pub use default::DEFAULT_SKINS;
 }
 
-mod png_util;
+pub(crate) mod png_util;
 
 const SKIN_CHANGE_DEBOUNCE: Duration = Duration::from_secs(10);
 

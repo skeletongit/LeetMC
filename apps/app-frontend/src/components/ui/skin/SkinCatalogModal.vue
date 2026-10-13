@@ -21,8 +21,11 @@ import {
 	useVIntl,
 } from '@modrinth/ui'
 import { arrayBufferToBase64 } from '@modrinth/utils/utils'
+import { save } from '@tauri-apps/plugin-dialog'
+import { writeFile } from '@tauri-apps/plugin-fs'
 import { computed, ref } from 'vue'
 
+import SkinHead from '@/components/ui/skin/SkinHead.vue'
 import {
 	add_and_equip_custom_skin,
 	type CatalogSearchResult,
@@ -36,8 +39,7 @@ import {
 } from '@/helpers/skins'
 
 const emit = defineEmits<{
-	(e: 'equipped', skin: Skin): void
-	(e: 'saved', skin: Skin): void
+	(e: 'equipped' | 'saved', skin: Skin): void
 }>()
 
 const modal = ref<InstanceType<typeof NewModal>>()
@@ -64,6 +66,50 @@ const messages = defineMessages({
 	tagAll: {
 		id: 'app.skins.catalog.tags.all',
 		defaultMessage: 'All',
+	},
+	tagCreeper: {
+		id: 'app.skins.catalog.tags.creeper',
+		defaultMessage: 'Creeper',
+	},
+	tagAnime: {
+		id: 'app.skins.catalog.tags.anime',
+		defaultMessage: 'Anime',
+	},
+	tagKnight: {
+		id: 'app.skins.catalog.tags.knight',
+		defaultMessage: 'Knight',
+	},
+	tagBoy: {
+		id: 'app.skins.catalog.tags.boy',
+		defaultMessage: 'Boy',
+	},
+	tagGirl: {
+		id: 'app.skins.catalog.tags.girl',
+		defaultMessage: 'Girl',
+	},
+	tagFemboy: {
+		id: 'app.skins.catalog.tags.femboy',
+		defaultMessage: 'Femboy',
+	},
+	tagCool: {
+		id: 'app.skins.catalog.tags.cool',
+		defaultMessage: 'Cool',
+	},
+	tagPvp: {
+		id: 'app.skins.catalog.tags.pvp',
+		defaultMessage: 'PvP',
+	},
+	tagCute: {
+		id: 'app.skins.catalog.tags.cute',
+		defaultMessage: 'Cute',
+	},
+	tagSteve: {
+		id: 'app.skins.catalog.tags.steve',
+		defaultMessage: 'Steve',
+	},
+	tagCat: {
+		id: 'app.skins.catalog.tags.cat',
+		defaultMessage: 'Cat',
 	},
 	noSkinsFound: {
 		id: 'app.skins.catalog.empty',
@@ -212,25 +258,31 @@ const isSaving = ref(false)
 
 const popularTagItems = [
 	{ key: 'all', label: messages.tagAll, query: '' },
-	{ key: 'creeper', label: 'Creeper', query: 'Creeper' },
-	{ key: 'anime', label: 'Anime', query: 'Anime' },
-	{ key: 'knight', label: 'Knight', query: 'Knight' },
-	{ key: 'boy', label: 'Boy', query: 'Boy' },
-	{ key: 'girl', label: 'Girl', query: 'Girl' },
-	{ key: 'femboy', label: 'Femboy', query: 'Femboy' },
-	{ key: 'cool', label: 'Cool', query: 'Cool' },
-	{ key: 'pvp', label: 'PvP', query: 'PvP' },
-	{ key: 'cute', label: 'Cute', query: 'Cute' },
-	{ key: 'steve', label: 'Steve', query: 'Steve' },
-	{ key: 'cat', label: 'Cat', query: 'Cat' },
+	{ key: 'creeper', label: messages.tagCreeper, query: 'Creeper' },
+	{ key: 'anime', label: messages.tagAnime, query: 'Anime' },
+	{ key: 'knight', label: messages.tagKnight, query: 'Knight' },
+	{ key: 'boy', label: messages.tagBoy, query: 'Boy' },
+	{ key: 'girl', label: messages.tagGirl, query: 'Girl' },
+	{ key: 'femboy', label: messages.tagFemboy, query: 'Femboy' },
+	{ key: 'cool', label: messages.tagCool, query: 'Cool' },
+	{ key: 'pvp', label: messages.tagPvp, query: 'PvP' },
+	{ key: 'cute', label: messages.tagCute, query: 'Cute' },
+	{ key: 'steve', label: messages.tagSteve, query: 'Steve' },
+	{ key: 'cat', label: messages.tagCat, query: 'Cat' },
 ]
+
+const isPreviewLoading = ref(false)
+const skinTextureCache = new Map<string, string>()
 
 const currentPreviewTexture = computed(() => {
 	if (!selectedSkin.value) return ''
-	if (selectedSkin.value.texture_base64) {
+	if (
+		selectedSkin.value.texture_base64 &&
+		selectedSkin.value.texture_base64.startsWith('data:image/')
+	) {
 		return selectedSkin.value.texture_base64
 	}
-	return selectedSkin.value.texture_url
+	return ''
 })
 
 function show(initialQuery?: string) {
@@ -259,7 +311,7 @@ async function loadCatalog(page = 1, query = '') {
 		const res = await search_catalog_skins(query.trim() || undefined, page)
 		catalogResult.value = res
 		if (res.skins.length > 0 && !selectedSkin.value) {
-			selectSkin(res.skins[0])
+			void selectSkin(res.skins[0])
 		}
 	} catch (error) {
 		addNotification({
@@ -274,6 +326,11 @@ async function loadCatalog(page = 1, query = '') {
 
 function onSearchCatalog() {
 	void loadCatalog(1, catalogQuery.value)
+}
+
+function onClearCatalogQuery() {
+	catalogQuery.value = ''
+	void loadCatalog(1, '')
 }
 
 function onTagClick(query: string) {
@@ -293,7 +350,7 @@ async function onSearchPlayer() {
 		const res = await search_player_skin(q)
 		playerResult.value = res
 		if (res) {
-			selectSkin(res)
+			void selectSkin(res)
 		}
 	} catch (error) {
 		addNotification({
@@ -306,15 +363,40 @@ async function onSearchPlayer() {
 	}
 }
 
-function selectSkin(skin: SearchedSkin) {
+async function selectSkin(skin: SearchedSkin) {
 	selectedSkin.value = skin
 	selectedVariant.value = skin.variant
+
+	if (skin.texture_base64 && skin.texture_base64.startsWith('data:image/')) {
+		return
+	}
+
+	if (skinTextureCache.has(skin.texture_url)) {
+		skin.texture_base64 = skinTextureCache.get(skin.texture_url)!
+		return
+	}
+
+	isPreviewLoading.value = true
+	try {
+		const bytes = await download_skin_bytes(skin.texture_url)
+		const b64 = arrayBufferToBase64(bytes)
+		const dataUrl = `data:image/png;base64,${b64}`
+		skin.texture_base64 = dataUrl
+		skinTextureCache.set(skin.texture_url, dataUrl)
+	} catch (err) {
+		console.error('Failed to download skin texture for preview:', err)
+	} finally {
+		isPreviewLoading.value = false
+	}
 }
 
 async function getSelectedSkinBytes(): Promise<Uint8Array> {
 	if (!selectedSkin.value) throw new Error(formatMessage(messages.skinNotSelectedError))
 
-	if (selectedSkin.value.texture_base64 && selectedSkin.value.texture_base64.startsWith('data:image/png;base64,')) {
+	if (
+		selectedSkin.value.texture_base64 &&
+		selectedSkin.value.texture_base64.startsWith('data:image/png;base64,')
+	) {
 		const b64 = selectedSkin.value.texture_base64.replace('data:image/png;base64,', '')
 		const binary = atob(b64)
 		const bytes = new Uint8Array(binary.length)
@@ -390,15 +472,14 @@ async function downloadCurrentSkinFile() {
 	if (!selectedSkin.value) return
 	try {
 		const bytes = await getSelectedSkinBytes()
-		const blob = new Blob([bytes], { type: 'image/png' })
-		const url = URL.createObjectURL(blob)
-		const link = document.createElement('a')
-		link.href = url
-		link.download = `${selectedSkin.value.name || 'skin'}.png`
-		document.body.appendChild(link)
-		link.click()
-		document.body.removeChild(link)
-		URL.revokeObjectURL(url)
+		const fileName = (selectedSkin.value.name || 'skin').replace(/[\\/:*?"<>|]/g, '-')
+		const outputPath = await save({
+			defaultPath: `${fileName}.png`,
+			filters: [{ name: 'PNG', extensions: ['png'] }],
+		})
+		if (!outputPath) return
+
+		await writeFile(outputPath, bytes)
 	} catch (error) {
 		addNotification({
 			type: 'error',
@@ -414,7 +495,9 @@ async function downloadCurrentSkinFile() {
 		<template #title>
 			<div class="flex items-center gap-2">
 				<GlobeIcon class="size-6 text-brand" />
-				<span class="text-xl font-bold text-contrast">{{ formatMessage(messages.catalogModalTitle) }}</span>
+				<span class="text-xl font-bold text-contrast">{{
+					formatMessage(messages.catalogModalTitle)
+				}}</span>
 			</div>
 		</template>
 
@@ -449,7 +532,9 @@ async function downloadCurrentSkinFile() {
 					<div v-if="activeMode === 'catalog'" class="flex flex-col gap-3">
 						<form class="flex gap-2" @submit.prevent="onSearchCatalog">
 							<div class="relative flex-1">
-								<SearchIcon class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-secondary pointer-events-none" />
+								<SearchIcon
+									class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-secondary pointer-events-none"
+								/>
 								<input
 									v-model="catalogQuery"
 									type="text"
@@ -460,12 +545,18 @@ async function downloadCurrentSkinFile() {
 									v-if="catalogQuery"
 									type="button"
 									class="absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-contrast"
-									@click="catalogQuery = ''; onSearchCatalog()"
+									@click="onClearCatalogQuery"
 								>
 									<XIcon class="size-4" />
 								</button>
 							</div>
-							<Button type="colored" color="brand" size="sm" :disabled="isCatalogLoading" @click="onSearchCatalog">
+							<Button
+								type="colored"
+								color="brand"
+								size="sm"
+								:disabled="isCatalogLoading"
+								@click="onSearchCatalog"
+							>
 								<SpinnerIcon v-if="isCatalogLoading" class="animate-spin" />
 								<span v-else>{{ formatMessage(commonMessages.searchLabel) }}</span>
 							</Button>
@@ -479,13 +570,14 @@ async function downloadCurrentSkinFile() {
 								type="button"
 								class="px-2.5 py-1 text-xs font-medium rounded-full border transition-colors"
 								:class="
-									(!item.query && !catalogQuery) || (item.query && catalogQuery.toLowerCase() === item.query.toLowerCase())
+									(!item.query && !catalogQuery) ||
+									(item.query && catalogQuery.toLowerCase() === item.query.toLowerCase())
 										? 'border-brand bg-brand/10 text-brand'
 										: 'border-surface-5 bg-surface-3 text-secondary hover:text-contrast'
 								"
 								@click="onTagClick(item.query)"
 							>
-								{{ typeof item.label === 'string' ? item.label : formatMessage(item.label) }}
+								{{ formatMessage(item.label) }}
 							</button>
 						</div>
 
@@ -503,28 +595,32 @@ async function downloadCurrentSkinFile() {
 									v-for="skin in catalogResult.skins"
 									:key="skin.id"
 									class="group relative flex flex-col items-center p-2 rounded-xl border transition-all cursor-pointer bg-surface-3 hover:border-brand"
-									:class="selectedSkin?.id === skin.id ? 'border-brand ring-2 ring-brand/30' : 'border-surface-5'"
+									:class="
+										selectedSkin?.id === skin.id
+											? 'border-brand ring-2 ring-brand/30'
+											: 'border-surface-5'
+									"
 									@click="selectSkin(skin)"
 								>
 									<!-- Skin Head 2D Face thumbnail -->
-									<div class="relative size-14 mb-1.5 rounded-lg overflow-hidden bg-surface-4 flex items-center justify-center">
-										<img
-											:src="skin.texture_url"
-											alt=""
-											class="absolute size-56 object-none pointer-events-none"
-											style="image-rendering: pixelated; transform: translate(14%, 14%) scale(3.5); transform-origin: 0 0;"
-										/>
-									</div>
+									<SkinHead :src="skin.texture_url" :size="56" class="mb-1.5" />
 									<span class="text-xs font-semibold text-contrast truncate w-full text-center">
 										{{ skin.name }}
 									</span>
 									<span class="text-[10px] text-secondary">
-										{{ skin.variant === 'SLIM' ? formatMessage(messages.slimArm) : formatMessage(messages.classicArm) }}
+										{{
+											skin.variant === 'SLIM'
+												? formatMessage(messages.slimArm)
+												: formatMessage(messages.classicArm)
+										}}
 									</span>
 								</div>
 							</div>
 
-							<div v-else class="flex h-64 flex-col items-center justify-center text-secondary gap-2">
+							<div
+								v-else
+								class="flex h-64 flex-col items-center justify-center text-secondary gap-2"
+							>
 								<SearchIcon class="size-8" />
 								<span>{{ formatMessage(messages.noSkinsFound) }}</span>
 							</div>
@@ -542,7 +638,12 @@ async function downloadCurrentSkinFile() {
 							>
 								{{ formatMessage(commonMessages.backButton) }}
 							</Button>
-							<span>{{ formatMessage(messages.pageInfo, { page: catalogPage, totalPages: catalogResult.total_pages }) }}</span>
+							<span>{{
+								formatMessage(messages.pageInfo, {
+									page: catalogPage,
+									totalPages: catalogResult.total_pages,
+								})
+							}}</span>
 							<Button
 								size="sm"
 								:disabled="catalogPage >= catalogResult.total_pages || isCatalogLoading"
@@ -557,7 +658,9 @@ async function downloadCurrentSkinFile() {
 					<div v-else class="flex flex-col gap-4">
 						<form class="flex gap-2" @submit.prevent="onSearchPlayer">
 							<div class="relative flex-1">
-								<UserSearchIcon class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-secondary pointer-events-none" />
+								<UserSearchIcon
+									class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-secondary pointer-events-none"
+								/>
 								<input
 									v-model="playerQuery"
 									type="text"
@@ -565,7 +668,13 @@ async function downloadCurrentSkinFile() {
 									class="w-full bg-surface-3 text-contrast rounded-xl pl-9 pr-8 py-2 text-sm border border-surface-5 outline-none focus:border-brand"
 								/>
 							</div>
-							<Button type="colored" color="brand" size="sm" :disabled="isPlayerLoading || !playerQuery.trim()" @click="onSearchPlayer">
+							<Button
+								type="colored"
+								color="brand"
+								size="sm"
+								:disabled="isPlayerLoading || !playerQuery.trim()"
+								@click="onSearchPlayer"
+							>
 								<SpinnerIcon v-if="isPlayerLoading" class="animate-spin" />
 								<span v-else>{{ formatMessage(messages.findSkinButton) }}</span>
 							</Button>
@@ -574,23 +683,35 @@ async function downloadCurrentSkinFile() {
 						<div class="flex-1 flex flex-col items-center justify-center min-h-[300px]">
 							<div v-if="isPlayerLoading" class="flex flex-col items-center gap-2">
 								<SpinnerIcon class="size-8 animate-spin text-brand" />
-								<span class="text-xs text-secondary">{{ formatMessage(messages.playerSearchingNotice) }}</span>
+								<span class="text-xs text-secondary">{{
+									formatMessage(messages.playerSearchingNotice)
+								}}</span>
 							</div>
 
-							<div v-else-if="playerResult" class="flex flex-col items-center gap-3 p-4 rounded-2xl bg-surface-3 border border-surface-5 w-full max-w-sm">
+							<div
+								v-else-if="playerResult"
+								class="flex flex-col items-center gap-3 p-4 rounded-2xl bg-surface-3 border border-surface-5 w-full max-w-sm"
+							>
 								<div class="flex items-center gap-3 w-full">
-									<div class="size-12 rounded-xl bg-surface-4 overflow-hidden relative flex items-center justify-center border border-surface-5">
-										<img
-											:src="playerResult.texture_base64"
-											alt=""
-											class="absolute size-48 object-none pointer-events-none"
-											style="image-rendering: pixelated; transform: translate(14%, 14%) scale(3.5); transform-origin: 0 0;"
-										/>
-									</div>
+									<SkinHead
+										:src="playerResult.texture_base64 || playerResult.texture_url"
+										:size="48"
+									/>
 									<div class="flex flex-col min-w-0">
-										<span class="text-base font-bold text-contrast truncate">{{ playerResult.name }}</span>
-										<span class="text-xs text-secondary font-mono truncate">UUID: {{ playerResult.id }}</span>
-										<span class="text-xs text-brand font-medium">{{ formatMessage(messages.modelLabel, { model: playerResult.variant === 'SLIM' ? formatMessage(messages.slimArm) : formatMessage(messages.classicArm) }) }}</span>
+										<span class="text-base font-bold text-contrast truncate">{{
+											playerResult.name
+										}}</span>
+										<span class="text-xs text-secondary font-mono truncate"
+											>UUID: {{ playerResult.id }}</span
+										>
+										<span class="text-xs text-brand font-medium">{{
+											formatMessage(messages.modelLabel, {
+												model:
+													playerResult.variant === 'SLIM'
+														? formatMessage(messages.slimArm)
+														: formatMessage(messages.classicArm),
+											})
+										}}</span>
 									</div>
 								</div>
 								<div class="text-xs text-secondary text-center w-full">
@@ -598,12 +719,18 @@ async function downloadCurrentSkinFile() {
 								</div>
 							</div>
 
-							<div v-else-if="playerSearched" class="flex flex-col items-center gap-2 text-secondary">
+							<div
+								v-else-if="playerSearched"
+								class="flex flex-col items-center gap-2 text-secondary"
+							>
 								<XIcon class="size-8 text-red" />
 								<span class="text-sm">{{ formatMessage(messages.playerNotFound) }}</span>
 							</div>
 
-							<div v-else class="flex flex-col items-center gap-2 text-secondary text-center max-w-xs">
+							<div
+								v-else
+								class="flex flex-col items-center gap-2 text-secondary text-center max-w-xs"
+							>
 								<UserSearchIcon class="size-10 text-secondary/50" />
 								<span class="text-sm">{{ formatMessage(messages.playerSearchHint) }}</span>
 							</div>
@@ -612,7 +739,9 @@ async function downloadCurrentSkinFile() {
 				</div>
 
 				<!-- Right Column: 3D Preview & Actions -->
-				<div class="flex flex-col items-center justify-between p-4 rounded-2xl bg-surface-3 border border-surface-5 min-h-[400px]">
+				<div
+					class="flex flex-col items-center justify-between p-4 rounded-2xl bg-surface-3 border border-surface-5 min-h-[400px]"
+				>
 					<div class="w-full flex flex-col items-center gap-2">
 						<span class="text-sm font-bold text-contrast truncate max-w-full">
 							{{ selectedSkin ? selectedSkin.name : formatMessage(messages.previewTitle) }}
@@ -620,8 +749,9 @@ async function downloadCurrentSkinFile() {
 
 						<!-- 3D Model Renderer -->
 						<div class="size-56 relative flex items-center justify-center">
+							<SpinnerIcon v-if="isPreviewLoading" class="size-8 animate-spin text-brand" />
 							<SkinPreviewRenderer
-								v-if="currentPreviewTexture"
+								v-else-if="currentPreviewTexture"
 								:texture-src="currentPreviewTexture"
 								:variant="selectedVariant"
 								framing="modal"
@@ -636,17 +766,30 @@ async function downloadCurrentSkinFile() {
 
 						<!-- Arm style selector -->
 						<div v-if="selectedSkin" class="w-full flex flex-col gap-1 items-center">
-							<span class="text-xs text-secondary">{{ formatMessage(messages.armStyleLabel) }}</span>
-							<RadioButtons v-model="selectedVariant" :items="['CLASSIC', 'SLIM']" class="!flex-row text-xs">
+							<span class="text-xs text-secondary">{{
+								formatMessage(messages.armStyleLabel)
+							}}</span>
+							<RadioButtons
+								v-model="selectedVariant"
+								:items="['CLASSIC', 'SLIM']"
+								class="!flex-row text-xs"
+							>
 								<template #default="{ item }">
-									{{ item === 'CLASSIC' ? formatMessage(messages.classicArm) : formatMessage(messages.slimArm) }}
+									{{
+										item === 'CLASSIC'
+											? formatMessage(messages.classicArm)
+											: formatMessage(messages.slimArm)
+									}}
 								</template>
 							</RadioButtons>
 						</div>
 					</div>
 
 					<!-- Action Buttons -->
-					<div v-if="selectedSkin" class="flex flex-col gap-2 w-full pt-3 border-t border-surface-5">
+					<div
+						v-if="selectedSkin"
+						class="flex flex-col gap-2 w-full pt-3 border-t border-surface-5"
+					>
 						<Button
 							type="colored"
 							color="brand"

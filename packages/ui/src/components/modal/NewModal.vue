@@ -34,7 +34,7 @@
 					aria-modal="true"
 					tabindex="-1"
 					:aria-labelledby="headerId"
-					class="modal-body flex flex-col bg-bg-raised rounded-2xl border border-solid border-surface-5 outline-none"
+					class="modal-body liquid-glass-panel flex flex-col bg-bg-raised rounded-2xl border border-solid border-surface-5 outline-none"
 					v-bind="$attrs"
 				>
 					<div

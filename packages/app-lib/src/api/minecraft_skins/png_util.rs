@@ -50,6 +50,16 @@ pub fn blob_to_data_url(png_data: impl AsRef<[u8]>) -> Option<Arc<Url>> {
     })
 }
 
+pub fn data_url_to_bytes(url: &Url) -> Option<Vec<u8>> {
+	if url.scheme() == "data" {
+		let data_url = DataUrl::process(url.as_str()).ok()?;
+		let (bytes, _) = data_url.decode_to_vec().ok()?;
+		Some(bytes)
+	} else {
+		None
+	}
+}
+
 pub fn is_png(png_data: &[u8]) -> bool {
     /// The initial 8 bytes of a PNG file, used to identify it as such.
     ///

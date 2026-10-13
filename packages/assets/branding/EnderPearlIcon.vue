@@ -7,7 +7,7 @@ import lightEnderPearlIcon from './ender-pearl-light.png?url'
 const lightMode = ref(
 	typeof document !== 'undefined' && document.documentElement.classList.contains('light-mode'),
 )
-let themeObserver: MutationObserver | undefined
+let themeObserver = null
 
 function updateTheme() {
 	lightMode.value = document.documentElement.classList.contains('light-mode')

@@ -1,4 +1,3 @@
-
 interface InstanceProperties {
 	loader: string
 	game_version: string

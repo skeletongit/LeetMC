@@ -80,16 +80,16 @@
 			<template #description>
 				<div class="text-md space-y-4">
 					<p class="leading-[170%] text-secondary">
-						Your server's node, where your LeetMC Server is physically hosted, is not accessible
-						at the moment. We are working to resolve the issue as quickly as possible.
+						Your server's node, where your LeetMC Server is physically hosted, is not accessible at
+						the moment. We are working to resolve the issue as quickly as possible.
 					</p>
 					<p class="leading-[170%] text-secondary">
 						Your data is safe and will not be lost, and your server will be back online as soon as
 						the issue is resolved.
 					</p>
 					<p class="leading-[170%] text-secondary">
-						If reloading does not work initially, please contact LeetMC Support via the chat
-						bubble in the bottom right corner and we'll be happy to help.
+						If reloading does not work initially, please contact LeetMC Support via the chat bubble
+						in the bottom right corner and we'll be happy to help.
 					</p>
 				</div>
 			</template>

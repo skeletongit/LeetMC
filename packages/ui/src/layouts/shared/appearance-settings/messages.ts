@@ -9,6 +9,14 @@ export const appearanceSettingsMessages = defineMessages({
 		id: 'settings.display.theme.description',
 		defaultMessage: 'Select your preferred color theme across Modrinth.',
 	},
+	liquidGlassTitle: {
+		id: 'app.appearance-settings.liquid-glass.title',
+		defaultMessage: 'Liquid glass',
+	},
+	liquidGlassDescription: {
+		id: 'app.appearance-settings.liquid-glass.description',
+		defaultMessage: 'Adjust panel transparency and background blur.',
+	},
 	syncAcrossDevicesTitle: {
 		id: 'settings.display.theme.sync-across-devices',
 		defaultMessage: 'Sync theme across devices',

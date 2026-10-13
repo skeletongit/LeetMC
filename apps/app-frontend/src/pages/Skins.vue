@@ -1278,14 +1278,22 @@ await loadSkins()
 		</div>
 
 		<div class="pt-2">
-			<div class="mb-4 flex flex-wrap items-center justify-between gap-3 p-3.5 bg-surface-2 rounded-2xl border border-surface-5">
+			<div
+				class="mb-4 flex flex-wrap items-center justify-between gap-3 p-3.5 bg-surface-2 rounded-2xl border border-surface-5"
+			>
 				<div class="flex items-center gap-3">
-					<div class="size-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center shrink-0">
+					<div
+						class="size-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center shrink-0"
+					>
 						<GlobeIcon class="size-5" />
 					</div>
 					<div class="flex flex-col">
-						<span class="text-sm font-bold text-contrast">{{ formatMessage(messages.skinCatalogBannerTitle) }}</span>
-						<span class="text-xs text-secondary">{{ formatMessage(messages.skinCatalogBannerDescription) }}</span>
+						<span class="text-sm font-bold text-contrast">{{
+							formatMessage(messages.skinCatalogBannerTitle)
+						}}</span>
+						<span class="text-xs text-secondary">{{
+							formatMessage(messages.skinCatalogBannerDescription)
+						}}</span>
 					</div>
 				</div>
 				<Button type="colored" color="brand" @click="skinCatalogModal?.show()">

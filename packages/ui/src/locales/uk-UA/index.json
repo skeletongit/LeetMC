@@ -5921,15 +5921,6 @@
   "settings.language.categories.search-result": {
     "defaultMessage": "Результати пошуку"
   },
-  "settings.language.coverage.app-tooltip": {
-    "defaultMessage": "Близько {percentage}% Modrinth App доступно цією мовою."
-  },
-  "settings.language.coverage.label": {
-    "defaultMessage": "Підтримується {percentage}%"
-  },
-  "settings.language.coverage.website-tooltip": {
-    "defaultMessage": "Близько {percentage}% вебсайту доступно цією мовою."
-  },
   "settings.language.description": {
     "defaultMessage": "Виберіть бажану мову {platform}. Переклади виконуються добровольцями <crowdin-link>на Crowdin</crowdin-link>."
   },
@@ -6202,6 +6193,9 @@
   },
   "sharing.invite-players-toast.server-suffix": {
     "defaultMessage": "."
+  },
+  "skins.preview.drag-to-rotate": {
+    "defaultMessage": "Перетягуйте, щоб обертати"
   },
   "skins.select": {
     "defaultMessage": "Вибір скіну"

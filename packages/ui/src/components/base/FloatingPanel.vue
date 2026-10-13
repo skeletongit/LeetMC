@@ -277,7 +277,7 @@ defineExpose({
 				<div
 					v-if="isOpen"
 					ref="panelRef"
-					class="fixed z-[9995] w-fit rounded-[14px] border border-surface-5 bg-surface-3 border-solid border-px p-3 shadow-2xl"
+					class="liquid-glass-panel fixed z-[9995] w-fit rounded-[14px] border border-surface-5 bg-surface-3 border-solid border-px p-3 shadow-2xl"
 					:class="panelClass"
 					:style="[panelStyle, { transformOrigin }]"
 					role="dialog"

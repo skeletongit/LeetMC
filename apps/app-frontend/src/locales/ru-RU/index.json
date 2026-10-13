@@ -1253,9 +1253,6 @@
   "app.nav.switch-account": {
     "message": "Сменить аккаунт"
   },
-  "app.nav.upgrade-to-modrinth-plus": {
-    "message": "Перейти на Modrinth+"
-  },
   "app.nav.view-profile": {
     "message": "Посмотреть профиль"
   },
@@ -2636,12 +2633,6 @@
   "app.settings.privacy.discord-rich-presence.title": {
     "message": "Discord Rich Presence"
   },
-  "app.settings.privacy.telemetry.description": {
-    "message": "Modrinth собирает анонимные данные об использовании для персонализации и улучшения сервиса. Отключите этот параметр, чтобы отказаться от сбора данных."
-  },
-  "app.settings.privacy.telemetry.title": {
-    "message": "Телеметрия"
-  },
   "app.settings.resource-management.always-show-copy-details.description": {
     "message": "Показывать кнопку «Получить отчёт» на всех этапах установки. Для прерванных установок кнопка видна всегда."
   },
@@ -3029,6 +3020,153 @@
   "app.skins.apply-button": {
     "message": "Применить"
   },
+  "app.skins.catalog-banner.button": {
+    "message": "Поиск и каталог"
+  },
+  "app.skins.catalog-banner.description": {
+    "message": "Ищите скины игроков или просматривайте огромный каталог одним нажатием"
+  },
+  "app.skins.catalog-banner.title": {
+    "message": "Каталог скинов (NameMC)"
+  },
+  "app.skins.catalog.arm.classic": {
+    "message": "Классические"
+  },
+  "app.skins.catalog.arm.slim": {
+    "message": "Тонкие"
+  },
+  "app.skins.catalog.button.download-png": {
+    "message": "Скачать PNG"
+  },
+  "app.skins.catalog.button.equip": {
+    "message": "Надеть скин"
+  },
+  "app.skins.catalog.button.save-to-library": {
+    "message": "Сохранить в библиотеку"
+  },
+  "app.skins.catalog.download.error-text": {
+    "message": "Не удалось скачать файл скина"
+  },
+  "app.skins.catalog.download.error-title": {
+    "message": "Ошибка скачивания"
+  },
+  "app.skins.catalog.empty": {
+    "message": "Скины не найдены. Попробуйте поискать по другому тегу."
+  },
+  "app.skins.catalog.equip.error-title": {
+    "message": "Не удалось надеть скин"
+  },
+  "app.skins.catalog.equip.success-text": {
+    "message": "Скин «{name}» успешно установлен для вашей учётной записи."
+  },
+  "app.skins.catalog.equip.success-title": {
+    "message": "Скин установлен!"
+  },
+  "app.skins.catalog.error.catalog-default": {
+    "message": "Не удалось загрузить каталог скинов"
+  },
+  "app.skins.catalog.error.catalog-title": {
+    "message": "Ошибка каталога"
+  },
+  "app.skins.catalog.error.not-selected": {
+    "message": "Скин не выбран"
+  },
+  "app.skins.catalog.error.player-default": {
+    "message": "Не удалось найти скин игрока"
+  },
+  "app.skins.catalog.error.player-title": {
+    "message": "Ошибка поиска игрока"
+  },
+  "app.skins.catalog.pagination.info": {
+    "message": "Страница {page} из {totalPages}"
+  },
+  "app.skins.catalog.player-search.button": {
+    "message": "Найти скин"
+  },
+  "app.skins.catalog.player-search.found": {
+    "message": "Скин найден и готов к установке!"
+  },
+  "app.skins.catalog.player-search.hint": {
+    "message": "Введите имя любого игрока, чтобы сразу загрузить его скин из Minecraft!"
+  },
+  "app.skins.catalog.player-search.model": {
+    "message": "Модель: {model}"
+  },
+  "app.skins.catalog.player-search.not-found": {
+    "message": "Игрок не найден или у него нет собственного скина."
+  },
+  "app.skins.catalog.player-search.placeholder": {
+    "message": "Введите имя игрока (например, Notch или Dream) либо ссылку NameMC"
+  },
+  "app.skins.catalog.player-search.searching": {
+    "message": "Поиск в Mojang и NameMC..."
+  },
+  "app.skins.catalog.preview.arm-style": {
+    "message": "Тип рук:"
+  },
+  "app.skins.catalog.preview.select-hint": {
+    "message": "Выберите скин"
+  },
+  "app.skins.catalog.preview.title": {
+    "message": "Предпросмотр"
+  },
+  "app.skins.catalog.save.error-title": {
+    "message": "Не удалось сохранить скин"
+  },
+  "app.skins.catalog.save.success-text": {
+    "message": "Скин «{name}» добавлен в вашу библиотеку."
+  },
+  "app.skins.catalog.save.success-title": {
+    "message": "Скин сохранён!"
+  },
+  "app.skins.catalog.search.placeholder": {
+    "message": "Поиск по тегам (аниме, крипер, рыцарь, парень, PvP...)"
+  },
+  "app.skins.catalog.tab.catalog": {
+    "message": "Каталог и популярное"
+  },
+  "app.skins.catalog.tab.player": {
+    "message": "Поиск игрока"
+  },
+  "app.skins.catalog.tags.all": {
+    "message": "Все"
+  },
+  "app.skins.catalog.tags.anime": {
+    "message": "Аниме"
+  },
+  "app.skins.catalog.tags.boy": {
+    "message": "Парень"
+  },
+  "app.skins.catalog.tags.cat": {
+    "message": "Коты"
+  },
+  "app.skins.catalog.tags.cool": {
+    "message": "Крутые"
+  },
+  "app.skins.catalog.tags.creeper": {
+    "message": "Крипер"
+  },
+  "app.skins.catalog.tags.cute": {
+    "message": "Милые"
+  },
+  "app.skins.catalog.tags.femboy": {
+    "message": "Фембой"
+  },
+  "app.skins.catalog.tags.girl": {
+    "message": "Девушка"
+  },
+  "app.skins.catalog.tags.knight": {
+    "message": "Рыцарь"
+  },
+  "app.skins.catalog.tags.pvp": {
+    "message": "PvP"
+  },
+  "app.skins.catalog.tags.steve": {
+    "message": "Стив"
+  },
+  "app.skins.catalog.title": {
+    "message": "Каталог скинов (NameMC)"
+  },
   "app.skins.delete-button": {
     "message": "Удалить скин"
   },
@@ -3382,9 +3520,6 @@
   },
   "app.welcome-screen.import-prompt": {
     "message": "Меняете лаунчер?"
-  },
-  "app.welcome-screen.quick-create-hint": {
-    "message": "Нажмите <shortcut>Т</shortcut> быстрого создания сборки"
   },
   "app.welcome-screen.title": {
     "message": "Добро пожаловать в Modrinth"
@@ -4342,6 +4477,42 @@
   },
   "minecraft-account.add-account": {
     "message": "Добавить аккаунт"
+  },
+  "minecraft-account.add-offline-account": {
+    "message": "Добавить офлайн-аккаунт"
+  },
+  "minecraft-account.offline-account-label": {
+    "message": "Офлайн-аккаунт"
+  },
+  "minecraft-account.offline-badge": {
+    "message": "Офлайн"
+  },
+  "minecraft-account.offline-login.description": {
+    "message": "Введите имя игрока, чтобы играть без учётной записи Microsoft. Вы сможете играть в одиночном режиме, на офлайн-серверах и настраивать скины."
+  },
+  "minecraft-account.offline-login.error.characters": {
+    "message": "Имя может содержать только латинские буквы, цифры и знаки подчёркивания"
+  },
+  "minecraft-account.offline-login.error.length": {
+    "message": "Имя должно содержать от 3 до 16 символов"
+  },
+  "minecraft-account.offline-login.error.required": {
+    "message": "Введите имя игрока"
+  },
+  "minecraft-account.offline-login.header": {
+    "message": "Вход в офлайн-аккаунт"
+  },
+  "minecraft-account.offline-login.submit": {
+    "message": "Войти"
+  },
+  "minecraft-account.offline-login.username-label": {
+    "message": "Имя игрока"
+  },
+  "minecraft-account.offline-login.username-placeholder": {
+    "message": "Например, Steve"
+  },
+  "minecraft-required.offline-sign-in": {
+    "message": "Добавить офлайн-аккаунт"
   },
   "minecraft-account.label": {
     "message": "Аккаунт Minecraft"
