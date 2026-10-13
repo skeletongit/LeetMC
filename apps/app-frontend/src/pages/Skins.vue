@@ -1117,149 +1117,149 @@ await loadSkins()
 					class="ml-5 mt-4 flex h-[calc(80vh-1rem)] items-center justify-center max-[700px]:h-[calc(50vh-1rem)]"
 				>
 					<SkinPreviewRenderer
-					:cape-src="capeTexture"
-					:texture-src="skinTexture || ''"
-					:ears-texture-src="selectedSkin?.texture"
-					:variant="skinVariant"
-					:nametag="skinNametag"
-					:initial-rotation="Math.PI / 8"
-					:ears-enabled="earsFeaturesEnabled"
-					@ears-features-detected="selectedSkinHasEarsFeatures = $event"
-				>
-					<template v-if="hasPendingSkinChange" #nametag-badge>
-						<div
-							class="flex items-center justify-center gap-1.5 rounded-full border border-solid border-brand-blue bg-bg-blue px-3 py-1 text-base font-semibold leading-6 text-brand-blue"
-						>
-							<EyeIcon class="size-5 shrink-0" />
-							{{ formatMessage(messages.previewingBadge) }}
-						</div>
-					</template>
-					<template #subtitle>
-						<div
-							class="skin-preview-subtitle flex w-full flex-col items-center gap-6"
-							:class="{ 'has-ears-features': selectedSkinHasEarsFeatures }"
-						>
+						:cape-src="capeTexture"
+						:texture-src="skinTexture || ''"
+						:ears-texture-src="selectedSkin?.texture"
+						:variant="skinVariant"
+						:nametag="skinNametag"
+						:initial-rotation="Math.PI / 8"
+						:ears-enabled="earsFeaturesEnabled"
+						@ears-features-detected="selectedSkinHasEarsFeatures = $event"
+					>
+						<template v-if="hasPendingSkinChange" #nametag-badge>
 							<div
-								v-if="hasPendingSkinChange"
-								class="skin-preview-actions flex w-full items-center justify-center gap-1.5"
-								:class="selectedSkinHasEarsFeatures ? 'flex-nowrap' : 'flex-wrap'"
+								class="flex items-center justify-center gap-1.5 rounded-full border border-solid border-brand-blue bg-bg-blue px-3 py-1 text-base font-semibold leading-6 text-brand-blue"
 							>
-								<Button
-									v-tooltip="
-										selectedSkinHasEarsFeatures
-											? formatMessage(commonMessages.resetButton)
-											: undefined
-									"
-									type="base"
-									size="lg"
-									class="skin-preview-action-button"
-									:disabled="isApplyingSkin || isSkinManagementReadOnly"
-									:aria-label="formatMessage(commonMessages.resetButton)"
-									@click="resetSelectedSkin"
-								>
-									<RotateCounterClockwiseIcon />
-									<span class="skin-preview-action-label">
-										{{ formatMessage(commonMessages.resetButton) }}
-									</span>
-								</Button>
-								<Button
-									v-tooltip="
-										!currentUser
-											? formatMessage(messages.demoApplyTooltip)
-											: selectedSkinHasEarsFeatures
-												? formatMessage(messages.applyButton)
-												: undefined
-									"
-									type="colored"
-									color="brand"
-									size="lg"
-									class="skin-preview-action-button"
-									:disabled="!currentUser || isApplyingSkin || isSkinManagementReadOnly"
-									:aria-label="formatMessage(messages.applyButton)"
-									@click="applySelectedSkin"
-								>
-									<SpinnerIcon v-if="isApplyingSkin" class="animate-spin" />
-									<CheckIcon v-else />
-									<span class="skin-preview-action-label">
-										{{ formatMessage(messages.applyButton) }}
-									</span>
-								</Button>
+								<EyeIcon class="size-5 shrink-0" />
+								{{ formatMessage(messages.previewingBadge) }}
 							</div>
-							<Button
-								v-else
-								type="base"
-								size="lg"
-								:disabled="!selectedSkin || isSkinManagementReadOnly"
-								@click="(e: MouseEvent) => selectedSkin && editSkinModal?.show(e, selectedSkin)"
-							>
-								<EditIcon />
-								{{ formatMessage(messages.editSkinButton) }}
-							</Button>
-
+						</template>
+						<template #subtitle>
 							<div
-								v-if="selectedSkinHasEarsFeatures"
-								class="ears-feature-notice box-border flex w-full max-w-[340px] items-center justify-center gap-1.5 px-2"
+								class="skin-preview-subtitle flex w-full flex-col items-center gap-6"
+								:class="{ 'has-ears-features': selectedSkinHasEarsFeatures }"
 							>
-								<div class="ears-feature-copy flex min-w-0 flex-1 items-center gap-1.5">
-									<img
-										:src="EarsModIcon"
-										alt=""
-										class="size-10 shrink-0 rounded-[7px] border border-solid border-surface-5 object-cover"
-									/>
-									<p
-										class="ears-feature-description m-0 min-w-0 flex-1 text-sm font-medium leading-5 text-primary"
+								<div
+									v-if="hasPendingSkinChange"
+									class="skin-preview-actions flex w-full items-center justify-center gap-1.5"
+									:class="selectedSkinHasEarsFeatures ? 'flex-nowrap' : 'flex-wrap'"
+								>
+									<Button
+										v-tooltip="
+											selectedSkinHasEarsFeatures
+												? formatMessage(commonMessages.resetButton)
+												: undefined
+										"
+										type="base"
+										size="lg"
+										class="skin-preview-action-button"
+										:disabled="isApplyingSkin || isSkinManagementReadOnly"
+										:aria-label="formatMessage(commonMessages.resetButton)"
+										@click="resetSelectedSkin"
 									>
-										{{ earsFeatureNoticeParts.before
-										}}<router-link
-											v-if="earsFeatureNoticeParts.hasEarsLink"
-											to="/project/mfzaZK3Z"
-											class="text-inherit underline"
-											>Ears</router-link
-										>{{ earsFeatureNoticeParts.after }}
-									</p>
-									<router-link
-										to="/project/mfzaZK3Z"
-										class="ears-feature-compact-label hidden min-w-0 flex-1 text-sm font-medium leading-5 text-primary underline"
-										>Ears</router-link
+										<RotateCounterClockwiseIcon />
+										<span class="skin-preview-action-label">
+											{{ formatMessage(commonMessages.resetButton) }}
+										</span>
+									</Button>
+									<Button
+										v-tooltip="
+											!currentUser
+												? formatMessage(messages.demoApplyTooltip)
+												: selectedSkinHasEarsFeatures
+													? formatMessage(messages.applyButton)
+													: undefined
+										"
+										type="colored"
+										color="brand"
+										size="lg"
+										class="skin-preview-action-button"
+										:disabled="!currentUser || isApplyingSkin || isSkinManagementReadOnly"
+										:aria-label="formatMessage(messages.applyButton)"
+										@click="applySelectedSkin"
 									>
+										<SpinnerIcon v-if="isApplyingSkin" class="animate-spin" />
+										<CheckIcon v-else />
+										<span class="skin-preview-action-label">
+											{{ formatMessage(messages.applyButton) }}
+										</span>
+									</Button>
 								</div>
 								<Button
-									type="outlined"
+									v-else
+									type="base"
 									size="lg"
-									class="ears-feature-toggle-button shadow-md"
-									:aria-pressed="earsFeaturesEnabled"
-									:aria-label="
-										formatMessage(
-											earsFeaturesEnabled
-												? messages.toggleEarsFeaturesOff
-												: messages.toggleEarsFeaturesOn,
-										)
-									"
-									@click="earsFeaturesEnabled = !earsFeaturesEnabled"
+									:disabled="!selectedSkin || isSkinManagementReadOnly"
+									@click="(e: MouseEvent) => selectedSkin && editSkinModal?.show(e, selectedSkin)"
 								>
-									{{
-										formatMessage(
-											earsFeaturesEnabled
-												? messages.toggleEarsFeaturesOff
-												: messages.toggleEarsFeaturesOn,
-										)
-									}}
+									<EditIcon />
+									{{ formatMessage(messages.editSkinButton) }}
 								</Button>
-								<Toggle
-									v-model="earsFeaturesEnabled"
-									v-tooltip="
-										formatMessage(
-											earsFeaturesEnabled
-												? messages.toggleEarsFeaturesOff
-												: messages.toggleEarsFeaturesOn,
+
+								<div
+									v-if="selectedSkinHasEarsFeatures"
+									class="ears-feature-notice box-border flex w-full max-w-[340px] items-center justify-center gap-1.5 px-2"
+								>
+									<div class="ears-feature-copy flex min-w-0 flex-1 items-center gap-1.5">
+										<img
+											:src="EarsModIcon"
+											alt=""
+											class="size-10 shrink-0 rounded-[7px] border border-solid border-surface-5 object-cover"
+										/>
+										<p
+											class="ears-feature-description m-0 min-w-0 flex-1 text-sm font-medium leading-5 text-primary"
+										>
+											{{ earsFeatureNoticeParts.before
+											}}<router-link
+												v-if="earsFeatureNoticeParts.hasEarsLink"
+												to="/project/mfzaZK3Z"
+												class="text-inherit underline"
+												>Ears</router-link
+											>{{ earsFeatureNoticeParts.after }}
+										</p>
+										<router-link
+											to="/project/mfzaZK3Z"
+											class="ears-feature-compact-label hidden min-w-0 flex-1 text-sm font-medium leading-5 text-primary underline"
+											>Ears</router-link
+										>
+									</div>
+									<Button
+										type="outlined"
+										size="lg"
+										class="ears-feature-toggle-button shadow-md"
+										:aria-pressed="earsFeaturesEnabled"
+										:aria-label="
+											formatMessage(
+												earsFeaturesEnabled
+													? messages.toggleEarsFeaturesOff
+													: messages.toggleEarsFeaturesOn,
 										)
-									"
-									small
-									class="ears-feature-toggle-switch"
-								/>
+										"
+										@click="earsFeaturesEnabled = !earsFeaturesEnabled"
+									>
+										{{
+											formatMessage(
+												earsFeaturesEnabled
+													? messages.toggleEarsFeaturesOff
+													: messages.toggleEarsFeaturesOn,
+											)
+										}}
+									</Button>
+									<Toggle
+										v-model="earsFeaturesEnabled"
+										v-tooltip="
+											formatMessage(
+												earsFeaturesEnabled
+													? messages.toggleEarsFeaturesOff
+													: messages.toggleEarsFeaturesOn,
+											)
+										"
+										small
+										class="ears-feature-toggle-switch"
+									/>
+								</div>
 							</div>
-						</div>
-					</template>
+						</template>
 					</SkinPreviewRenderer>
 				</div>
 			</div>

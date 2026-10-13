@@ -558,10 +558,7 @@ async function downloadCurrentSkinFile() {
 			</div>
 
 			<!-- Main modal body -->
-			<div
-				class="grid grid-cols-1 gap-6 md:grid-cols-[1fr_260px]"
-				:class="props.embedded ? 'min-h-0 grow' : 'min-h-[460px]'"
-			>
+			<div class="grid grid-cols-1 gap-6 md:grid-cols-[1fr_260px] min-h-[460px]">
 				<!-- Left Column: Search & Items -->
 				<div class="flex flex-col gap-4 min-w-0">
 					<!-- CATALOG MODE -->
@@ -625,7 +622,7 @@ async function downloadCurrentSkinFile() {
 
 							<div
 								v-else-if="catalogResult?.skins && catalogResult.skins.length > 0"
-								class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-3 max-h-[360px] overflow-y-auto pr-1"
+								class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-[360px] overflow-y-auto pr-1"
 							>
 								<div
 									v-for="skin in catalogResult.skins"
@@ -691,8 +688,8 @@ async function downloadCurrentSkinFile() {
 					</div>
 
 					<!-- PLAYER LOOKUP MODE -->
-					<div v-else class="flex flex-col gap-4">
-						<form class="flex gap-2" @submit.prevent="onSearchPlayer">
+					<div v-else class="flex flex-col gap-3 flex-1 min-h-0">
+						<form class="flex gap-2 shrink-0" @submit.prevent="onSearchPlayer">
 							<div class="relative flex-1">
 								<UserSearchIcon
 									class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-secondary pointer-events-none"
