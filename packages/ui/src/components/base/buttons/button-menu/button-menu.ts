@@ -32,7 +32,7 @@ export const buttonMenuTones: Record<ButtonColor, string> = {
 	brand: 'var(--color-brand)',
 	red: 'var(--color-red)',
 	orange: 'var(--color-orange)',
-	green: 'var(--color-green)',
+	green: 'var(--color-brand)',
 	blue: 'var(--color-blue)',
 	purple: 'var(--color-purple)',
 	medal_promotion: 'var(--medal-promotion-text-orange, var(--color-orange))',

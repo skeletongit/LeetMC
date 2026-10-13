@@ -35,6 +35,21 @@
   "affiliate.viewAnalytics": {
     "defaultMessage": "Посмотреть аналитику"
   },
+  "app.appearance-settings.accent-color.description": {
+    "defaultMessage": "Настройте активный цвет кнопок и выбранных элементов для этой темы."
+  },
+  "app.appearance-settings.accent-color.reset": {
+    "defaultMessage": "Сбросить на цвет темы"
+  },
+  "app.appearance-settings.accent-color.title": {
+    "defaultMessage": "Акцентный цвет"
+  },
+  "app.appearance-settings.liquid-glass.description": {
+    "defaultMessage": "Настройте прозрачность панелей и размытие фона."
+  },
+  "app.appearance-settings.liquid-glass.title": {
+    "defaultMessage": "Жидкое стекло"
+  },
   "app.appearance-settings.native-decorations.description": {
     "defaultMessage": "Использовать системное оформление заголовка и кнопок окна. Требуется перезапуск."
   },

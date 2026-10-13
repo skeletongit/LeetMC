@@ -35,6 +35,21 @@
   "affiliate.viewAnalytics": {
     "defaultMessage": "View analytics"
   },
+  "app.appearance-settings.accent-color.description": {
+    "defaultMessage": "Customize the active color used for buttons and selected controls in this theme."
+  },
+  "app.appearance-settings.accent-color.reset": {
+    "defaultMessage": "Reset to theme default"
+  },
+  "app.appearance-settings.accent-color.title": {
+    "defaultMessage": "Accent color"
+  },
+  "app.appearance-settings.liquid-glass.description": {
+    "defaultMessage": "Adjust panel transparency and background blur."
+  },
+  "app.appearance-settings.liquid-glass.title": {
+    "defaultMessage": "Liquid glass"
+  },
   "app.appearance-settings.native-decorations.description": {
     "defaultMessage": "Use your operating system's title bar and window controls. Requires an app restart."
   },

@@ -21,6 +21,11 @@ interface AppearanceSetting<T> {
 	disabled?: AppearanceRef<boolean>
 }
 
+interface AccentColorSetting extends AppearanceSetting<string> {
+	defaultValue: AppearanceRef<string>
+	reset: () => void | Promise<void>
+}
+
 interface ThemeSettings {
 	current: AppearanceRef<AppearanceThemeSelection>
 	options: AppearanceRef<readonly AppearanceThemeSelection[]>
@@ -43,6 +48,7 @@ interface SidebarSettings {
 export interface AppearanceSettingsContext {
 	theme: ThemeSettings
 	advancedRendering: AppearanceSetting<boolean>
+	accentColor?: AccentColorSetting
 	liquidGlassIntensity?: AppearanceSetting<number>
 	nativeDecorations?: AppearanceSetting<boolean>
 	projectLayouts?: ProjectLayoutSettings
@@ -62,6 +68,10 @@ export interface AppearanceSettingsProviderOptions {
 		syncDisabled: AppearanceRef<boolean>
 	}
 	advancedRendering: WritableAppearanceSetting<boolean>
+	accentColor?: WritableAppearanceSetting<string> & {
+		defaultValue: AppearanceRef<string>
+		reset: () => void | Promise<void>
+	}
 	liquidGlassIntensity?: WritableAppearanceSetting<number>
 	nativeDecorations?: WritableAppearanceSetting<boolean>
 	projectLayouts?: {
@@ -210,6 +220,13 @@ export function provideAppearanceSettings(
 			},
 		},
 		advancedRendering: createSetting(options.advancedRendering),
+		accentColor: options.accentColor
+			? {
+					...createSetting(options.accentColor),
+					defaultValue: options.accentColor.defaultValue,
+					reset: options.accentColor.reset,
+				}
+			: undefined,
 		liquidGlassIntensity: options.liquidGlassIntensity
 			? createSetting(options.liquidGlassIntensity)
 			: undefined,

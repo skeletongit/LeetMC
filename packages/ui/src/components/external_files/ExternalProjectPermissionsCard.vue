@@ -723,9 +723,9 @@ const visibleQuickReplies = computed<ButtonMenuOption[]>(() => {
 											</TeleportOverflowMenu>
 											<Button
 												type="quiet"
-												color="green"
+												color="brand"
 												:disabled="setModerationStatusMutation.isPending.value"
-												class="!text-green [&>svg]:!text-green"
+												class="!text-brand [&>svg]:!text-brand"
 												@click="handleSetModerationStatus('approved')"
 											>
 												<SpinnerIcon

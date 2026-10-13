@@ -9,6 +9,18 @@ export const appearanceSettingsMessages = defineMessages({
 		id: 'settings.display.theme.description',
 		defaultMessage: 'Select your preferred color theme across Modrinth.',
 	},
+	accentColorTitle: {
+		id: 'app.appearance-settings.accent-color.title',
+		defaultMessage: 'Accent color',
+	},
+	accentColorDescription: {
+		id: 'app.appearance-settings.accent-color.description',
+		defaultMessage: 'Customize the active color used for buttons and selected controls in this theme.',
+	},
+	resetAccentColor: {
+		id: 'app.appearance-settings.accent-color.reset',
+		defaultMessage: 'Reset to theme default',
+	},
 	liquidGlassTitle: {
 		id: 'app.appearance-settings.liquid-glass.title',
 		defaultMessage: 'Liquid glass',

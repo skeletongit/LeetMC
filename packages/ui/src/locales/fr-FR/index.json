@@ -35,6 +35,21 @@
   "affiliate.viewAnalytics": {
     "defaultMessage": "Voir les statistiques"
   },
+  "app.appearance-settings.accent-color.description": {
+    "defaultMessage": "Personnalisez la couleur active utilisée pour les boutons et les contrôles sélectionnés de ce thème."
+  },
+  "app.appearance-settings.accent-color.reset": {
+    "defaultMessage": "Rétablir la couleur du thème"
+  },
+  "app.appearance-settings.accent-color.title": {
+    "defaultMessage": "Couleur d’accentuation"
+  },
+  "app.appearance-settings.liquid-glass.description": {
+    "defaultMessage": "Ajustez la transparence des panneaux et le flou de l’arrière-plan."
+  },
+  "app.appearance-settings.liquid-glass.title": {
+    "defaultMessage": "Verre liquide"
+  },
   "app.appearance-settings.native-decorations.description": {
     "defaultMessage": "Utiliser la barre de titre et les commandes de fenêtre de votre système d'exploitation. Nécessite le redémarrage de l'application."
   },

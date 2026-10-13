@@ -2185,6 +2185,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	position: absolute;
 	z-index: 40;
 	display: flex;
+	justify-content: center;
 	gap: 0.25rem;
 	padding: 0.5rem;
 	box-sizing: border-box;
@@ -2476,6 +2477,10 @@ html.dark-mode .modal-overlay.standard {
 
 html.oled-mode .modal-overlay.standard {
 	background: linear-gradient(180deg, rgb(7 18 15 / 56%) 0%, rgb(2 8 7 / 76%) 100%);
+}
+
+html.retro-mode .modal-overlay.standard {
+	background: linear-gradient(180deg, rgb(25 25 23 / 58%) 0%, rgb(14 14 13 / 76%) 100%);
 }
 
 html.light-mode .modal-overlay.standard {

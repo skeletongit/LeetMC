@@ -258,9 +258,9 @@ onUnmounted(() => {
 	color: var(--color-text-primary);
 }
 
-:global(html.light-mode) .interactive-dot-background {
-	--dot-base-color: var(--color-text-tertiary);
-	--dot-active-color: var(--color-brand);
-	--dot-base-opacity: 0.22;
+:global(html.light-mode .interactive-dot-background) {
+	--dot-base-color: #d9a9b5;
+	--dot-active-color: #e8a2b4;
+	--dot-base-opacity: 0.26;
 }
 </style>

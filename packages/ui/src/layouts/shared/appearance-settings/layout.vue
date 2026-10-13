@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import Toggle from '#ui/components/base/Toggle.vue'
 import Slider from '#ui/components/base/Slider.vue'
+import Button from '#ui/components/base/buttons/Button.vue'
+import ColorPicker from '#ui/components/base/inputs/ColorPicker.vue'
 import { useVIntl } from '#ui/composables'
 
 import AppearanceSettingsThemeSelector from './components/appearance-settings-theme-selector.vue'
@@ -18,6 +20,9 @@ const themeOptions = theme.options
 const systemTheme = theme.system
 const preferredDarkTheme = theme.preferredDark
 const advancedRendering = appearance.advancedRendering.value
+const accentColor = appearance.accentColor
+const accentColorValue = accentColor?.value
+const defaultAccentColor = accentColor?.defaultValue
 const liquidGlassIntensity = appearance.liquidGlassIntensity
 const liquidGlassIntensityValue = liquidGlassIntensity?.value
 const nativeDecorations = appearance.nativeDecorations
@@ -51,6 +56,32 @@ const sidebarPreferenceValues = sidebarPreferences?.value
 				:preferred-dark-theme="preferredDarkTheme"
 				@update:model-value="theme.update"
 			/>
+
+			<div v-if="accentColor" class="mt-6">
+				<h3 id="accent-color-label" class="m-0 text-lg font-semibold text-contrast">
+					{{ formatMessage(messages.accentColorTitle) }}
+				</h3>
+				<p class="mb-3 mt-1 text-secondary">
+					{{ formatMessage(messages.accentColorDescription) }}
+				</p>
+				<div class="flex flex-wrap items-center gap-3">
+					<ColorPicker
+						:model-value="accentColorValue ?? '#000000'"
+						:label="formatMessage(messages.accentColorTitle)"
+						@update:model-value="accentColor.update"
+					/>
+					<code class="rounded-lg bg-surface-3 px-3 py-2 font-mono text-sm uppercase text-contrast">
+						{{ accentColorValue }}
+					</code>
+					<Button
+						size="sm"
+						:disabled="accentColorValue === defaultAccentColor"
+						@click="accentColor.reset"
+					>
+						{{ formatMessage(messages.resetAccentColor) }}
+					</Button>
+				</div>
+			</div>
 
 			<div v-if="liquidGlassIntensity" class="mt-6">
 				<h3 id="liquid-glass-intensity-label" class="m-0 text-lg font-semibold text-contrast">

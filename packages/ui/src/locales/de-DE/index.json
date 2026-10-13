@@ -35,6 +35,21 @@
   "affiliate.viewAnalytics": {
     "defaultMessage": "Analysen anzeigen"
   },
+  "app.appearance-settings.accent-color.description": {
+    "defaultMessage": "Passe die aktive Farbe für Schaltflächen und ausgewählte Steuerelemente in diesem Design an."
+  },
+  "app.appearance-settings.accent-color.reset": {
+    "defaultMessage": "Auf Designstandard zurücksetzen"
+  },
+  "app.appearance-settings.accent-color.title": {
+    "defaultMessage": "Akzentfarbe"
+  },
+  "app.appearance-settings.liquid-glass.description": {
+    "defaultMessage": "Passe die Transparenz der Bedienfelder und die Hintergrundunschärfe an."
+  },
+  "app.appearance-settings.liquid-glass.title": {
+    "defaultMessage": "Flüssigglas"
+  },
   "app.appearance-settings.native-decorations.description": {
     "defaultMessage": "Nutze die Titelleiste und die Fenstersteuerelemente deines Betriebssystems. Erfordert einen Neustart der App."
   },

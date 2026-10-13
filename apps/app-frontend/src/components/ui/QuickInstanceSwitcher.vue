@@ -92,9 +92,27 @@ const updateMaxAuto = () => {
 	const dividerSize = rem + 1
 	const footerSize =
 		(props.horizontal ? footer.value?.clientWidth : footer.value?.clientHeight) ?? 0
-	const containerSize = props.horizontal
-		? container.value.clientWidth
-		: container.value.clientHeight
+	let containerSize = container.value.clientHeight
+	if (props.horizontal) {
+		const parent = container.value.parentElement
+		if (parent) {
+			const parentStyle = getComputedStyle(parent)
+			const parentGap = Number.parseFloat(parentStyle.columnGap) || 0
+			const horizontalPadding =
+				(Number.parseFloat(parentStyle.paddingLeft) || 0) +
+				(Number.parseFloat(parentStyle.paddingRight) || 0)
+			const siblingWidth = Array.from(parent.children)
+				.filter((child) => child !== container.value)
+				.reduce((width, child) => width + child.getBoundingClientRect().width, 0)
+			containerSize =
+				parent.clientWidth -
+				horizontalPadding -
+				siblingWidth -
+				parentGap * Math.max(0, parent.children.length - 1)
+		} else {
+			containerSize = container.value.clientWidth
+		}
+	}
 	maxAuto.value = Math.max(
 		0,
 		Math.floor((containerSize - footerSize - gap - 2 * dividerSize) / (3 * rem + gap)),
@@ -199,6 +217,9 @@ onMounted(() => {
 	resizeObserver = new ResizeObserver(updateMaxAuto)
 	resizeObserver.observe(container.value)
 	resizeObserver.observe(footer.value)
+	if (props.horizontal && container.value.parentElement) {
+		resizeObserver.observe(container.value.parentElement)
+	}
 	updateMaxAuto()
 	checkProcesses()
 })
@@ -335,8 +356,8 @@ function openContextMenu(event, instance) {
 <template>
 	<div
 		ref="container"
-		class="quick-instance-container flex min-h-0 flex-1 gap-1"
-		:class="horizontal ? 'horizontal min-w-0 flex-row items-center' : 'flex-col'"
+		class="quick-instance-container flex min-h-0 gap-1"
+		:class="horizontal ? 'horizontal min-w-0 flex-none flex-row items-center' : 'flex-1 flex-col'"
 	>
 		<Transition name="top-divider">
 			<div

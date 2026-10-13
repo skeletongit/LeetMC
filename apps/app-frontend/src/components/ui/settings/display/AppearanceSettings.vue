@@ -10,7 +10,13 @@ import { platform } from '@tauri-apps/plugin-os'
 import { computed, inject, onBeforeUnmount, onMounted, watch } from 'vue'
 
 import { useAppSettings } from '@/composables/use-app-settings.ts'
-import { type ColorTheme, isDarkTheme, useTheme } from '@/composables/use-theme.ts'
+import {
+	type ColorTheme,
+	isDarkTheme,
+	type Theme,
+	type ThemeAccentColors,
+	useTheme,
+} from '@/composables/use-theme.ts'
 import { type AppSettings, get, set } from '@/helpers/settings.ts'
 import { appSettingsModalContextKey } from '@/providers/app-settings-modal'
 
@@ -25,6 +31,7 @@ type AppearanceSettingsState = {
 	theme: ColorTheme
 	syncAcrossDevices: boolean
 	advancedRendering: boolean
+	accentColors: ThemeAccentColors
 	liquidGlassIntensity: number
 	nativeDecorations: boolean
 }
@@ -34,6 +41,7 @@ function getAppearanceSettingsState(): AppearanceSettingsState {
 		theme: theme.preferred,
 		syncAcrossDevices: theme.syncAcrossDevices,
 		advancedRendering: theme.advancedRendering,
+		accentColors: { ...theme.accentColors },
 		liquidGlassIntensity: theme.liquidGlassIntensity,
 		nativeDecorations: appSettings.nativeDecorations,
 	}
@@ -68,20 +76,27 @@ const { saved, current, changes, saving, hasChanges, reset, save } = useSavable(
 		theme.preferred = value.theme
 		theme.syncAcrossDevices = value.syncAcrossDevices
 		theme.advancedRendering = value.advancedRendering
+		theme.accentColors = { ...value.accentColors }
 		theme.liquidGlassIntensity = value.liquidGlassIntensity
 		appSettings.nativeDecorations = value.nativeDecorations
 	},
 )
 
-const themeOptions = computed(() =>
-	theme.options.filter(
-		(option) => option !== 'retro' || appSettings.devMode || current.value.theme === 'retro',
-	),
-)
+const themeOptions = computed(() => theme.options)
 
 const preferredDarkTheme = computed(() =>
 	isDarkTheme(current.value.theme) ? current.value.theme : theme.preferredDark,
 )
+const selectedAccentTheme = computed<Theme>(() => {
+	if (current.value.theme !== 'system') return current.value.theme
+	return theme.native === 'light' ? 'light' : preferredDarkTheme.value
+})
+const accentColor = computed(
+	() =>
+		current.value.accentColors[selectedAccentTheme.value] ??
+		theme.defaultAccentColors[selectedAccentTheme.value],
+)
+const defaultAccentColor = computed(() => theme.defaultAccentColors[selectedAccentTheme.value])
 
 function setTheme(value: ColorTheme): void {
 	current.value.theme = value
@@ -93,6 +108,19 @@ function setSyncAcrossDevices(enabled: boolean): void {
 
 function setAdvancedRendering(enabled: boolean): void {
 	current.value.advancedRendering = enabled
+}
+
+function setAccentColor(color: string): void {
+	current.value.accentColors = {
+		...current.value.accentColors,
+		[selectedAccentTheme.value]: color.toLowerCase(),
+	}
+}
+
+function resetAccentColor(): void {
+	const colors = { ...current.value.accentColors }
+	delete colors[selectedAccentTheme.value]
+	current.value.accentColors = colors
 }
 
 function setLiquidGlassIntensity(intensity: number): void {
@@ -119,6 +147,17 @@ watch(
 	{ immediate: true },
 )
 
+watch(
+	[() => current.value.accentColors, () => saved.value.accentColors],
+	([selectedColors, savedColors]) => {
+		const hasChanges = (Object.keys(theme.defaultAccentColors) as Theme[]).some(
+			(themeName) => selectedColors[themeName] !== savedColors[themeName],
+		)
+		theme.accentColorsPreview = hasChanges ? { ...selectedColors } : null
+	},
+	{ deep: true, immediate: true },
+)
+
 async function saveAppearanceSettings(): Promise<void> {
 	try {
 		await save()
@@ -141,6 +180,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
 	theme.preview = null
 	theme.liquidGlassPreview = null
+	theme.accentColorsPreview = null
 	settingsModal?.registerUnsavedChangesController(null)
 })
 
@@ -161,6 +201,12 @@ provideAppearanceSettings({
 	advancedRendering: {
 		value: computed(() => current.value.advancedRendering),
 		set: setAdvancedRendering,
+	},
+	accentColor: {
+		value: accentColor,
+		defaultValue: defaultAccentColor,
+		set: setAccentColor,
+		reset: resetAccentColor,
 	},
 	liquidGlassIntensity: {
 		value: computed(() => current.value.liquidGlassIntensity),

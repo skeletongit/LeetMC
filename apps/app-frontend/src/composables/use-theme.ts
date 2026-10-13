@@ -6,12 +6,22 @@ export const DARK_THEMES = ['dark', 'oled', 'retro'] as const
 
 export type ColorTheme = (typeof THEME_OPTIONS)[number]
 export type DarkTheme = (typeof DARK_THEMES)[number]
-type Theme = Exclude<ColorTheme, 'system'>
+export type Theme = Exclude<ColorTheme, 'system'>
+export type ThemeAccentColors = Partial<Record<Theme, string>>
 type NativeTheme = 'light' | 'dark'
+
+export const DEFAULT_THEME_ACCENT_COLORS: Record<Theme, string> = {
+	dark: '#2ccdb1',
+	light: '#d3324e',
+	oled: '#2ccdb1',
+	retro: '#4d9227',
+}
 
 const PREFERRED_THEME_KEY = 'modrinth-theme'
 const PREFERRED_DARK_THEME_KEY = 'modrinth-preferred-dark-theme'
 const LIQUID_GLASS_INTENSITY_KEY = 'leetmc-liquid-glass-intensity'
+const THEME_ACCENT_COLORS_KEY = 'leetmc-theme-accent-colors'
+const HEX_COLOR_PATTERN = /^#[0-9a-f]{6}$/i
 
 export function isDarkTheme(theme: string): theme is DarkTheme {
 	return (DARK_THEMES as readonly string[]).includes(theme)
@@ -63,11 +73,39 @@ function loadLiquidGlassIntensity(): number {
 	return 100
 }
 
+function loadThemeAccentColors(): ThemeAccentColors {
+	try {
+		const stored = JSON.parse(window.localStorage.getItem(THEME_ACCENT_COLORS_KEY) ?? '{}')
+		if (!stored || typeof stored !== 'object' || Array.isArray(stored)) return {}
+
+		const colors: ThemeAccentColors = {}
+		for (const theme of Object.keys(DEFAULT_THEME_ACCENT_COLORS) as Theme[]) {
+			const color = stored[theme]
+			if (typeof color === 'string' && HEX_COLOR_PATTERN.test(color)) {
+				colors[theme] = color.toLowerCase()
+			}
+		}
+		return colors
+	} catch {
+		return {}
+	}
+}
+
+function hexToRgb(color: string): [number, number, number] {
+	return [
+		Number.parseInt(color.slice(1, 3), 16),
+		Number.parseInt(color.slice(3, 5), 16),
+		Number.parseInt(color.slice(5, 7), 16),
+	]
+}
+
 const preferred = ref<ColorTheme>(loadPreferredTheme())
 const preview = ref<ColorTheme | null>(null)
 const preferredDark = ref<DarkTheme>(loadPreferredDarkTheme())
 const liquidGlassIntensity = ref(loadLiquidGlassIntensity())
 const liquidGlassPreview = ref<number | null>(null)
+const accentColors = ref<ThemeAccentColors>(loadThemeAccentColors())
+const accentColorsPreview = ref<ThemeAccentColors | null>(null)
 const advancedRendering = ref(true)
 const syncAcrossDevices = ref(false)
 const nativeThemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
@@ -82,6 +120,9 @@ const active = computed<Theme>(() => {
 })
 const activeLiquidGlassIntensity = computed(
 	() => liquidGlassPreview.value ?? liquidGlassIntensity.value,
+)
+const activeAccentColor = computed(
+	() => (accentColorsPreview.value ?? accentColors.value)[active.value],
 )
 
 nativeThemeQuery.addEventListener('change', (event) => {
@@ -128,9 +169,53 @@ watch(
 )
 
 watch(
+	accentColors,
+	(colors) => {
+		try {
+			window.localStorage.setItem(THEME_ACCENT_COLORS_KEY, JSON.stringify(colors))
+		} catch {
+			// storage blocked or full
+		}
+	},
+	{ deep: true, immediate: true },
+)
+
+watch(
 	activeLiquidGlassIntensity,
 	(intensity) => {
 		document.documentElement.style.setProperty('--liquid-glass-level', String(intensity / 100))
+	},
+	{ immediate: true },
+)
+
+watch(
+	[active, activeAccentColor],
+	([, color]) => {
+		const html = document.documentElement
+		const customProperties = [
+			'--color-brand',
+			'--color-brand-highlight',
+			'--color-brand-shadow',
+			'--color-button-text-selected',
+			'--color-focus-ring',
+			'--loading-bar-gradient',
+		]
+
+		for (const property of customProperties) {
+			html.style.removeProperty(property)
+		}
+		if (!color) return
+
+		const [red, green, blue] = hexToRgb(color)
+		html.style.setProperty('--color-brand', color)
+		html.style.setProperty('--color-brand-highlight', `rgb(${red} ${green} ${blue} / 25%)`)
+		html.style.setProperty('--color-brand-shadow', `rgb(${red} ${green} ${blue} / 70%)`)
+		html.style.setProperty('--color-button-text-selected', color)
+		html.style.setProperty('--color-focus-ring', color)
+		html.style.setProperty(
+			'--loading-bar-gradient',
+			`linear-gradient(to right, ${color} 0%, color-mix(in srgb, ${color} 55%, white) 100%)`,
+		)
 	},
 	{ immediate: true },
 )
@@ -172,6 +257,9 @@ const theme = reactive({
 	preferredDark,
 	liquidGlassIntensity,
 	liquidGlassPreview,
+	accentColors,
+	accentColorsPreview,
+	defaultAccentColors: DEFAULT_THEME_ACCENT_COLORS,
 	active,
 	native,
 	syncAcrossDevices,

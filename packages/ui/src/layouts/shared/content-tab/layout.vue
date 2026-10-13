@@ -1374,9 +1374,9 @@ const confirmUnlinkModal = ref<InstanceType<typeof ConfirmUnlinkModal>>()
 									v-if="hasBulkUpdateSupport && hasOutdatedProjects"
 									v-tooltip="formatMessage(messages.updateAll)"
 									type="quiet"
-									color="green"
+									color="brand"
 									:disabled="isBulkOperating || loadingUpdateAll"
-									class="!text-sm !font-medium hover:!bg-green focus-visible:!bg-green hover:!text-[var(--color-accent-contrast)] focus-visible:!text-[var(--color-accent-contrast)]"
+									class="!text-sm !font-medium hover:!bg-brand focus-visible:!bg-brand hover:!text-[var(--color-accent-contrast)] focus-visible:!text-[var(--color-accent-contrast)]"
 									@click="promptUpdateAll"
 								>
 									<DownloadIcon />
@@ -1495,9 +1495,9 @@ const confirmUnlinkModal = ref<InstanceType<typeof ConfirmUnlinkModal>>()
 					v-if="hasBulkUpdateSupport && selectedItems.some((m) => m.has_update && !m.locked)"
 					v-tooltip="formatMessage(commonMessages.updateButton)"
 					type="quiet"
-					color="green"
+					color="brand"
 					:disabled="loadingUpdateAll"
-					class="hover:!bg-green focus-visible:!bg-green hover:!text-[var(--color-accent-contrast)] focus-visible:!text-[var(--color-accent-contrast)]"
+					class="hover:!bg-brand focus-visible:!bg-brand hover:!text-[var(--color-accent-contrast)] focus-visible:!text-[var(--color-accent-contrast)]"
 					@click="promptUpdateSelected"
 				>
 					<DownloadIcon />

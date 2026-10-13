@@ -35,6 +35,21 @@
   "affiliate.viewAnalytics": {
     "defaultMessage": "Переглянути аналітику"
   },
+  "app.appearance-settings.accent-color.description": {
+    "defaultMessage": "Налаштуйте активний колір кнопок і вибраних елементів для цієї теми."
+  },
+  "app.appearance-settings.accent-color.reset": {
+    "defaultMessage": "Скинути до кольору теми"
+  },
+  "app.appearance-settings.accent-color.title": {
+    "defaultMessage": "Акцентний колір"
+  },
+  "app.appearance-settings.liquid-glass.description": {
+    "defaultMessage": "Налаштуйте прозорість панелей і розмиття фону."
+  },
+  "app.appearance-settings.liquid-glass.title": {
+    "defaultMessage": "Рідке скло"
+  },
   "app.appearance-settings.native-decorations.description": {
     "defaultMessage": "Використовувати рядок заголовка й елементи керування вашої операційної системи. Потребує перезапуску застосунку."
   },
