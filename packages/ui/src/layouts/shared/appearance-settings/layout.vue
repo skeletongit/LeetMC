@@ -20,6 +20,8 @@ const themeOptions = theme.options
 const systemTheme = theme.system
 const preferredDarkTheme = theme.preferredDark
 const advancedRendering = appearance.advancedRendering.value
+const adaptPearlToAccent = appearance.adaptPearlToAccent
+const adaptPearlToAccentValue = adaptPearlToAccent?.value
 const accentColor = appearance.accentColor
 const accentColorValue = accentColor?.value
 const defaultAccentColor = accentColor?.defaultValue
@@ -138,6 +140,22 @@ const sidebarPreferenceValues = sidebarPreferences?.value
 							:model-value="advancedRendering"
 							:aria-labelledby="labelledBy"
 							@update:model-value="appearance.advancedRendering.update"
+						/>
+					</template>
+				</AppearanceSettingRow>
+
+				<AppearanceSettingRow
+					v-if="adaptPearlToAccent"
+					control-id="adapt-pearl-to-accent"
+					:title="formatMessage(messages.adaptPearlToAccentTitle)"
+					:description="formatMessage(messages.adaptPearlToAccentDescription)"
+				>
+					<template #default="{ labelledBy }">
+						<Toggle
+							id="adapt-pearl-to-accent"
+							:model-value="adaptPearlToAccentValue ?? true"
+							:aria-labelledby="labelledBy"
+							@update:model-value="adaptPearlToAccent.update"
 						/>
 					</template>
 				</AppearanceSettingRow>

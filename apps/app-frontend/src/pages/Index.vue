@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { PlayIcon, PlusIcon } from '@modrinth/assets'
-import { ContextMenu, defineMessages, injectNotificationManager, useVIntl } from '@modrinth/ui'
+import {
+	Button,
+	ContextMenu,
+	defineMessages,
+	EmptyState,
+	injectNotificationManager,
+	useVIntl,
+} from '@modrinth/ui'
 import { useQuery } from '@tanstack/vue-query'
 import dayjs from 'dayjs'
 import { computed, inject, ref } from 'vue'
@@ -8,7 +15,6 @@ import { onBeforeRouteLeave } from 'vue-router'
 
 import LibrarySection from '@/components/ui/library/index.vue'
 import { libraryScrollTop } from '@/components/ui/library/view-state'
-import WelcomeScreen from '@/components/ui/WelcomeScreen.vue'
 import RecentWorldsList from '@/components/ui/world/RecentWorldsList.vue'
 import { useAppSettings } from '@/composables/use-app-settings.ts'
 import { traceStartupStep } from '@/helpers/startup-debug'
@@ -38,6 +44,18 @@ const messages = defineMessages({
 	newInstance: {
 		id: 'app.library.context-menu.create-instance',
 		defaultMessage: 'New instance',
+	},
+	createInstance: {
+		id: 'app.nav.create-new-instance',
+		defaultMessage: 'Create new instance',
+	},
+	emptyHeading: {
+		id: 'app.library.empty.heading',
+		defaultMessage: 'No instances yet',
+	},
+	emptyDescription: {
+		id: 'app.library.empty.description',
+		defaultMessage: 'Create your first instance to start playing.',
 	},
 	libraryActionsLabel: {
 		id: 'app.library.actions.label',
@@ -89,7 +107,26 @@ function openPageContextMenu(event: MouseEvent) {
 </script>
 
 <template>
-	<WelcomeScreen v-if="isReady && !hasCreatedInstance" />
+	<div
+		v-if="isReady && instances.length === 0"
+		data-library-page-background
+		class="flex min-h-[calc(100vh-8rem)] items-center justify-center p-6"
+		@contextmenu="openPageContextMenu"
+	>
+		<EmptyState
+			type="empty"
+			:heading="formatMessage(messages.emptyHeading)"
+			:description="formatMessage(messages.emptyDescription)"
+		>
+			<template #actions>
+				<Button type="colored" color="brand" @click="showCreationModal?.()">
+					<PlusIcon />
+					{{ formatMessage(messages.createInstance) }}
+				</Button>
+			</template>
+		</EmptyState>
+		<ContextMenu ref="pageOptions" :label="formatMessage(messages.libraryActionsLabel)" />
+	</div>
 	<div
 		v-else-if="isReady"
 		data-library-page-background

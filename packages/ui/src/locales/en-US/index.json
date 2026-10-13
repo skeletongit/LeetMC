@@ -44,6 +44,12 @@
   "app.appearance-settings.accent-color.title": {
     "defaultMessage": "Accent color"
   },
+  "app.appearance-settings.adapt-pearl-to-accent.description": {
+    "defaultMessage": "Recolors the pearl in the LeetMC logo to match the selected accent color."
+  },
+  "app.appearance-settings.adapt-pearl-to-accent.title": {
+    "defaultMessage": "Adapt pearl to accent color"
+  },
   "app.appearance-settings.liquid-glass.description": {
     "defaultMessage": "Adjust panel transparency and background blur."
   },
@@ -6046,6 +6052,9 @@
   },
   "settings.display.theme.light": {
     "defaultMessage": "Light"
+  },
+  "settings.display.theme.modrinth": {
+    "defaultMessage": "Modrinth"
   },
   "settings.display.theme.oled": {
     "defaultMessage": "Ender Pearl"

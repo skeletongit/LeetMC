@@ -977,6 +977,12 @@
   "app.library.group.instances-modal.no-instances-found": {
     "message": "No instances found"
   },
+  "app.library.empty.description": {
+    "message": "Create your first instance to start playing."
+  },
+  "app.library.empty.heading": {
+    "message": "No instances yet"
+  },
   "app.library.group.instances-modal.search-placeholder": {
     "message": "Search instance"
   },
@@ -3279,7 +3285,7 @@
     "message": "Sign in to apply skins."
   },
   "app.skins.demo.description": {
-    "message": "Sign in to your Minecraft account to save and apply skins!"
+    "message": "Sign in to at least an offline account to save and apply skins."
   },
   "app.skins.demo.title": {
     "message": "Editing with a demo account"
@@ -3415,6 +3421,9 @@
   },
   "app.skins.section.wilderness-bound": {
     "message": "Wilderness Bound"
+  },
+  "app.skins.offline-sign-in.button": {
+    "message": "Sign in with offline account"
   },
   "app.skins.sign-in.button": {
     "message": "Sign in to Microsoft"

@@ -1,7 +1,7 @@
 import type { Labrinth } from '@modrinth/api-client'
 import type { ComputedRef, Ref } from 'vue'
 
-export type AppearanceTheme = Labrinth.Users.v3.Theme
+export type AppearanceTheme = Labrinth.Users.v3.Theme | 'modrinth'
 export type AppearanceThemeSelection = AppearanceTheme | 'system'
 export type ProjectLayout = Labrinth.Users.v3.LayoutOption
 export type SidebarPreferences = Labrinth.Users.v3.SidebarPreferences

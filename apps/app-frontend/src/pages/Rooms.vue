@@ -366,7 +366,7 @@ function handleSharedInstanceUnavailable(
 
 		<EmptyState
 			v-else
-			type="empty-inbox"
+			type="no-rooms"
 			:heading="formatMessage(messages.noRooms)"
 			:description="formatMessage(messages.noRoomsDescription)"
 		>

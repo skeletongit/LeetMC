@@ -80,6 +80,7 @@ import _NoGPSIllustration from './illustrations/no-gps.svg?component'
 import _NoImagesIllustration from './illustrations/no-images.svg?component'
 import _NoItemsCartIllustration from './illustrations/no-items-cart.svg?component'
 import _NoMessagesIllustration from './illustrations/no-messages.svg?component'
+import _NoRoomsIllustration from './illustrations/no-rooms.svg?component'
 import _NoSearchResultIllustration from './illustrations/no-search-result.svg?component'
 import _NoTasksIllustration from './illustrations/no-tasks.svg?component'
 
@@ -155,6 +156,7 @@ export const NoGPSIllustration = _NoGPSIllustration
 export const NoImagesIllustration = _NoImagesIllustration
 export const NoItemsCartIllustration = _NoItemsCartIllustration
 export const NoMessagesIllustration = _NoMessagesIllustration
+export const NoRoomsIllustration = _NoRoomsIllustration
 export const NoSearchResultIllustration = _NoSearchResultIllustration
 export const NoTasksIllustration = _NoTasksIllustration
 

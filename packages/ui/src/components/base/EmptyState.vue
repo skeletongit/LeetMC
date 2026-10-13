@@ -30,6 +30,7 @@ import {
 	NoImagesIllustration,
 	NoItemsCartIllustration,
 	NoMessagesIllustration,
+	NoRoomsIllustration,
 	NoSearchResultIllustration,
 	NoTasksIllustration,
 } from '@modrinth/assets'
@@ -48,6 +49,7 @@ const illustrationMap: Record<string, Component> = {
 	'no-images': NoImagesIllustration,
 	'no-items-cart': NoItemsCartIllustration,
 	'no-messages': NoMessagesIllustration,
+	'no-rooms': NoRoomsIllustration,
 	'no-search-result': NoSearchResultIllustration,
 	'no-tasks': NoTasksIllustration,
 }

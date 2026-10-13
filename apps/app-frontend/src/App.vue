@@ -89,6 +89,7 @@ import NavButton from '@/components/ui/NavButton.vue'
 import OnboardingChecklist from '@/components/ui/onboarding-checklist/index.vue'
 import PrideFundraiserBanner from '@/components/ui/PrideFundraiserBanner.vue'
 import QuickInstanceSwitcher from '@/components/ui/QuickInstanceSwitcher.vue'
+import RouteSkeleton from '@/components/ui/RouteSkeleton.vue'
 import SharedInstanceInviteHandler from '@/components/ui/shared-instances/shared-instance-invite-handler/index.vue'
 import SplashScreen from '@/components/ui/SplashScreen.vue'
 import SurveyPopup from '@/components/ui/SurveyPopup.vue'
@@ -726,6 +727,49 @@ let initialLoadToken = loading.begin('Initial app state')
 let routerToken = null
 let suspenseToken = null
 
+const routeSkeletonVisible = ref(false)
+const ROUTE_SKELETON_DELAY = 120
+const ROUTE_SKELETON_MIN_DURATION = 160
+let routeSkeletonDelayId = null
+let routeSkeletonHideId = null
+let routeSkeletonShownAt = 0
+
+function scheduleRouteSkeleton() {
+	if (routeSkeletonDelayId !== null) window.clearTimeout(routeSkeletonDelayId)
+	if (routeSkeletonHideId !== null) window.clearTimeout(routeSkeletonHideId)
+
+	routeSkeletonHideId = null
+	routeSkeletonDelayId = window.setTimeout(() => {
+		routeSkeletonDelayId = null
+		routeSkeletonShownAt = performance.now()
+		routeSkeletonVisible.value = true
+	}, ROUTE_SKELETON_DELAY)
+}
+
+function hideRouteSkeleton() {
+	if (routeSkeletonDelayId !== null) {
+		window.clearTimeout(routeSkeletonDelayId)
+		routeSkeletonDelayId = null
+	}
+
+	if (!routeSkeletonVisible.value) return
+
+	const remainingDuration = Math.max(
+		0,
+		ROUTE_SKELETON_MIN_DURATION - (performance.now() - routeSkeletonShownAt),
+	)
+	if (routeSkeletonHideId !== null) window.clearTimeout(routeSkeletonHideId)
+	routeSkeletonHideId = window.setTimeout(() => {
+		routeSkeletonHideId = null
+		routeSkeletonVisible.value = false
+	}, remainingDuration)
+}
+
+onUnmounted(() => {
+	if (routeSkeletonDelayId !== null) window.clearTimeout(routeSkeletonDelayId)
+	if (routeSkeletonHideId !== null) window.clearTimeout(routeSkeletonHideId)
+})
+
 let suspensePending = false
 
 const sidebarOverlayScrollbarsOptions = Object.freeze({
@@ -738,6 +782,7 @@ const sidebarOverlayScrollbarsOptions = Object.freeze({
 router.beforeEach((to, from) => {
 	debugStartup('Route navigation started', { to: to.path, from: from.path })
 	suspensePending = false
+	scheduleRouteSkeleton()
 	if (routerToken) loading.end(routerToken)
 	routerToken = loading.begin(`Route navigation: ${to.path}`)
 })
@@ -756,6 +801,7 @@ router.afterEach((to, from, failure) => {
 			stateInitialized: stateInitialized.value,
 		})
 		if (!suspensePending && stateInitialized.value) {
+			hideRouteSkeleton()
 			if (initialLoadToken) {
 				loading.end(initialLoadToken)
 				initialLoadToken = null
@@ -777,6 +823,7 @@ function onSuspensePending() {
 
 function onSuspenseResolve() {
 	debugStartup('Route Suspense resolved', { route: route.path })
+	hideRouteSkeleton()
 	if (suspenseToken) {
 		loading.end(suspenseToken)
 		suspenseToken = null
@@ -927,6 +974,7 @@ watch(
 			.then(async () => {
 				const settings = await getSettings()
 				const selectedTheme = preferences.appearance.auto ? 'system' : preferences.appearance.theme
+				const preserveLocalModrinthTheme = appTheme.preferred === 'modrinth'
 				const userId = credentials.value?.user_id ?? credentials.value?.user?.id
 				if (userId) {
 					rememberAccountAppearance(userId, preferences.appearance)
@@ -938,14 +986,22 @@ watch(
 				const behavior = preferences.behavior
 				let settingsChanged = false
 
-				if (appTheme.syncAcrossDevices && appTheme.preferred !== selectedTheme) {
+				if (
+					appTheme.syncAcrossDevices &&
+					!preserveLocalModrinthTheme &&
+					appTheme.preferred !== selectedTheme
+				) {
 					appTheme.preferred = selectedTheme
 				}
 				if (i18n.global.locale.value !== locale) {
 					await setLocale(locale)
 				}
 
-				if (appTheme.syncAcrossDevices && settings.theme !== selectedTheme) {
+				if (
+					appTheme.syncAcrossDevices &&
+					!preserveLocalModrinthTheme &&
+					settings.theme !== selectedTheme
+				) {
 					settings.theme = selectedTheme
 					settingsChanged = true
 				}
@@ -1994,6 +2050,9 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	>
 		<div class="app-viewport flex-grow router-view">
 			<SurveyPopup />
+			<Transition name="route-skeleton-fade">
+				<RouteSkeleton v-if="routeSkeletonVisible" />
+			</Transition>
 			<div
 				v-if="appSettings.featureFlags.page_path"
 				class="absolute bottom-0 left-0 m-2 bg-tooltip-bg text-tooltip-text font-semibold rounded-full px-2 py-1 text-xs z-50"
@@ -2222,6 +2281,10 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	transition: color 120ms ease-out;
 }
 
+.app-grid-navbar :deep(.nav-button svg) {
+	transition: filter 140ms ease-out;
+}
+
 .app-grid-navbar :deep(.nav-button:hover),
 .app-grid-navbar :deep(.nav-button.router-link-active),
 .app-grid-navbar :deep(.nav-button.subpage-active) {
@@ -2230,7 +2293,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 
 .app-grid-navbar :deep(.nav-button.router-link-active svg),
 .app-grid-navbar :deep(.nav-button.subpage-active svg) {
-	filter: none;
+	filter: drop-shadow(0 0 0.28rem color-mix(in srgb, var(--color-brand) 38%, transparent));
 }
 
 .page-transition-enter-active {
@@ -2241,7 +2304,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 	position: absolute;
 	inset: 0;
 	width: 100%;
-	transition: opacity 80ms ease-in;
+	visibility: hidden;
 }
 
 .page-transition-enter-from {
@@ -2368,11 +2431,29 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 }
 
 .app-viewport {
+	position: relative;
 	flex-grow: 1;
 	height: 100%;
 	overflow: auto;
 	overflow-x: hidden;
 	scrollbar-gutter: stable;
+}
+
+.route-skeleton-fade-enter-active,
+.route-skeleton-fade-leave-active {
+	transition: opacity 110ms ease-out;
+}
+
+.route-skeleton-fade-enter-from,
+.route-skeleton-fade-leave-to {
+	opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.route-skeleton-fade-enter-active,
+	.route-skeleton-fade-leave-active {
+		transition: none;
+	}
 }
 
 .app-contents::before {

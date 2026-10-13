@@ -411,6 +411,15 @@ html.oled-mode,
 	--liquid-glass-shadow: 0 10px 30px rgb(0 0 0 / 24%), inset 0 1px 0 rgb(255 255 255 / 8%);
 }
 
+html.modrinth-mode,
+.modrinth-mode {
+	--liquid-glass-solid: #27292e;
+	--liquid-glass-start: rgb(52 54 60 / 62%);
+	--liquid-glass-end: rgb(39 41 46 / 54%);
+	--liquid-glass-border: rgb(255 255 255 / 9%);
+	--liquid-glass-shadow: 0 10px 30px rgb(0 0 0 / 22%), inset 0 1px 0 rgb(255 255 255 / 8%);
+}
+
 :where(
 	.liquid-glass-panel,
 	.card,

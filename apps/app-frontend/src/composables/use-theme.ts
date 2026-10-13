@@ -1,8 +1,8 @@
 import { prepareThemeColorTransition } from '@modrinth/ui'
 import { computed, reactive, ref, watch } from 'vue'
 
-export const THEME_OPTIONS = ['dark', 'light', 'oled', 'retro', 'system'] as const
-export const DARK_THEMES = ['dark', 'oled', 'retro'] as const
+export const THEME_OPTIONS = ['dark', 'light', 'oled', 'modrinth', 'retro', 'system'] as const
+export const DARK_THEMES = ['dark', 'oled', 'modrinth', 'retro'] as const
 
 export type ColorTheme = (typeof THEME_OPTIONS)[number]
 export type DarkTheme = (typeof DARK_THEMES)[number]
@@ -14,6 +14,7 @@ export const DEFAULT_THEME_ACCENT_COLORS: Record<Theme, string> = {
 	dark: '#2ccdb1',
 	light: '#d3324e',
 	oled: '#2ccdb1',
+	modrinth: '#1bd96a',
 	retro: '#4d9227',
 }
 
@@ -21,6 +22,7 @@ const PREFERRED_THEME_KEY = 'modrinth-theme'
 const PREFERRED_DARK_THEME_KEY = 'modrinth-preferred-dark-theme'
 const LIQUID_GLASS_INTENSITY_KEY = 'leetmc-liquid-glass-intensity'
 const THEME_ACCENT_COLORS_KEY = 'leetmc-theme-accent-colors'
+const ADAPT_PEARL_TO_ACCENT_KEY = 'leetmc-adapt-pearl-to-accent'
 const HEX_COLOR_PATTERN = /^#[0-9a-f]{6}$/i
 
 export function isDarkTheme(theme: string): theme is DarkTheme {
@@ -73,6 +75,14 @@ function loadLiquidGlassIntensity(): number {
 	return 100
 }
 
+function loadAdaptPearlToAccent(): boolean {
+	try {
+		return window.localStorage.getItem(ADAPT_PEARL_TO_ACCENT_KEY) !== 'false'
+	} catch {
+		return true
+	}
+}
+
 function loadThemeAccentColors(): ThemeAccentColors {
 	try {
 		const stored = JSON.parse(window.localStorage.getItem(THEME_ACCENT_COLORS_KEY) ?? '{}')
@@ -99,6 +109,16 @@ function hexToRgb(color: string): [number, number, number] {
 	]
 }
 
+function getAccentContrastColor([red, green, blue]: [number, number, number]): string {
+	const linearize = (channel: number) => {
+		const normalized = channel / 255
+		return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4
+	}
+	const luminance = 0.2126 * linearize(red) + 0.7152 * linearize(green) + 0.0722 * linearize(blue)
+
+	return luminance > 0.179 ? '#0a0b0c' : '#ffffff'
+}
+
 const preferred = ref<ColorTheme>(loadPreferredTheme())
 const preview = ref<ColorTheme | null>(null)
 const preferredDark = ref<DarkTheme>(loadPreferredDarkTheme())
@@ -107,6 +127,11 @@ const liquidGlassPreview = ref<number | null>(null)
 const accentColors = ref<ThemeAccentColors>(loadThemeAccentColors())
 const accentColorsPreview = ref<ThemeAccentColors | null>(null)
 const advancedRendering = ref(true)
+const adaptPearlToAccent = ref(loadAdaptPearlToAccent())
+const adaptPearlToAccentPreview = ref<boolean | null>(null)
+const activeAdaptPearlToAccent = computed(
+	() => adaptPearlToAccentPreview.value ?? adaptPearlToAccent.value,
+)
 const syncAcrossDevices = ref(false)
 const nativeThemeQuery = window.matchMedia('(prefers-color-scheme: dark)')
 const native = ref<NativeTheme>(nativeThemeQuery.matches ? 'dark' : 'light')
@@ -181,6 +206,26 @@ watch(
 )
 
 watch(
+	adaptPearlToAccent,
+	(enabled) => {
+		try {
+			window.localStorage.setItem(ADAPT_PEARL_TO_ACCENT_KEY, String(enabled))
+		} catch {
+			// storage blocked or full
+		}
+	},
+	{ immediate: true },
+)
+
+watch(
+	activeAdaptPearlToAccent,
+	(enabled) => {
+		document.documentElement.classList.toggle('disable-pearl-accent-adaptation', !enabled)
+	},
+	{ immediate: true },
+)
+
+watch(
 	activeLiquidGlassIntensity,
 	(intensity) => {
 		document.documentElement.style.setProperty('--liquid-glass-level', String(intensity / 100))
@@ -196,6 +241,7 @@ watch(
 			'--color-brand',
 			'--color-brand-highlight',
 			'--color-brand-shadow',
+			'--color-accent-contrast',
 			'--color-button-text-selected',
 			'--color-focus-ring',
 			'--loading-bar-gradient',
@@ -210,6 +256,7 @@ watch(
 		html.style.setProperty('--color-brand', color)
 		html.style.setProperty('--color-brand-highlight', `rgb(${red} ${green} ${blue} / 25%)`)
 		html.style.setProperty('--color-brand-shadow', `rgb(${red} ${green} ${blue} / 70%)`)
+		html.style.setProperty('--color-accent-contrast', getAccentContrastColor([red, green, blue]))
 		html.style.setProperty('--color-button-text-selected', color)
 		html.style.setProperty('--color-focus-ring', color)
 		html.style.setProperty(
@@ -264,6 +311,8 @@ const theme = reactive({
 	native,
 	syncAcrossDevices,
 	advancedRendering,
+	adaptPearlToAccent,
+	adaptPearlToAccentPreview,
 	options: THEME_OPTIONS,
 	applyAccountAppearance,
 })

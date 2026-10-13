@@ -953,6 +953,12 @@
   "app.library.group.instances-modal.no-instances-found": {
     "message": "Сборки не найдены"
   },
+  "app.library.empty.description": {
+    "message": "Создайте первую сборку, чтобы начать играть."
+  },
+  "app.library.empty.heading": {
+    "message": "Сборок пока нет"
+  },
   "app.library.group.instances-modal.search-placeholder": {
     "message": "Поиск сборки"
   },
@@ -3180,7 +3186,7 @@
     "message": "Войдите, чтобы применять скины."
   },
   "app.skins.demo.description": {
-    "message": "Войдите в аккаунт Minecraft, чтобы сохранять и применять скины!"
+    "message": "Войдите как минимум в оффлайн-аккаунт, чтобы сохранять и применять скины."
   },
   "app.skins.demo.title": {
     "message": "Редактирование с демо-аккаунта"
@@ -3316,6 +3322,9 @@
   },
   "app.skins.section.wilderness-bound": {
     "message": "Wilderness Bound"
+  },
+  "app.skins.offline-sign-in.button": {
+    "message": "Войти в оффлайн-аккаунт"
   },
   "app.skins.sign-in.button": {
     "message": "Войти в Microsoft"

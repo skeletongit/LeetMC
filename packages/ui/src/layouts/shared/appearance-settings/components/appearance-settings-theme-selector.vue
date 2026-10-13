@@ -34,6 +34,10 @@ const themeLabels = defineMessages({
 		id: 'settings.display.theme.oled',
 		defaultMessage: 'Ender Pearl',
 	},
+	modrinth: {
+		id: 'settings.display.theme.modrinth',
+		defaultMessage: 'Modrinth',
+	},
 	retro: {
 		id: 'settings.display.theme.retro',
 		defaultMessage: 'Retro',
@@ -146,6 +150,22 @@ function getPreviewClass(option: T): string {
 			--color-button-bg: var(--surface-4);
 			--color-base: #b8c7c3;
 			--color-secondary: #91a8a3;
+		}
+
+		&.modrinth-mode {
+			--surface-1: #16181c;
+			--surface-1-5: #1a1c20;
+			--surface-2: #1d1f23;
+			--surface-2-5: #222429;
+			--surface-3: #27292e;
+			--surface-4: #34363c;
+			--surface-5: #42444a;
+			--color-bg: var(--surface-1);
+			--color-raised-bg: var(--surface-3);
+			--color-super-raised-bg: var(--surface-4);
+			--color-button-bg: var(--surface-4);
+			--color-base: #b0bac5;
+			--color-secondary: #96a2b0;
 		}
 
 		&.retro-mode {

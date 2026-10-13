@@ -1,0 +1,41 @@
+<svg viewBox="0 0 250 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<path
+		fill-rule="evenodd"
+		clip-rule="evenodd"
+		d="M48 145H202C205.866 145 209 141.866 209 138C209 134.134 205.866 131 202 131H190C186.134 131 183 127.866 183 124C183 120.134 186.134 117 190 117H216C219.866 117 223 113.866 223 110C223 106.134 219.866 103 216 103H194C197.866 103 201 99.866 201 96C201 92.134 197.866 89 194 89H170C173.866 89 177 85.866 177 82C177 78.134 173.866 75 170 75H80C76.134 75 73 78.134 73 82C73 85.866 76.134 89 80 89H52C48.134 89 45 92.134 45 96C45 99.866 48.134 103 52 103H32C28.134 103 25 106.134 25 110C25 113.866 28.134 117 32 117H60C63.866 117 67 120.134 67 124C67 127.866 63.866 131 60 131H48C44.134 131 41 134.134 41 138C41 141.866 44.134 145 48 145Z"
+		fill="var(--surface-2, #1D1F23)"
+	/>
+	<path
+		d="M54 81L125 46L196 81L125 117L54 81Z"
+		fill="var(--surface-2, #1D1F23)"
+	/>
+	<path d="M54 81V139L125 176V117L54 81Z" fill="var(--surface-1, #16181C)" />
+	<path d="M196 81V139L125 176V117L196 81Z" fill="var(--surface-1, #16181C)" />
+	<path
+		d="M54 81L125 46L196 81M54 81V139L125 176M54 81L125 117M196 81V139L125 176M196 81L125 117M125 46V117M125 117V176"
+		stroke="var(--surface-4, #34363C)"
+		stroke-width="2.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+	<path
+		d="M78 102L103 115V143L78 130V102ZM172 102L147 115V143L172 130V102Z"
+		fill="var(--surface-2, #1D1F23)"
+		stroke="var(--surface-4, #34363C)"
+		stroke-width="2.5"
+		stroke-linejoin="round"
+	/>
+	<path
+		d="M103 115L125 104L147 115L125 126L103 115ZM103 128L125 139L147 128M125 126V151"
+		stroke="var(--surface-3, #27292E)"
+		stroke-width="2.5"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+	/>
+	<path
+		d="M72 72L83 66M178 66L189 72M125 31V39"
+		stroke="var(--surface-3, #27292E)"
+		stroke-width="2.5"
+		stroke-linecap="round"
+	/>
+</svg>

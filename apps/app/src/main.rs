@@ -13,6 +13,9 @@ use theseus::prelude::*;
 
 mod api;
 
+#[cfg(target_os = "windows")]
+mod windows_efficiency;
+
 #[cfg(target_os = "macos")]
 mod macos;
 
@@ -51,6 +54,9 @@ async fn initialize_state(
 #[tracing::instrument(skip_all)]
 #[tauri::command]
 fn show_window(app: tauri::AppHandle) {
+    #[cfg(target_os = "windows")]
+    windows_efficiency::set_webview_backgrounded(false);
+
     let win = app.get_window("main").unwrap();
     if let Err(e) = win.show() {
         DialogBuilder::message()
@@ -233,6 +239,17 @@ fn main() {
                         )
                     } {
                         tracing::warn!("Failed to refresh window frame: {e}");
+                    }
+                })
+                .on_event(|_, event| {
+                    if let tauri::RunEvent::WindowEvent {
+                        label,
+                        event: tauri::WindowEvent::Focused(focused),
+                        ..
+                    } = event
+                        && label == "main"
+                    {
+                        windows_efficiency::set_webview_backgrounded(!*focused);
                     }
                 })
                 .build(),

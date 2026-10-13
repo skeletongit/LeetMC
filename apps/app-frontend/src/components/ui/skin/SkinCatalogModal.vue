@@ -14,6 +14,7 @@ import {
 	Button,
 	commonMessages,
 	defineMessages,
+	Input,
 	injectNotificationManager,
 	NewModal,
 	RadioButtons,
@@ -23,7 +24,7 @@ import {
 import { arrayBufferToBase64 } from '@modrinth/utils/utils'
 import { save } from '@tauri-apps/plugin-dialog'
 import { writeFile } from '@tauri-apps/plugin-fs'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
 import SkinHead from '@/components/ui/skin/SkinHead.vue'
 import {
@@ -40,6 +41,7 @@ import {
 
 const emit = defineEmits<{
 	(e: 'equipped' | 'saved', skin: Skin): void
+	(e: 'select-preview', skin: SearchedSkin): void
 }>()
 
 const props = withDefaults(
@@ -385,6 +387,7 @@ async function onSearchPlayer() {
 async function selectSkin(skin: SearchedSkin) {
 	selectedSkin.value = skin
 	selectedVariant.value = skin.variant
+	emit('select-preview', skin)
 
 	if (skin.texture_base64 && skin.texture_base64.startsWith('data:image/')) {
 		return
@@ -392,6 +395,7 @@ async function selectSkin(skin: SearchedSkin) {
 
 	if (skinTextureCache.has(skin.texture_url)) {
 		skin.texture_base64 = skinTextureCache.get(skin.texture_url)!
+		emit('select-preview', skin)
 		return
 	}
 
@@ -402,12 +406,19 @@ async function selectSkin(skin: SearchedSkin) {
 		const dataUrl = `data:image/png;base64,${b64}`
 		skin.texture_base64 = dataUrl
 		skinTextureCache.set(skin.texture_url, dataUrl)
+		emit('select-preview', skin)
 	} catch (err) {
 		console.error('Failed to download skin texture for preview:', err)
 	} finally {
 		isPreviewLoading.value = false
 	}
 }
+
+watch(selectedVariant, (newVariant) => {
+	if (selectedSkin.value) {
+		emit('select-preview', { ...selectedSkin.value, variant: newVariant })
+	}
+})
 
 async function getSelectedSkinBytes(): Promise<Uint8Array> {
 	if (!selectedSkin.value) throw new Error(formatMessage(messages.skinNotSelectedError))
@@ -558,31 +569,27 @@ async function downloadCurrentSkinFile() {
 			</div>
 
 			<!-- Main modal body -->
-			<div class="grid grid-cols-1 gap-6 md:grid-cols-[1fr_260px] min-h-[460px]">
+			<div
+				:class="
+					props.embedded
+						? 'flex flex-col gap-4 min-w-0'
+						: 'grid grid-cols-1 gap-6 md:grid-cols-[1fr_260px] min-h-[460px]'
+				"
+			>
 				<!-- Left Column: Search & Items -->
 				<div class="flex flex-col gap-4 min-w-0">
 					<!-- CATALOG MODE -->
 					<div v-if="activeMode === 'catalog'" class="flex flex-col gap-3">
 						<form class="flex gap-2" @submit.prevent="onSearchCatalog">
-							<div class="relative flex-1">
-								<SearchIcon
-									class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-secondary pointer-events-none"
-								/>
-								<input
-									v-model="catalogQuery"
-									type="text"
-									:placeholder="formatMessage(messages.catalogSearchPlaceholder)"
-									class="w-full bg-surface-3 text-contrast rounded-xl pl-9 pr-8 py-2 text-sm border border-surface-5 outline-none focus:border-brand"
-								/>
-								<button
-									v-if="catalogQuery"
-									type="button"
-									class="absolute right-2.5 top-1/2 -translate-y-1/2 text-secondary hover:text-contrast"
-									@click="onClearCatalogQuery"
-								>
-									<XIcon class="size-4" />
-								</button>
-							</div>
+							<Input
+								v-model="catalogQuery"
+								:placeholder="formatMessage(messages.catalogSearchPlaceholder)"
+								:icon="SearchIcon"
+								size="small"
+								clearable
+								class="flex-1"
+								@clear="onClearCatalogQuery"
+							/>
 							<Button
 								type="colored"
 								color="brand"
@@ -597,21 +604,26 @@ async function downloadCurrentSkinFile() {
 
 						<!-- Quick tags -->
 						<div class="flex flex-wrap gap-1.5">
-							<button
+							<Button
 								v-for="item in popularTagItems"
 								:key="item.key"
-								type="button"
-								class="px-2.5 py-1 text-xs font-medium rounded-full border transition-colors"
-								:class="
+								:type="
 									(!item.query && !catalogQuery) ||
 									(item.query && catalogQuery.toLowerCase() === item.query.toLowerCase())
-										? 'border-brand bg-brand/10 text-brand'
-										: 'border-surface-5 bg-surface-3 text-secondary hover:text-contrast'
+										? 'colored'
+										: 'base'
 								"
+								:color="
+									(!item.query && !catalogQuery) ||
+									(item.query && catalogQuery.toLowerCase() === item.query.toLowerCase())
+										? 'brand'
+										: undefined
+								"
+								size="xs"
 								@click="onTagClick(item.query)"
 							>
 								{{ formatMessage(item.label) }}
-							</button>
+							</Button>
 						</div>
 
 						<!-- Catalog skin grid -->
@@ -622,7 +634,7 @@ async function downloadCurrentSkinFile() {
 
 							<div
 								v-else-if="catalogResult?.skins && catalogResult.skins.length > 0"
-								class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2.5 max-h-[360px] overflow-y-auto pr-1"
+								class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-2.5 max-h-[380px] overflow-y-auto pr-1"
 							>
 								<div
 									v-for="skin in catalogResult.skins"
@@ -635,8 +647,8 @@ async function downloadCurrentSkinFile() {
 									"
 									@click="selectSkin(skin)"
 								>
-									<!-- Skin Head 2D Face thumbnail -->
-									<SkinHead :src="skin.texture_url" :size="56" class="mb-1.5" />
+									<!-- Skin Full Body 2D thumbnail -->
+									<SkinHead :src="skin.texture_url" :variant="skin.variant" :height="96" class="mb-1.5" />
 									<span class="text-xs font-semibold text-contrast truncate w-full text-center">
 										{{ skin.name }}
 									</span>
@@ -690,17 +702,14 @@ async function downloadCurrentSkinFile() {
 					<!-- PLAYER LOOKUP MODE -->
 					<div v-else class="flex flex-col gap-3 flex-1 min-h-0">
 						<form class="flex gap-2 shrink-0" @submit.prevent="onSearchPlayer">
-							<div class="relative flex-1">
-								<UserSearchIcon
-									class="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-secondary pointer-events-none"
-								/>
-								<input
-									v-model="playerQuery"
-									type="text"
-									:placeholder="formatMessage(messages.playerSearchPlaceholder)"
-									class="w-full bg-surface-3 text-contrast rounded-xl pl-9 pr-8 py-2 text-sm border border-surface-5 outline-none focus:border-brand"
-								/>
-							</div>
+							<Input
+								v-model="playerQuery"
+								:placeholder="formatMessage(messages.playerSearchPlaceholder)"
+								:icon="UserSearchIcon"
+								size="small"
+								clearable
+								class="flex-1"
+							/>
 							<Button
 								type="colored"
 								color="brand"
@@ -728,7 +737,8 @@ async function downloadCurrentSkinFile() {
 								<div class="flex items-center gap-3 w-full">
 									<SkinHead
 										:src="playerResult.texture_base64 || playerResult.texture_url"
-										:size="48"
+										:variant="playerResult.variant"
+										:height="96"
 									/>
 									<div class="flex flex-col min-w-0">
 										<span class="text-base font-bold text-contrast truncate">{{
@@ -769,10 +779,80 @@ async function downloadCurrentSkinFile() {
 							</div>
 						</div>
 					</div>
+
+					<!-- Compact action bar for embedded mode when a skin is selected -->
+					<div
+						v-if="props.embedded && selectedSkin"
+						class="flex flex-col gap-2.5 p-3 rounded-2xl bg-surface-3 border border-surface-5 mt-1"
+					>
+						<div class="flex items-center justify-between gap-2">
+							<div class="flex items-center gap-2.5 min-w-0">
+								<SkinHead
+									:src="selectedSkin.texture_base64 || selectedSkin.texture_url"
+									:variant="selectedVariant"
+									:height="48"
+								/>
+								<div class="flex flex-col min-w-0">
+									<span class="text-sm font-bold text-contrast truncate">{{ selectedSkin.name }}</span>
+									<span class="text-xs text-secondary">{{
+										selectedVariant === 'SLIM'
+											? formatMessage(messages.slimArm)
+											: formatMessage(messages.classicArm)
+									}}</span>
+								</div>
+							</div>
+							<RadioButtons
+								v-model="selectedVariant"
+								:items="['CLASSIC', 'SLIM']"
+								class="!flex-row text-xs shrink-0"
+							>
+								<template #default="{ item }">
+									{{ item === 'CLASSIC' ? formatMessage(messages.classicArm) : formatMessage(messages.slimArm) }}
+								</template>
+							</RadioButtons>
+						</div>
+
+						<div class="flex items-center gap-2">
+							<Button
+								type="colored"
+								color="brand"
+								size="sm"
+								class="flex-1 justify-center"
+								:disabled="isEquipping"
+								@click="equipCurrentSkin"
+							>
+								<SpinnerIcon v-if="isEquipping" class="animate-spin" />
+								<CheckIcon v-else />
+								{{ formatMessage(messages.equipButton) }}
+							</Button>
+
+							<Button
+								type="base"
+								size="sm"
+								class="flex-1 justify-center"
+								:disabled="isSaving"
+								@click="saveCurrentSkin"
+							>
+								<SpinnerIcon v-if="isSaving" class="animate-spin" />
+								<SaveIcon v-else />
+								{{ formatMessage(messages.saveToLibraryButton) }}
+							</Button>
+
+							<Button
+								type="outlined"
+								size="sm"
+								:aria-label="formatMessage(messages.downloadPngButton)"
+								@click="downloadCurrentSkinFile"
+							>
+								<DownloadIcon />
+							</Button>
+						</div>
+					</div>
 				</div>
 
-				<!-- Right Column: 3D Preview & Actions -->
+				<!-- Right Column: 3D Preview & Actions (ONLY in standalone modal mode) -->
 				<div
+					v-if="!props.embedded"
 					class="flex flex-col items-center justify-between p-4 rounded-2xl bg-surface-3 border border-surface-5 min-h-[400px]"
 				>
 					<div class="w-full flex flex-col items-center gap-2">

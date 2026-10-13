@@ -16,7 +16,7 @@ export const Interactive: StoryObj = {
 		components: { AppearanceSettingsThemeSelector },
 		setup() {
 			const currentTheme = ref('dark')
-			const themeOptions = ['system', 'light', 'dark', 'oled', 'retro']
+			const themeOptions = ['system', 'light', 'dark', 'oled', 'modrinth', 'retro']
 			return { currentTheme, themeOptions }
 		},
 		template: `

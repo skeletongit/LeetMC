@@ -175,6 +175,12 @@ function resetEffect() {
 	requestDraw()
 }
 
+function handleDocumentPointerOut(event: PointerEvent) {
+	if (event.relatedTarget === null) {
+		resetEffect()
+	}
+}
+
 function clearEffect() {
 	targetStrength = 0
 	currentStrength = 0
@@ -218,6 +224,8 @@ onMounted(() => {
 	resizeObserver.observe(element)
 	window.addEventListener('pointermove', handlePointerMove, { passive: true })
 	window.addEventListener('pointerleave', resetEffect)
+	window.addEventListener('blur', resetEffect)
+	document.addEventListener('pointerout', handleDocumentPointerOut)
 	document.addEventListener('visibilitychange', handleVisibilityChange)
 	reducedMotionQuery.addEventListener('change', handleAnimationPreferenceChange)
 	resize()
@@ -228,6 +236,8 @@ onUnmounted(() => {
 	resizeObserver?.disconnect()
 	window.removeEventListener('pointermove', handlePointerMove)
 	window.removeEventListener('pointerleave', resetEffect)
+	window.removeEventListener('blur', resetEffect)
+	document.removeEventListener('pointerout', handleDocumentPointerOut)
 	document.removeEventListener('visibilitychange', handleVisibilityChange)
 	reducedMotionQuery?.removeEventListener('change', handleAnimationPreferenceChange)
 })

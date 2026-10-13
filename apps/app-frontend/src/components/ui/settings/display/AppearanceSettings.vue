@@ -31,6 +31,7 @@ type AppearanceSettingsState = {
 	theme: ColorTheme
 	syncAcrossDevices: boolean
 	advancedRendering: boolean
+	adaptPearlToAccent: boolean
 	accentColors: ThemeAccentColors
 	liquidGlassIntensity: number
 	nativeDecorations: boolean
@@ -41,6 +42,7 @@ function getAppearanceSettingsState(): AppearanceSettingsState {
 		theme: theme.preferred,
 		syncAcrossDevices: theme.syncAcrossDevices,
 		advancedRendering: theme.advancedRendering,
+		adaptPearlToAccent: theme.adaptPearlToAccent,
 		accentColors: { ...theme.accentColors },
 		liquidGlassIntensity: theme.liquidGlassIntensity,
 		nativeDecorations: appSettings.nativeDecorations,
@@ -54,6 +56,7 @@ const { saved, current, changes, saving, hasChanges, reset, save } = useSavable(
 		if (
 			value.syncAcrossDevices &&
 			auth.user.value &&
+			value.theme !== 'modrinth' &&
 			(appearanceChanges.theme !== undefined || appearanceChanges.syncAcrossDevices !== undefined)
 		) {
 			await updatePreferences({
@@ -76,6 +79,7 @@ const { saved, current, changes, saving, hasChanges, reset, save } = useSavable(
 		theme.preferred = value.theme
 		theme.syncAcrossDevices = value.syncAcrossDevices
 		theme.advancedRendering = value.advancedRendering
+		theme.adaptPearlToAccent = value.adaptPearlToAccent
 		theme.accentColors = { ...value.accentColors }
 		theme.liquidGlassIntensity = value.liquidGlassIntensity
 		appSettings.nativeDecorations = value.nativeDecorations
@@ -108,6 +112,10 @@ function setSyncAcrossDevices(enabled: boolean): void {
 
 function setAdvancedRendering(enabled: boolean): void {
 	current.value.advancedRendering = enabled
+}
+
+function setAdaptPearlToAccent(enabled: boolean): void {
+	current.value.adaptPearlToAccent = enabled
 }
 
 function setAccentColor(color: string): void {
@@ -158,6 +166,15 @@ watch(
 	{ deep: true, immediate: true },
 )
 
+watch(
+	[() => current.value.adaptPearlToAccent, () => saved.value.adaptPearlToAccent],
+	([selectedAdaptation, savedAdaptation]) => {
+		theme.adaptPearlToAccentPreview =
+			selectedAdaptation === savedAdaptation ? null : selectedAdaptation
+	},
+	{ immediate: true },
+)
+
 async function saveAppearanceSettings(): Promise<void> {
 	try {
 		await save()
@@ -181,6 +198,7 @@ onBeforeUnmount(() => {
 	theme.preview = null
 	theme.liquidGlassPreview = null
 	theme.accentColorsPreview = null
+	theme.adaptPearlToAccentPreview = null
 	settingsModal?.registerUnsavedChangesController(null)
 })
 
@@ -201,6 +219,10 @@ provideAppearanceSettings({
 	advancedRendering: {
 		value: computed(() => current.value.advancedRendering),
 		set: setAdvancedRendering,
+	},
+	adaptPearlToAccent: {
+		value: computed(() => current.value.adaptPearlToAccent),
+		set: setAdaptPearlToAccent,
 	},
 	accentColor: {
 		value: accentColor,

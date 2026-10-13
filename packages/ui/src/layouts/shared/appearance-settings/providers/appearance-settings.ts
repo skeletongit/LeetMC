@@ -48,6 +48,7 @@ interface SidebarSettings {
 export interface AppearanceSettingsContext {
 	theme: ThemeSettings
 	advancedRendering: AppearanceSetting<boolean>
+	adaptPearlToAccent?: AppearanceSetting<boolean>
 	accentColor?: AccentColorSetting
 	liquidGlassIntensity?: AppearanceSetting<number>
 	nativeDecorations?: AppearanceSetting<boolean>
@@ -68,6 +69,7 @@ export interface AppearanceSettingsProviderOptions {
 		syncDisabled: AppearanceRef<boolean>
 	}
 	advancedRendering: WritableAppearanceSetting<boolean>
+	adaptPearlToAccent?: WritableAppearanceSetting<boolean>
 	accentColor?: WritableAppearanceSetting<string> & {
 		defaultValue: AppearanceRef<string>
 		reset: () => void | Promise<void>
@@ -220,6 +222,9 @@ export function provideAppearanceSettings(
 			},
 		},
 		advancedRendering: createSetting(options.advancedRendering),
+		adaptPearlToAccent: options.adaptPearlToAccent
+			? createSetting(options.adaptPearlToAccent)
+			: undefined,
 		accentColor: options.accentColor
 			? {
 					...createSetting(options.accentColor),

@@ -15,7 +15,8 @@ export const appearanceSettingsMessages = defineMessages({
 	},
 	accentColorDescription: {
 		id: 'app.appearance-settings.accent-color.description',
-		defaultMessage: 'Customize the active color used for buttons and selected controls in this theme.',
+		defaultMessage:
+			'Customize the active color used for buttons and selected controls in this theme.',
 	},
 	resetAccentColor: {
 		id: 'app.appearance-settings.accent-color.reset',
@@ -90,6 +91,14 @@ export const appearanceSettingsMessages = defineMessages({
 		id: 'settings.display.sidebar.advanced-rendering.description',
 		defaultMessage:
 			'Enables advanced rendering such as blur effects that may cause performance issues without hardware-accelerated rendering.',
+	},
+	adaptPearlToAccentTitle: {
+		id: 'app.appearance-settings.adapt-pearl-to-accent.title',
+		defaultMessage: 'Adapt pearl to accent color',
+	},
+	adaptPearlToAccentDescription: {
+		id: 'app.appearance-settings.adapt-pearl-to-accent.description',
+		defaultMessage: 'Recolors the pearl in the LeetMC logo to match the selected accent color.',
 	},
 	externalLinksNewTabTitle: {
 		id: 'settings.display.sidebar.external-links-new-tab.title',

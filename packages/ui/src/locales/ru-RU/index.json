@@ -44,6 +44,12 @@
   "app.appearance-settings.accent-color.title": {
     "defaultMessage": "Акцентный цвет"
   },
+  "app.appearance-settings.adapt-pearl-to-accent.description": {
+    "defaultMessage": "Перекрашивает жемчуг в логотипе LeetMC под выбранный акцентный цвет."
+  },
+  "app.appearance-settings.adapt-pearl-to-accent.title": {
+    "defaultMessage": "Адаптировать жемчуг под акцентный цвет"
+  },
   "app.appearance-settings.liquid-glass.description": {
     "defaultMessage": "Настройте прозрачность панелей и размытие фона."
   },
@@ -5848,6 +5854,9 @@
   },
   "settings.display.theme.light": {
     "defaultMessage": "Светлая"
+  },
+  "settings.display.theme.modrinth": {
+    "defaultMessage": "Modrinth"
   },
   "settings.display.theme.oled": {
     "defaultMessage": "Жемчуг края"

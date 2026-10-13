@@ -123,7 +123,15 @@ const columnCount = computed(() => {
 		return 4
 	}
 
-	return 3
+	if (listWidth.value >= 400) {
+		return 3
+	}
+
+	if (listWidth.value >= 200) {
+		return 2
+	}
+
+	return 1
 })
 
 const cardWidth = computed(() => {
