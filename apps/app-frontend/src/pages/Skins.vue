@@ -3,10 +3,8 @@ import {
 	CheckIcon,
 	EditIcon,
 	EyeIcon,
-	GlobeIcon,
 	InfoIcon,
 	RotateCounterClockwiseIcon,
-	SearchIcon,
 	ShirtIcon,
 	SpinnerIcon,
 	WindowsIcon,
@@ -215,22 +213,9 @@ const messages = defineMessages({
 		id: 'app.skins.sign-in.button',
 		defaultMessage: 'Sign in to Microsoft',
 	},
-	skinCatalogBannerTitle: {
-		id: 'app.skins.catalog-banner.title',
-		defaultMessage: 'Skin Catalog (NameMC)',
-	},
-	skinCatalogBannerDescription: {
-		id: 'app.skins.catalog-banner.description',
-		defaultMessage: 'Search player skins or browse a massive catalog in one click',
-	},
-	skinCatalogBannerButton: {
-		id: 'app.skins.catalog-banner.button',
-		defaultMessage: 'Search & Catalog',
-	},
 })
 
 const editSkinModal = useTemplateRef('editSkinModal')
-const skinCatalogModal = useTemplateRef<InstanceType<typeof SkinCatalogModal>>('skinCatalogModal')
 const addSkinFileInput = useTemplateRef<HTMLInputElement>('addSkinFileInput')
 const skinSectionList = useTemplateRef<VirtualSkinSectionListExpose>('skinSectionList')
 
@@ -1115,21 +1100,23 @@ await loadSkins()
 		:proceed-label="formatMessage(commonMessages.deleteLabel)"
 		@proceed="deleteSkin"
 	/>
-	<SkinCatalogModal
-		ref="skinCatalogModal"
-		@equipped="() => loadSkins()"
-		@saved="() => loadSkins()"
-	/>
+	<div class="skin-page-layout box-border grow p-4" :class="{ 'pb-40': !currentUser }">
+		<SkinCatalogModal
+			embedded
+			class="min-w-0 self-start"
+			@equipped="() => loadSkins()"
+			@saved="() => loadSkins()"
+		/>
 
-	<div class="skin-layout box-border grow p-4" :class="{ 'pb-40': !currentUser }">
-		<div class="sticky top-6 self-start p-2 pt-0">
-			<h1 class="m-0 text-2xl font-bold flex items-center gap-2">
-				{{ formatMessage(appMessages.skinSelectorLabel) }}
-			</h1>
-			<div
-				class="ml-5 mt-4 flex h-[calc(80vh-1rem)] items-center justify-center max-[700px]:h-[calc(50vh-1rem)]"
-			>
-				<SkinPreviewRenderer
+		<div class="skin-manager-layout min-w-0">
+			<div class="sticky top-6 self-start p-2 pt-0">
+				<h1 class="m-0 text-2xl font-bold flex items-center gap-2">
+					{{ formatMessage(appMessages.skinSelectorLabel) }}
+				</h1>
+				<div
+					class="ml-5 mt-4 flex h-[calc(80vh-1rem)] items-center justify-center max-[700px]:h-[calc(50vh-1rem)]"
+				>
+					<SkinPreviewRenderer
 					:cape-src="capeTexture"
 					:texture-src="skinTexture || ''"
 					:ears-texture-src="selectedSkin?.texture"
@@ -1273,53 +1260,31 @@ await loadSkins()
 							</div>
 						</div>
 					</template>
-				</SkinPreviewRenderer>
-			</div>
-		</div>
-
-		<div class="pt-2">
-			<div
-				class="mb-4 flex flex-wrap items-center justify-between gap-3 p-3.5 bg-surface-2 rounded-2xl border border-surface-5"
-			>
-				<div class="flex items-center gap-3">
-					<div
-						class="size-10 rounded-xl bg-brand/10 text-brand flex items-center justify-center shrink-0"
-					>
-						<GlobeIcon class="size-5" />
-					</div>
-					<div class="flex flex-col">
-						<span class="text-sm font-bold text-contrast">{{
-							formatMessage(messages.skinCatalogBannerTitle)
-						}}</span>
-						<span class="text-xs text-secondary">{{
-							formatMessage(messages.skinCatalogBannerDescription)
-						}}</span>
-					</div>
+					</SkinPreviewRenderer>
 				</div>
-				<Button type="colored" color="brand" @click="skinCatalogModal?.show()">
-					<SearchIcon /> {{ formatMessage(messages.skinCatalogBannerButton) }}
-				</Button>
 			</div>
 
-			<VirtualSkinSectionList
-				ref="skinSectionList"
-				:saved-skins="savedSkins"
-				:default-skin-sections="defaultSkinSections"
-				:capes="capes"
-				:is-skin-selected="isSkinSelected"
-				:is-skin-active="isSkinActive"
-				:is-add-skin-button-drag-active="isAddSkinButtonDragActive"
-				:read-only="isSkinManagementReadOnly"
-				@select="changeSkin"
-				@edit="(skin, event) => editSkinModal?.show(event, skin)"
-				@delete="confirmDeleteSkin"
-				@reorder-saved-skins="reorderSavedSkins"
-				@add-skin="openAddSkinFileBrowser"
-				@add-skin-dragenter="onAddSkinDragOver"
-				@add-skin-dragover="onAddSkinDragOver"
-				@add-skin-dragleave="onAddSkinDragLeave"
-				@add-skin-drop="onAddSkinDrop"
-			/>
+			<div class="min-w-0 pt-2">
+				<VirtualSkinSectionList
+					ref="skinSectionList"
+					:saved-skins="savedSkins"
+					:default-skin-sections="defaultSkinSections"
+					:capes="capes"
+					:is-skin-selected="isSkinSelected"
+					:is-skin-active="isSkinActive"
+					:is-add-skin-button-drag-active="isAddSkinButtonDragActive"
+					:read-only="isSkinManagementReadOnly"
+					@select="changeSkin"
+					@edit="(skin, event) => editSkinModal?.show(event, skin)"
+					@delete="confirmDeleteSkin"
+					@reorder-saved-skins="reorderSavedSkins"
+					@add-skin="openAddSkinFileBrowser"
+					@add-skin-dragenter="onAddSkinDragOver"
+					@add-skin-dragover="onAddSkinDragOver"
+					@add-skin-dragleave="onAddSkinDragLeave"
+					@add-skin-drop="onAddSkinDrop"
+				/>
+			</div>
 		</div>
 	</div>
 
@@ -1399,10 +1364,20 @@ await loadSkins()
 	}
 }
 
-.skin-layout {
+.skin-page-layout {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 2.5fr);
-	gap: 2.5rem;
+	grid-template-columns: minmax(34rem, 1.25fr) minmax(42rem, 1fr);
+	gap: 2rem;
+
+	@media (max-width: 1350px) {
+		grid-template-columns: 1fr;
+	}
+}
+
+.skin-manager-layout {
+	display: grid;
+	grid-template-columns: minmax(16rem, 0.8fr) minmax(24rem, 1.2fr);
+	gap: 1.5rem;
 
 	@media (max-width: 700px) {
 		grid-template-columns: 1fr;

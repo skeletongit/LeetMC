@@ -11,7 +11,7 @@ import {
 	useScrollViewport,
 	useVIntl,
 } from '@modrinth/ui'
-import { useElementSize, useWindowSize } from '@vueuse/core'
+import { useElementSize } from '@vueuse/core'
 import { computed, nextTick, onUnmounted, ref, useTemplateRef, watch } from 'vue'
 import Draggable from 'vuedraggable'
 
@@ -109,18 +109,17 @@ let isEnableLayoutTransitionsScheduled = false
 let isUnmounted = false
 
 const { width: listWidth } = useElementSize(listContainer)
-const { width: windowWidth } = useWindowSize()
 
 const columnCount = computed(() => {
-	if (windowWidth.value >= 2050) {
+	if (listWidth.value >= 1050) {
 		return 6
 	}
 
-	if (windowWidth.value >= 1750) {
+	if (listWidth.value >= 850) {
 		return 5
 	}
 
-	if (windowWidth.value >= 1300) {
+	if (listWidth.value >= 650) {
 		return 4
 	}
 
@@ -406,7 +405,8 @@ defineExpose({ getAddSkinButtonElement })
 				<Draggable
 					v-if="section.kind === 'saved'"
 					:list="draggableSavedSkins"
-					class="grid w-full grid-cols-3 gap-3 min-[1300px]:grid-cols-4 min-[1750px]:grid-cols-5 min-[2050px]:grid-cols-6"
+					class="grid w-full gap-3"
+					:style="{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }"
 					:item-key="savedSkinKey"
 					:disabled="readOnly || !canReorderSavedSkins"
 					:animation="250"
@@ -539,7 +539,8 @@ defineExpose({ getAddSkinButtonElement })
 
 				<div
 					v-else
-					class="grid w-full grid-cols-3 gap-3 min-[1300px]:grid-cols-4 min-[1750px]:grid-cols-5 min-[2050px]:grid-cols-6"
+					class="grid w-full gap-3"
+					:style="{ gridTemplateColumns: `repeat(${columnCount}, minmax(0, 1fr))` }"
 				>
 					<BakedSkinButton
 						v-for="skin in section.skins"

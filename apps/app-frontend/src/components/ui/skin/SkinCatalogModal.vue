@@ -23,7 +23,7 @@ import {
 import { arrayBufferToBase64 } from '@modrinth/utils/utils'
 import { save } from '@tauri-apps/plugin-dialog'
 import { writeFile } from '@tauri-apps/plugin-fs'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import SkinHead from '@/components/ui/skin/SkinHead.vue'
 import {
@@ -41,6 +41,15 @@ import {
 const emit = defineEmits<{
 	(e: 'equipped' | 'saved', skin: Skin): void
 }>()
+
+const props = withDefaults(
+	defineProps<{
+		embedded?: boolean
+	}>(),
+	{
+		embedded: false,
+	},
+)
 
 const modal = ref<InstanceType<typeof NewModal>>()
 const { formatMessage } = useVIntl()
@@ -286,7 +295,9 @@ const currentPreviewTexture = computed(() => {
 })
 
 function show(initialQuery?: string) {
-	modal.value?.show()
+	if (!props.embedded) {
+		modal.value?.show()
+	}
 	if (initialQuery && initialQuery.trim()) {
 		catalogQuery.value = initialQuery.trim()
 		void loadCatalog(1, catalogQuery.value)
@@ -296,12 +307,20 @@ function show(initialQuery?: string) {
 }
 
 function hide() {
-	modal.value?.hide()
+	if (!props.embedded) {
+		modal.value?.hide()
+	}
 }
 
 defineExpose({
 	show,
 	hide,
+})
+
+onMounted(() => {
+	if (props.embedded && !catalogResult.value) {
+		void loadCatalog(1)
+	}
 })
 
 async function loadCatalog(page = 1, query = '') {
@@ -491,17 +510,31 @@ async function downloadCurrentSkinFile() {
 </script>
 
 <template>
-	<NewModal ref="modal" class="!max-w-5xl !w-[92vw]">
+	<component
+		:is="props.embedded ? 'section' : NewModal"
+		ref="modal"
+		:class="
+			props.embedded
+				? 'skin-catalog-embedded box-border flex min-w-0 flex-col rounded-2xl border border-surface-5 bg-surface-2 p-4'
+				: '!max-w-5xl !w-[92vw]'
+		"
+	>
 		<template #title>
-			<div class="flex items-center gap-2">
+			<div v-if="!props.embedded" class="flex items-center gap-2">
 				<GlobeIcon class="size-6 text-brand" />
 				<span class="text-xl font-bold text-contrast">{{
 					formatMessage(messages.catalogModalTitle)
 				}}</span>
 			</div>
 		</template>
+		<div v-if="props.embedded" class="mb-4 flex items-center gap-2">
+			<GlobeIcon class="size-6 text-brand" />
+			<span class="text-xl font-bold text-contrast">{{
+				formatMessage(messages.catalogModalTitle)
+			}}</span>
+		</div>
 
-		<div class="flex flex-col gap-4">
+		<div class="flex min-h-0 flex-col gap-4" :class="{ grow: props.embedded }">
 			<!-- Mode switchers -->
 			<div class="flex items-center justify-between border-b border-surface-5 pb-3">
 				<div class="flex gap-2">
@@ -525,7 +558,10 @@ async function downloadCurrentSkinFile() {
 			</div>
 
 			<!-- Main modal body -->
-			<div class="grid grid-cols-1 md:grid-cols-[1fr_260px] gap-6 min-h-[460px]">
+			<div
+				class="grid grid-cols-1 gap-6 md:grid-cols-[1fr_260px]"
+				:class="props.embedded ? 'min-h-0 grow' : 'min-h-[460px]'"
+			>
 				<!-- Left Column: Search & Items -->
 				<div class="flex flex-col gap-4 min-w-0">
 					<!-- CATALOG MODE -->
@@ -828,9 +864,9 @@ async function downloadCurrentSkinFile() {
 		</div>
 
 		<template #actions>
-			<Button type="outlined" @click="hide">
+			<Button v-if="!props.embedded" type="outlined" @click="hide">
 				<XIcon /> {{ formatMessage(commonMessages.closeButton) }}
 			</Button>
 		</template>
-	</NewModal>
+	</component>
 </template>
