@@ -3015,7 +3015,7 @@
     "message": "Busca skins de jugadores o explora un catálogo enorme con un solo clic"
   },
   "app.skins.catalog-banner.title": {
-    "message": "Catálogo de skins (NameMC)"
+    "message": "Catálogo de skins"
   },
   "app.skins.catalog.arm.classic": {
     "message": "Clásico"
@@ -3030,7 +3030,7 @@
     "message": "Equipar skin"
   },
   "app.skins.catalog.button.save-to-library": {
-    "message": "Guardar en la biblioteca"
+    "message": "Guardar"
   },
   "app.skins.catalog.download.error-text": {
     "message": "No se pudo descargar el archivo del skin"
@@ -3111,10 +3111,10 @@
     "message": "Buscar por etiquetas (anime, creeper, caballero, chico, PvP...)"
   },
   "app.skins.catalog.tab.catalog": {
-    "message": "Catálogo y tendencias"
+    "message": "Catálogo"
   },
   "app.skins.catalog.tab.player": {
-    "message": "Buscar jugador"
+    "message": "Jugadores"
   },
   "app.skins.catalog.tags.all": {
     "message": "Todos"
@@ -3137,9 +3137,6 @@
   "app.skins.catalog.tags.cute": {
     "message": "Adorables"
   },
-  "app.skins.catalog.tags.femboy": {
-    "message": "Femboy"
-  },
   "app.skins.catalog.tags.girl": {
     "message": "Chica"
   },
@@ -3153,7 +3150,7 @@
     "message": "Steve"
   },
   "app.skins.catalog.title": {
-    "message": "Catálogo de skins (NameMC)"
+    "message": "Catálogo de skins"
   },
   "app.skins.delete-button": {
     "message": "Borrar skin"
@@ -3265,6 +3262,9 @@
   },
   "app.skins.section.default-skins": {
     "message": "Skins por defecto"
+  },
+  "app.skins.section.the-boys": {
+    "message": "The Boys"
   },
   "app.skins.section.minecon-earth-2017": {
     "message": "MINECON Earth 2017"

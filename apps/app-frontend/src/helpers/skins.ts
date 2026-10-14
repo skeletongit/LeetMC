@@ -27,6 +27,11 @@ export interface SkinTextureUrl {
 	normalized: string
 }
 
+export interface AccountSkin {
+	profile_id: string
+	skin: Skin
+}
+
 export const DEFAULT_MODEL_SORTING = ['Steve', 'Alex'] as string[]
 
 export const DEFAULT_MODELS: Record<string, SkinModel> = {
@@ -116,6 +121,10 @@ export async function get_available_capes(): Promise<Cape[]> {
 
 export async function get_available_skins(): Promise<Skin[]> {
 	return invoke('plugin:minecraft-skins|get_available_skins', {})
+}
+
+export async function get_account_skins(): Promise<AccountSkin[]> {
+	return invoke('plugin:minecraft-skins|get_account_skins', {})
 }
 
 export async function add_and_equip_custom_skin(

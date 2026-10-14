@@ -3006,7 +3006,7 @@
     "message": "Шукайте скіни гравців або переглядайте великий каталог одним натисканням"
   },
   "app.skins.catalog-banner.title": {
-    "message": "Каталог скінів (NameMC)"
+    "message": "Каталог скінів"
   },
   "app.skins.catalog.arm.classic": {
     "message": "Класичні"
@@ -3021,7 +3021,7 @@
     "message": "Одягнути скін"
   },
   "app.skins.catalog.button.save-to-library": {
-    "message": "Зберегти до бібліотеки"
+    "message": "Зберегти"
   },
   "app.skins.catalog.download.error-text": {
     "message": "Не вдалося завантажити файл скіна"
@@ -3102,10 +3102,10 @@
     "message": "Пошук за тегами (аніме, кріпер, лицар, хлопець, PvP...)"
   },
   "app.skins.catalog.tab.catalog": {
-    "message": "Каталог і популярне"
+    "message": "Каталог"
   },
   "app.skins.catalog.tab.player": {
-    "message": "Пошук гравця"
+    "message": "Гравці"
   },
   "app.skins.catalog.tags.all": {
     "message": "Усі"
@@ -3128,9 +3128,6 @@
   "app.skins.catalog.tags.cute": {
     "message": "Милі"
   },
-  "app.skins.catalog.tags.femboy": {
-    "message": "Фембой"
-  },
   "app.skins.catalog.tags.girl": {
     "message": "Дівчина"
   },
@@ -3144,7 +3141,7 @@
     "message": "Стів"
   },
   "app.skins.catalog.title": {
-    "message": "Каталог скінів (NameMC)"
+    "message": "Каталог скінів"
   },
   "app.skins.delete-button": {
     "message": "Видалити скін"
@@ -3256,6 +3253,9 @@
   },
   "app.skins.section.default-skins": {
     "message": "Усталені скіни"
+  },
+  "app.skins.section.the-boys": {
+    "message": "Хлопаки"
   },
   "app.skins.section.dungeons-hero": {
     "message": "Герої Dungeons"

@@ -56,6 +56,7 @@ pub use bytes::Bytes;
 use futures::{StreamExt, TryStreamExt, stream};
 use serde::{Deserialize, Serialize};
 use sha2::Digest;
+use sqlx::Row;
 use tokio::sync::Mutex;
 use url::Url;
 use uuid::Uuid;
@@ -191,6 +192,22 @@ impl PendingSkinChange {
         }
     }
 
+    fn is_offline(&self) -> bool {
+        match self {
+            Self::AddAndEquipCustom {
+                selected_credentials,
+                ..
+            }
+            | Self::Equip {
+                selected_credentials,
+                ..
+            }
+            | Self::Unequip {
+                selected_credentials,
+            } => selected_credentials.is_offline(),
+        }
+    }
+
     fn matches_skin(&self, skin: &Skin) -> bool {
         match self {
             Self::AddAndEquipCustom {
@@ -239,6 +256,12 @@ pub struct Skin {
     /// Whether the skin is currently equipped in the Minecraft profile of its corresponding
     /// player.
     pub is_equipped: bool,
+}
+
+#[derive(Clone, Serialize, Debug)]
+pub struct AccountSkin {
+    pub profile_id: Uuid,
+    pub skin: Skin,
 }
 
 #[derive(Clone, Deserialize, Serialize, Debug)]
@@ -472,12 +495,12 @@ pub async fn get_available_skins() -> crate::Result<Vec<Skin>> {
 
     for default_skin in assets::DEFAULT_SKINS.iter() {
         let is_equipped = !found_equipped_skin
-            && default_skin.texture_key == current_skin_texture_key
+            && texture_keys_match(&default_skin.texture_key, &current_skin_texture_key)
             && default_skin.variant == current_skin_variant;
         let saved_cape_id = saved_default_skins
             .iter()
             .find(|skin| {
-                skin.texture_key.as_str() == default_skin.texture_key.as_ref()
+                texture_keys_match(&skin.texture_key, &default_skin.texture_key)
                     && skin.variant == default_skin.variant
             })
             .and_then(|skin| skin.cape_id);
@@ -520,6 +543,98 @@ pub async fn get_available_skins() -> crate::Result<Vec<Skin>> {
     }
 
     Ok(available_skins)
+}
+
+/// Gets the equipped skin for every saved Minecraft account whose profile data is available.
+#[tracing::instrument]
+pub async fn get_account_skins() -> crate::Result<Vec<AccountSkin>> {
+    let state = State::get().await?;
+    crate::launcher::offline_skin_server::ensure_tables().await;
+    let credentials = Credentials::get_all(&state.pool)
+        .await?
+        .into_iter()
+        .map(|(_, credentials)| credentials)
+        .collect::<Vec<_>>();
+    let mut account_skins = Vec::with_capacity(credentials.len());
+
+    for credentials in credentials {
+        let profile_id = credentials.offline_profile.id;
+        let pending_skin_change = pending_effective_skin_change(profile_id).await;
+        let skin = if let Some(pending_skin_change) = pending_skin_change {
+            if pending_skin_change.is_unequip() {
+                Some(get_fallback_default_skin()?.clone())
+            } else {
+                pending_skin_change.skin()
+            }
+        } else if credentials.is_offline() {
+            let profile_id_hyphen = profile_id.hyphenated().to_string();
+            let offline_skin = sqlx::query(
+                "SELECT texture_key, variant, url FROM offline_equipped_skins WHERE minecraft_user_uuid = ?",
+            )
+            .bind(profile_id_hyphen)
+            .fetch_optional(&state.pool)
+            .await
+            .ok()
+            .flatten()
+            .and_then(|row| {
+                let texture_key = row.try_get::<String, _>("texture_key").ok()?;
+                let variant = row.try_get::<String, _>("variant").ok()?;
+                let texture = Url::parse(&row.try_get::<String, _>("url").ok()?).ok()?;
+
+                Some(Skin {
+                    texture_key: Arc::from(texture_key),
+                    name: None,
+                    section: None,
+                    variant: if variant.eq_ignore_ascii_case("SLIM") {
+                        MinecraftSkinVariant::Slim
+                    } else {
+                        MinecraftSkinVariant::Classic
+                    },
+                    cape_id: None,
+                    texture: Arc::new(texture),
+                    source: SkinSource::Custom,
+                    is_equipped: true,
+                })
+            });
+
+            if offline_skin.is_some() {
+                offline_skin
+            } else {
+                get_fallback_default_skin().ok().cloned()
+            }
+        } else if let Some(profile) = credentials.online_profile_fresh().await {
+            profile.current_skin().ok().map(|current_skin| Skin {
+                texture_key: current_skin.texture_key(),
+                name: current_skin.name.as_deref().map(Arc::from),
+                section: None,
+                variant: current_skin.variant,
+                cape_id: profile.current_cape().map(|cape| cape.id),
+                texture: Arc::clone(&current_skin.url),
+                source: SkinSource::CustomExternal,
+                is_equipped: true,
+            })
+        } else if let Some(profile) = credentials.online_profile().await {
+            profile.current_skin().ok().map(|current_skin| Skin {
+                texture_key: current_skin.texture_key(),
+                name: current_skin.name.as_deref().map(Arc::from),
+                section: None,
+                variant: current_skin.variant,
+                cape_id: profile.current_cape().map(|cape| cape.id),
+                texture: Arc::clone(&current_skin.url),
+                source: SkinSource::CustomExternal,
+                is_equipped: true,
+            })
+        } else {
+            get_fallback_default_skin().ok().cloned()
+        };
+
+        if let Some(mut skin) = skin {
+            skin.is_equipped = true;
+            account_skins.push(AccountSkin { profile_id, skin });
+        }
+    }
+
+    Ok(account_skins)
 }
 
 /// Adds or updates a skin in the app database and equips it for the current profile.
@@ -1049,6 +1164,7 @@ pub async fn flush_pending_skin_change_for_profile(
 
 async fn set_pending_skin_change(change: PendingSkinChange) {
     let profile_id = change.profile_id();
+    let is_offline = change.is_offline();
     let generation = {
         let mut state = PENDING_SKIN_CHANGE.lock().await;
         let generation = state
@@ -1063,7 +1179,17 @@ async fn set_pending_skin_change(change: PendingSkinChange) {
         generation
     };
 
-    schedule_pending_skin_change_flush(profile_id, generation);
+    if is_offline {
+        let _ = flush_pending_skin_change_inner(Some(
+            PendingSkinChangeFilter::Generation {
+                profile_id,
+                generation,
+            },
+        ))
+        .await;
+    } else {
+        schedule_pending_skin_change_flush(profile_id, generation);
+    }
 }
 
 fn schedule_pending_skin_change_flush(profile_id: Uuid, generation: u64) {
@@ -1202,6 +1328,27 @@ async fn execute_pending_skin_change(
             local_texture_key,
         } => {
             if selected_credentials.is_offline() {
+                let state = State::get().await?;
+
+                let _ = sqlx::query(
+                    "INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)"
+                )
+                .bind(local_texture_key.as_ref())
+                .bind(texture_blob.as_ref())
+                .execute(&state.pool)
+                .await;
+
+                let _ = CustomMinecraftSkin::add(
+                    selected_credentials.offline_profile.id,
+                    local_texture_key,
+                    texture_blob,
+                    *variant,
+                    *cape_id,
+                    CustomMinecraftSkinInsertPosition::Top,
+                    &state.pool,
+                )
+                .await;
+
                 if let Some(data_url) = png_util::blob_to_data_url(texture_blob.to_vec()) {
                     crate::state::update_offline_profile_cache(
                         selected_credentials.offline_profile.id,
@@ -1228,6 +1375,42 @@ async fn execute_pending_skin_change(
             skin,
         } => {
             if selected_credentials.is_offline() {
+                let state = State::get().await?;
+
+                let texture_blob = if let Some(bytes) = png_util::data_url_to_bytes(&skin.texture) {
+                    Some(bytes)
+                } else if let Ok(stream) = png_util::url_to_data_stream(&skin.texture).await {
+                    stream.try_fold(Vec::new(), |mut acc, chunk| async move {
+                        acc.extend_from_slice(&chunk);
+                        Ok(acc)
+                    }).await.ok()
+                } else {
+                    None
+                };
+
+                if let Some(bytes) = texture_blob {
+                    if !bytes.is_empty() {
+                        let _ = sqlx::query(
+                            "INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)"
+                        )
+                        .bind(skin.texture_key.as_ref())
+                        .bind(&bytes)
+                        .execute(&state.pool)
+                        .await;
+
+                        let _ = CustomMinecraftSkin::add(
+                            selected_credentials.offline_profile.id,
+                            &skin.texture_key,
+                            &bytes,
+                            skin.variant,
+                            skin.cape_id,
+                            CustomMinecraftSkinInsertPosition::Top,
+                            &state.pool,
+                        )
+                        .await;
+                    }
+                }
+
                 crate::state::update_offline_profile_cache(
                     selected_credentials.offline_profile.id,
                     &selected_credentials.offline_profile.name,
@@ -1370,14 +1553,32 @@ async fn refresh_profile_cache(selected_credentials: &Credentials) {
 fn is_bundled_skin_texture(texture_key: &str) -> bool {
     assets::DEFAULT_SKINS
         .iter()
-        .any(|default_skin| default_skin.texture_key.as_ref() == texture_key)
+        .any(|default_skin| texture_keys_match(&default_skin.texture_key, texture_key))
 }
 
 fn is_bundled_skin(texture_key: &str, variant: MinecraftSkinVariant) -> bool {
     assets::DEFAULT_SKINS.iter().any(|default_skin| {
-        default_skin.texture_key.as_ref() == texture_key
+        texture_keys_match(&default_skin.texture_key, texture_key)
             && default_skin.variant == variant
     })
+}
+
+fn texture_keys_match(first: &str, second: &str) -> bool {
+    first.strip_prefix("local-").unwrap_or(first)
+        == second.strip_prefix("local-").unwrap_or(second)
+}
+
+#[cfg(test)]
+mod skin_identity_tests {
+    use super::texture_keys_match;
+
+    #[test]
+    fn local_texture_keys_match_their_canonical_hashes() {
+        assert!(texture_keys_match("local-abc123", "abc123"));
+        assert!(texture_keys_match("abc123", "local-abc123"));
+        assert!(texture_keys_match("abc123", "abc123"));
+        assert!(!texture_keys_match("local-abc123", "def456"));
+    }
 }
 
 fn get_fallback_default_skin() -> crate::Result<&'static Skin> {
@@ -1652,6 +1853,54 @@ async fn search_skin_by_texture_hash(client: &reqwest::Client, hash: &str) -> cr
 	Ok(None)
 }
 
+const BLOCKED_CATALOG_SKIN_IDS: [u64; 2] = [1736946, 5321040];
+
+fn has_blocked_catalog_word(value: &str) -> bool {
+	let normalized = value
+		.split_whitespace()
+		.collect::<Vec<_>>()
+		.join(" ")
+		.to_lowercase();
+
+	if matches!(
+		normalized.as_str(),
+		"адольф гитлер" | "adolf hitler" | "naked" | "18+" | "голый"
+	) {
+		return true;
+	}
+
+	normalized
+		.split(|character: char| !character.is_alphanumeric() && character != '+')
+		.any(|word| matches!(word, "hot" | "adolf" | "porn" | "pornhub" | "hub"))
+}
+
+#[cfg(test)]
+mod catalog_filter_tests {
+	use super::{BLOCKED_CATALOG_SKIN_IDS, has_blocked_catalog_word};
+
+	#[test]
+	fn blocks_disallowed_catalog_words() {
+		for name in [
+			"Адольф гитлер",
+			"ADOLF HITLER",
+			"Naked",
+			"18+",
+			"Голый",
+			"  Adolf   Hitler  ",
+			"Hot",
+			"porn",
+			"PornHub",
+			"hub",
+			"Cute, Adolf, WW2",
+		] {
+			assert!(has_blocked_catalog_word(name), "{name} should be blocked");
+		}
+
+		assert!(!has_blocked_catalog_word("Knight"));
+		assert_eq!(BLOCKED_CATALOG_SKIN_IDS, [1736946, 5321040]);
+	}
+}
+
 #[tracing::instrument]
 pub async fn search_catalog_skins(
 	query: Option<String>,
@@ -1713,12 +1962,21 @@ pub async fn search_catalog_skins(
 	let skins = catalog
 		.items
 		.into_iter()
-		.map(|item| {
+		.filter_map(|item| {
+			if BLOCKED_CATALOG_SKIN_IDS.contains(&item.id) {
+				return None;
+			}
 			let tags = item.tags.unwrap_or_default();
+			if tags.iter().any(|tag| has_blocked_catalog_word(tag)) {
+				return None;
+			}
 			let name = tags
 				.first()
 				.cloned()
 				.unwrap_or_else(|| format!("Skin #{}", item.id));
+			if has_blocked_catalog_word(&name) {
+				return None;
+			}
 			let tex_key = item
 				.skin_url
 				.rsplit('/')
@@ -1732,7 +1990,7 @@ pub async fn search_catalog_skins(
 				MinecraftSkinVariant::Classic
 			};
 
-			SearchedSkin {
+			Some(SearchedSkin {
 				id: item.id.to_string(),
 				name,
 				texture_url: item.skin_url,
@@ -1741,7 +1999,7 @@ pub async fn search_catalog_skins(
 				texture_base64: String::new(),
 				tags,
 				source_type: "catalog".to_string(),
-			}
+			})
 		})
 		.collect();
 

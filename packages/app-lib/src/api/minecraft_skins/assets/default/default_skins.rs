@@ -4,9 +4,29 @@ use url::Url;
 
 use crate::{minecraft_skins::SkinSource, state::MinecraftSkinVariant};
 
-use super::super::super::Skin;
+use super::super::super::{Skin, png_util};
 
 const DEFAULT_SKINS_SECTION: &str = "Default skins";
+const THE_BOYS_SECTION: &str = "The Boys";
+
+fn bundled_skin(
+	texture_key: &'static str,
+	name: &'static str,
+	section: &'static str,
+	variant: MinecraftSkinVariant,
+	texture: &'static [u8],
+) -> Skin {
+	Skin {
+		texture_key: Arc::from(texture_key),
+		name: Some(Arc::from(name)),
+		section: Some(Arc::from(section)),
+		variant,
+		cape_id: None,
+		texture: png_util::blob_to_data_url(texture).expect("bundled skin must be a valid PNG"),
+		source: SkinSource::Default,
+		is_equipped: false,
+	}
+}
 
 /// A list of bundled Minecraft skins to make available to the user.
 pub static DEFAULT_SKINS: LazyLock<Vec<Skin>> = LazyLock::new(|| {
@@ -59,5 +79,61 @@ pub static DEFAULT_SKINS: LazyLock<Vec<Skin>> = LazyLock::new(|| {
 			source: SkinSource::Default,
 			is_equipped: false,
 		},
+		bundled_skin(
+			"3e7e5a9e11c4d91bfe7df9e9643dc22b24ad972491fa28d69656755d5ac27317",
+			"Homelander",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Classic,
+			include_bytes!("../the_boys/Homelander.png"),
+		),
+		bundled_skin(
+			"845784d75b30cd50a6fe43f11ba4a22d94bb726b0894dc8d2511e80911ebdb69",
+			"Soldier Boy",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Classic,
+			include_bytes!("../the_boys/SoldierBoy.png"),
+		),
+		bundled_skin(
+			"8b71e770ca32e68ef32a6d028bea5bcd305b6815fc2fcf91bc99c0e2c4319dab",
+			"A-Train",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Classic,
+			include_bytes!("../the_boys/ATrain.png"),
+		),
+		bundled_skin(
+			"efd9cf6296c68e7559479e50dcfe08fcc9e479736025a8e789f47c462ff3636c",
+			"Black Noir",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Classic,
+			include_bytes!("../the_boys/BlackNoir.png"),
+		),
+		bundled_skin(
+			"3211ecd0ccc4790024de5358819c2e77f2b992da1aa1e554b680294a6ad070ba",
+			"The Deep",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Classic,
+			include_bytes!("../the_boys/TheDeep.png"),
+		),
+		bundled_skin(
+			"ee8c36cbea3a13e355f87c8904ea12e77961b7d492074ea8f9f6ee4c49542a4c",
+			"Starlight",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Slim,
+			include_bytes!("../the_boys/Starlight.png"),
+		),
+		bundled_skin(
+			"8eb177cce5534b7c54a76b4d5b13f26ce32ec86a0349bc1355ae6524610110d7",
+			"Billy Butcher",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Classic,
+			include_bytes!("../the_boys/BillyButcher.png"),
+		),
+		bundled_skin(
+			"3ece958ce7333f43378f0a86d22a6cec98f3f7d75ad246d32831b3ced121a816",
+			"Hughie",
+			THE_BOYS_SECTION,
+			MinecraftSkinVariant::Classic,
+			include_bytes!("../the_boys/Hughie.png"),
+		),
 	]
 });

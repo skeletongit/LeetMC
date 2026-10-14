@@ -274,6 +274,41 @@ pub async fn update_offline_profile_cache(
 		.bind(skin_url.as_str())
 		.execute(&state.pool)
 		.await;
+
+		if skin_url.scheme() == "data" {
+			if let Some(bytes) = crate::api::minecraft_skins::png_util::data_url_to_bytes(&skin_url) {
+				let _ = sqlx::query(
+					"INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)"
+				)
+				.bind(texture_key)
+				.bind(&bytes)
+				.execute(&state.pool)
+				.await;
+			}
+		} else if skin_url.scheme() == "http" || skin_url.scheme() == "https" {
+			let pool = state.pool.clone();
+			let key = texture_key.to_string();
+			let url_string = skin_url.to_string();
+			tokio::spawn(async move {
+				let client = reqwest::Client::builder()
+					.timeout(std::time::Duration::from_secs(6))
+					.build()
+					.unwrap_or_default();
+				if let Ok(resp) = client.get(&url_string).send().await {
+					if resp.status().is_success() {
+						if let Ok(bytes) = resp.bytes().await {
+							let _ = sqlx::query(
+								"INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)"
+							)
+							.bind(&key)
+							.bind(bytes.as_ref())
+							.execute(&pool)
+							.await;
+						}
+					}
+				}
+			});
+		}
 	}
 }
 

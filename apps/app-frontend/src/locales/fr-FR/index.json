@@ -2886,7 +2886,7 @@
     "message": "Recherchez des skins de joueurs ou parcourez un immense catalogue en un clic"
   },
   "app.skins.catalog-banner.title": {
-    "message": "Catalogue de skins (NameMC)"
+    "message": "Catalogue de skins"
   },
   "app.skins.catalog.arm.classic": {
     "message": "Classique"
@@ -2901,7 +2901,7 @@
     "message": "Équiper le skin"
   },
   "app.skins.catalog.button.save-to-library": {
-    "message": "Enregistrer dans la bibliothèque"
+    "message": "Enregistrer"
   },
   "app.skins.catalog.download.error-text": {
     "message": "Impossible de télécharger le fichier du skin"
@@ -2982,10 +2982,10 @@
     "message": "Rechercher par tags (anime, creeper, chevalier, garçon, PvP...)"
   },
   "app.skins.catalog.tab.catalog": {
-    "message": "Catalogue et tendances"
+    "message": "Catalogue"
   },
   "app.skins.catalog.tab.player": {
-    "message": "Recherche de joueur"
+    "message": "Joueurs"
   },
   "app.skins.catalog.tags.all": {
     "message": "Tous"
@@ -3008,9 +3008,6 @@
   "app.skins.catalog.tags.cute": {
     "message": "Mignons"
   },
-  "app.skins.catalog.tags.femboy": {
-    "message": "Femboy"
-  },
   "app.skins.catalog.tags.girl": {
     "message": "Fille"
   },
@@ -3024,7 +3021,7 @@
     "message": "Steve"
   },
   "app.skins.catalog.title": {
-    "message": "Catalogue de skins (NameMC)"
+    "message": "Catalogue de skins"
   },
   "app.skins.delete-button": {
     "message": "Supprimer le skin"
@@ -3133,6 +3130,9 @@
   },
   "app.skins.section.default-skins": {
     "message": "Skins par défaut"
+  },
+  "app.skins.section.the-boys": {
+    "message": "The Boys"
   },
   "app.skins.section.dungeons-hero": {
     "message": "Héros Dungeons"

@@ -211,6 +211,12 @@ function updateHistoryNavigationState() {
 
 updateHistoryNavigationState()
 
+function navigateToWelcome() {
+	if (route.path !== '/welcome') {
+		router.push('/welcome')
+	}
+}
+
 const APP_SIDEBAR_WIDTH = 300
 const PRIDE_FUNDRAISER_END_DATE = new Date('2026-07-01T00:00:00Z').getTime()
 const credentials = ref()
@@ -447,6 +453,34 @@ function handleEditMenuAction(action) {
 	if (document.dispatchEvent(event)) document.execCommand(action)
 }
 
+async function toggleFullscreen() {
+	try {
+		const win = getCurrentWindow()
+		const current = await win.isFullscreen()
+		await win.setFullscreen(!current)
+		isFullscreen.value = !current
+	} catch (error) {
+		handleError(error)
+	}
+}
+
+async function handleFullscreenKeydown(event) {
+	if (event.repeat) return
+
+	const isF11 = event.key === 'F11' || event.code === 'F11'
+	const isAltEnter =
+		event.altKey &&
+		(event.key === 'Enter' || event.code === 'Enter' || event.code === 'NumpadEnter') &&
+		!event.ctrlKey &&
+		!event.metaKey
+
+	if (isF11 || isAltEnter) {
+		event.preventDefault()
+		event.stopPropagation()
+		await toggleFullscreen()
+	}
+}
+
 onMounted(async () => {
 	try {
 		const listeners = await Promise.all([
@@ -462,6 +496,7 @@ onMounted(async () => {
 	document.querySelector('body').addEventListener('click', handleClick)
 	document.querySelector('body').addEventListener('auxclick', handleAuxClick)
 	document.querySelector('body').addEventListener('contextmenu', handleContextMenu)
+	window.addEventListener('keydown', handleFullscreenKeydown, true)
 
 	checkUpdates()
 })
@@ -470,6 +505,7 @@ onUnmounted(async () => {
 	document.querySelector('body').removeEventListener('click', handleClick)
 	document.querySelector('body').removeEventListener('auxclick', handleAuxClick)
 	document.querySelector('body').removeEventListener('contextmenu', handleContextMenu)
+	window.removeEventListener('keydown', handleFullscreenKeydown, true)
 	unlistenEditMenu?.()
 	clearDelayedUpdatePopup()
 	await unlistenUpdateDownload?.()
@@ -507,6 +543,10 @@ const messages = defineMessages({
 	home: {
 		id: 'app.nav.home',
 		defaultMessage: 'Home',
+	},
+	welcomeTitle: {
+		id: 'app.welcome-screen.title',
+		defaultMessage: 'Welcome to LeetMC',
 	},
 	rooms: {
 		id: 'app.nav.rooms',
@@ -1991,7 +2031,14 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 		</div>
 		<div data-tauri-drag-region class="app-grid-statusbar bg-bg-raised h-[--top-bar-height] flex">
 			<div data-tauri-drag-region class="flex min-w-0 flex-1 items-center overflow-hidden p-2">
-				<TextLogo class="h-7 w-auto shrink-0 text-contrast pointer-events-none" />
+				<button
+					type="button"
+					class="flex h-7 shrink-0 cursor-pointer items-center rounded border-0 bg-transparent p-0 text-contrast transition-opacity hover:opacity-80 active:opacity-60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
+					:aria-label="formatMessage(messages.welcomeTitle)"
+					@click="navigateToWelcome"
+				>
+					<TextLogo class="h-7 w-auto pointer-events-none" />
+				</button>
 				<div data-tauri-drag-region class="ml-2 flex shrink-0 items-center gap-2">
 					<IconButton
 						type="outlined"

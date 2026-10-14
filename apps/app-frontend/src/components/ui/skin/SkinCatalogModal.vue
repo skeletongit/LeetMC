@@ -60,15 +60,15 @@ const { addNotification } = injectNotificationManager()
 const messages = defineMessages({
 	catalogModalTitle: {
 		id: 'app.skins.catalog.title',
-		defaultMessage: 'Skin Catalog (NameMC)',
+		defaultMessage: 'Skin Catalog',
 	},
 	catalogTab: {
 		id: 'app.skins.catalog.tab.catalog',
-		defaultMessage: 'Catalog & Trending',
+		defaultMessage: 'Catalog',
 	},
 	playerTab: {
 		id: 'app.skins.catalog.tab.player',
-		defaultMessage: 'Player Lookup',
+		defaultMessage: 'Players',
 	},
 	catalogSearchPlaceholder: {
 		id: 'app.skins.catalog.search.placeholder',
@@ -97,10 +97,6 @@ const messages = defineMessages({
 	tagGirl: {
 		id: 'app.skins.catalog.tags.girl',
 		defaultMessage: 'Girl',
-	},
-	tagFemboy: {
-		id: 'app.skins.catalog.tags.femboy',
-		defaultMessage: 'Femboy',
 	},
 	tagCool: {
 		id: 'app.skins.catalog.tags.cool',
@@ -184,7 +180,7 @@ const messages = defineMessages({
 	},
 	saveToLibraryButton: {
 		id: 'app.skins.catalog.button.save-to-library',
-		defaultMessage: 'Save to library',
+		defaultMessage: 'Save',
 	},
 	downloadPngButton: {
 		id: 'app.skins.catalog.button.download-png',
@@ -274,7 +270,6 @@ const popularTagItems = [
 	{ key: 'knight', label: messages.tagKnight, query: 'Knight' },
 	{ key: 'boy', label: messages.tagBoy, query: 'Boy' },
 	{ key: 'girl', label: messages.tagGirl, query: 'Girl' },
-	{ key: 'femboy', label: messages.tagFemboy, query: 'Femboy' },
 	{ key: 'cool', label: messages.tagCool, query: 'Cool' },
 	{ key: 'pvp', label: messages.tagPvp, query: 'PvP' },
 	{ key: 'cute', label: messages.tagCute, query: 'Cute' },
@@ -526,7 +521,7 @@ async function downloadCurrentSkinFile() {
 		ref="modal"
 		:class="
 			props.embedded
-				? 'skin-catalog-embedded box-border flex min-w-0 flex-col rounded-2xl border border-surface-5 bg-surface-2 p-4'
+				? 'skin-catalog-embedded liquid-glass-panel box-border flex min-w-0 flex-col rounded-2xl border border-[--liquid-glass-border] p-4'
 				: '!max-w-5xl !w-[92vw]'
 		"
 	>
@@ -547,7 +542,7 @@ async function downloadCurrentSkinFile() {
 
 		<div class="flex min-h-0 flex-col gap-4" :class="{ grow: props.embedded }">
 			<!-- Mode switchers -->
-			<div class="flex items-center justify-between border-b border-surface-5 pb-3">
+			<div class="flex items-center justify-between border-b border-[--liquid-glass-border] pb-3">
 				<div class="flex gap-2">
 					<Button
 						:type="activeMode === 'catalog' ? 'colored' : 'base'"
@@ -643,7 +638,7 @@ async function downloadCurrentSkinFile() {
 									:class="
 										selectedSkin?.id === skin.id
 											? 'border-brand ring-2 ring-brand/30'
-											: 'border-surface-5'
+											: 'border-[--liquid-glass-border]'
 									"
 									@click="selectSkin(skin)"
 								>
@@ -651,13 +646,6 @@ async function downloadCurrentSkinFile() {
 									<SkinHead :src="skin.texture_url" :variant="skin.variant" :height="96" class="mb-1.5" />
 									<span class="text-xs font-semibold text-contrast truncate w-full text-center">
 										{{ skin.name }}
-									</span>
-									<span class="text-[10px] text-secondary">
-										{{
-											skin.variant === 'SLIM'
-												? formatMessage(messages.slimArm)
-												: formatMessage(messages.classicArm)
-										}}
 									</span>
 								</div>
 							</div>
@@ -674,7 +662,7 @@ async function downloadCurrentSkinFile() {
 						<!-- Pagination -->
 						<div
 							v-if="catalogResult && catalogResult.total_pages > 1"
-							class="flex items-center justify-between border-t border-surface-5 pt-3 text-xs text-secondary"
+							class="flex items-center justify-between border-t border-[--liquid-glass-border] pt-3 text-xs text-secondary"
 						>
 							<Button
 								size="sm"
@@ -732,7 +720,7 @@ async function downloadCurrentSkinFile() {
 
 							<div
 								v-else-if="playerResult"
-								class="flex flex-col items-center gap-3 p-4 rounded-2xl bg-surface-3 border border-surface-5 w-full max-w-sm"
+								class="flex flex-col items-center gap-3 p-4 rounded-2xl bg-surface-3 border border-[--liquid-glass-border] w-full max-w-sm"
 							>
 								<div class="flex items-center gap-3 w-full">
 									<SkinHead
@@ -783,7 +771,7 @@ async function downloadCurrentSkinFile() {
 					<!-- Compact action bar for embedded mode when a skin is selected -->
 					<div
 						v-if="props.embedded && selectedSkin"
-						class="flex flex-col gap-2.5 p-3 rounded-2xl bg-surface-3 border border-surface-5 mt-1"
+						class="flex flex-col gap-2.5 p-3 rounded-2xl bg-surface-3 border border-[--liquid-glass-border] mt-1"
 					>
 						<div class="flex items-center justify-between gap-2">
 							<div class="flex items-center gap-2.5 min-w-0">
@@ -947,3 +935,20 @@ async function downloadCurrentSkinFile() {
 		</template>
 	</component>
 </template>
+
+<style lang="scss" scoped>
+.skin-catalog-embedded {
+	background: var(--liquid-glass-bg) !important;
+	border: 1px solid var(--liquid-glass-border) !important;
+	box-shadow: var(--liquid-glass-shadow);
+	backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+	-webkit-backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 16px))
+		saturate(calc(1 + var(--liquid-glass-level, 1) * 0.18));
+}
+
+:global(.disable-advanced-rendering) .skin-catalog-embedded {
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+</style>

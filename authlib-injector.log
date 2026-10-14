@@ -1,0 +1,5 @@
+Logging started at 2026-10-14T10:50:43.307156600Z
+[authlib-injector] [INFO] Version: 1.2.8
+[authlib-injector] [INFO] Authentication server: http://127.0.0.1:12345
+[authlib-injector] [WARNING] You are using HTTP protocol, which is INSECURE! Please switch to HTTPS if possible.
+[authlib-injector] [ERROR] Failed to fetch metadata: java.net.ConnectException: Connection refused: connect

@@ -6,6 +6,8 @@ import {
 import { type Ref, ref } from 'vue'
 
 export class AppNotificationManager extends AbstractWebNotificationManager {
+	protected override readonly DEFAULT_AUTO_DISMISS_DELAY_MS = 3 * 1000
+
 	private readonly state: Ref<WebNotification[]>
 	private readonly locationState: Ref<NotificationPanelLocation>
 

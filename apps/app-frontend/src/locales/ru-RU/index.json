@@ -3033,7 +3033,7 @@
     "message": "Ищите скины игроков или просматривайте огромный каталог одним нажатием"
   },
   "app.skins.catalog-banner.title": {
-    "message": "Каталог скинов (NameMC)"
+    "message": "Каталог скинов"
   },
   "app.skins.catalog.arm.classic": {
     "message": "Классические"
@@ -3048,7 +3048,7 @@
     "message": "Надеть скин"
   },
   "app.skins.catalog.button.save-to-library": {
-    "message": "Сохранить в библиотеку"
+    "message": "Сохранить"
   },
   "app.skins.catalog.download.error-text": {
     "message": "Не удалось скачать файл скина"
@@ -3129,10 +3129,10 @@
     "message": "Поиск по тегам (аниме, крипер, рыцарь, парень, PvP...)"
   },
   "app.skins.catalog.tab.catalog": {
-    "message": "Каталог и популярное"
+    "message": "Каталог"
   },
   "app.skins.catalog.tab.player": {
-    "message": "Поиск игрока"
+    "message": "Игроки"
   },
   "app.skins.catalog.tags.all": {
     "message": "Все"
@@ -3155,9 +3155,6 @@
   "app.skins.catalog.tags.cute": {
     "message": "Милые"
   },
-  "app.skins.catalog.tags.femboy": {
-    "message": "Фембой"
-  },
   "app.skins.catalog.tags.girl": {
     "message": "Девушка"
   },
@@ -3171,7 +3168,7 @@
     "message": "Стив"
   },
   "app.skins.catalog.title": {
-    "message": "Каталог скинов (NameMC)"
+    "message": "Каталог скинов"
   },
   "app.skins.delete-button": {
     "message": "Удалить скин"
@@ -3283,6 +3280,9 @@
   },
   "app.skins.section.default-skins": {
     "message": "Стандартные скины"
+  },
+  "app.skins.section.the-boys": {
+    "message": "Пацаны"
   },
   "app.skins.section.dungeons-hero": {
     "message": "Герои Dungeons"

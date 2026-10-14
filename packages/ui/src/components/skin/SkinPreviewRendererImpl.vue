@@ -7,7 +7,7 @@
 	>
 		<div
 			data-skin-preview-debug="controls"
-			class="absolute left-0 right-0 z-10 flex items-center justify-center pointer-events-none"
+			class="skin-preview-controls absolute left-0 right-0 z-10 flex items-center justify-center pointer-events-none"
 			:style="previewControlsPositionStyle"
 		>
 			<span
@@ -22,7 +22,7 @@
 		<div
 			v-if="$slots.subtitle"
 			data-skin-preview-debug="subtitle"
-			class="absolute left-0 right-0 z-10 flex items-center justify-center pointer-events-none"
+			class="skin-preview-subtitle-container absolute left-0 right-0 z-10 flex items-center justify-center pointer-events-none"
 			:style="subtitlePositionStyle"
 		>
 			<div ref="subtitleElement" class="w-full pointer-events-auto" @click="ignoreControlClick">

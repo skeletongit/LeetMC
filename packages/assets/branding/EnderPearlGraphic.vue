@@ -48,10 +48,11 @@ const filterId = `ender-pearl-accent-${useId().replaceAll(':', '')}`
 		<image
 			class="pearl-original pearl-original-light"
 			:href="lightEnderPearlIcon"
-			x="-0.1"
-			y="-0.1"
-			width="1.2"
-			height="1.2"
+			x="-0.18"
+			y="-0.18"
+			width="1.36"
+			height="1.36"
+			preserveAspectRatio="xMidYMid meet"
 		/>
 	</svg>
 </template>
@@ -78,6 +79,14 @@ const filterId = `ender-pearl-accent-${useId().replaceAll(':', '')}`
 }
 
 :global(.light-mode.disable-pearl-accent-adaptation .pearl-original-light) {
+	display: block;
+}
+
+:global(.light-mode .pearl-accent) {
+	display: none;
+}
+
+:global(.light-mode .pearl-original-light) {
 	display: block;
 }
 </style>

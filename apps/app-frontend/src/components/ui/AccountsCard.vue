@@ -158,7 +158,7 @@ import {
 } from '@/helpers/auth'
 import { getPlayerHeadUrl } from '@/helpers/rendering/player-head'
 import type { Skin } from '@/helpers/skins'
-import { get_available_skins } from '@/helpers/skins'
+import { get_account_skins } from '@/helpers/skins'
 
 const { formatMessage } = useVIntl()
 const { handleError } = injectNotificationManager()
@@ -178,23 +178,66 @@ type MinecraftCredential = {
 const accounts: Ref<MinecraftCredential[]> = ref([])
 const loginDisabled = ref(false)
 const defaultUser = ref<string | undefined>()
-const equippedSkin = ref<Skin | null>(null)
-const equippedHeadUrl = ref<string>()
+const accountSkins = ref<Record<string, Skin>>({})
+const accountHeadUrls = ref<Record<string, string>>({})
+const renderedTextureKeys = ref<Record<string, string>>({})
 let headRequest = 0
 
-async function updateHeadUrl(skin: Skin | null) {
+function revokeHeadUrls(urls: Record<string, string>) {
+	for (const url of Object.values(urls)) URL.revokeObjectURL(url)
+}
+
+async function updateHeadUrls(skins: Record<string, Skin>) {
 	const request = ++headRequest
-	if (equippedHeadUrl.value) URL.revokeObjectURL(equippedHeadUrl.value)
-	equippedHeadUrl.value = undefined
-	if (!skin) return
-	const url = await getPlayerHeadUrl(skin)
-	if (request !== headRequest) URL.revokeObjectURL(url)
-	else equippedHeadUrl.value = url
+	const validProfileIds = new Set(accounts.value.map((a) => a.profile.id))
+	const retainedUrls: Record<string, string> = {}
+	const retainedKeys: Record<string, string> = {}
+	for (const [profileId, url] of Object.entries(accountHeadUrls.value)) {
+		if (validProfileIds.has(profileId)) {
+			retainedUrls[profileId] = url
+			if (renderedTextureKeys.value[profileId]) {
+				retainedKeys[profileId] = renderedTextureKeys.value[profileId]
+			}
+		} else {
+			URL.revokeObjectURL(url)
+		}
+	}
+	accountHeadUrls.value = retainedUrls
+	renderedTextureKeys.value = retainedKeys
+
+	await Promise.allSettled(
+		Object.entries(skins).map(async ([profileId, skin]) => {
+			try {
+				if (!skin) return
+				const currentUrl = accountHeadUrls.value[profileId]
+				const currentKey = renderedTextureKeys.value[profileId]
+				if (currentUrl && currentKey === skin.texture_key) {
+					return
+				}
+
+				const url = await getPlayerHeadUrl(skin)
+				if (request !== headRequest) {
+					URL.revokeObjectURL(url)
+					return
+				}
+
+				const previousUrl = accountHeadUrls.value[profileId]
+				if (previousUrl && previousUrl !== url) URL.revokeObjectURL(previousUrl)
+				renderedTextureKeys.value[profileId] = skin.texture_key
+				accountHeadUrls.value = {
+					...accountHeadUrls.value,
+					[profileId]: url,
+				}
+			} catch (error) {
+				console.warn(`Failed to render head for Minecraft account ${profileId}:`, error)
+			}
+		}),
+	)
 }
 
 onUnmounted(() => {
 	headRequest++
-	if (equippedHeadUrl.value) URL.revokeObjectURL(equippedHeadUrl.value)
+	revokeHeadUrls(accountHeadUrls.value)
 })
 
 async function refreshValues() {
@@ -203,22 +246,70 @@ async function refreshValues() {
 	accounts.value = Array.isArray(userList) ? [...userList] : []
 	accounts.value.sort((a, b) => (a.profile?.name ?? '').localeCompare(b.profile?.name ?? ''))
 
+	let backendSkins: Record<string, Skin> = {}
 	try {
-		const skins = await get_available_skins()
-		equippedSkin.value = skins.find((skin) => skin.is_equipped) ?? null
-
-		await updateHeadUrl(equippedSkin.value)
-	} catch {
-		equippedSkin.value = null
-		void updateHeadUrl(null)
+		backendSkins = Object.fromEntries(
+			(await get_account_skins()).map(({ profile_id, skin }) => [profile_id, skin]),
+		)
+	} catch (e) {
+		console.warn('Failed to get account skins from backend:', e)
 	}
+
+	const mergedSkins: Record<string, Skin> = {
+		...accountSkins.value,
+		...backendSkins,
+	}
+
+	for (const account of accounts.value) {
+		const profileId = account.profile?.id
+		if (profileId && !mergedSkins[profileId]) {
+			const activeSkin =
+				(account as any).profile?.skins?.find((s: any) => s.state === 'ACTIVE') ??
+				(account as any).profile?.skins?.[0]
+			if (activeSkin?.url) {
+				mergedSkins[profileId] = {
+					texture_key:
+						activeSkin.texture_key ||
+						activeSkin.textureKey ||
+						activeSkin.id ||
+						`${profileId}-skin`,
+					variant: activeSkin.variant || 'CLASSIC',
+					texture: activeSkin.url,
+					source: 'custom_external',
+					is_equipped: true,
+				}
+			}
+		}
+	}
+
+	accountSkins.value = mergedSkins
+	await updateHeadUrls(mergedSkins)
 }
 
 async function setEquippedSkin(skin: Skin) {
-	equippedSkin.value = skin
+	if (!defaultUser.value) return
+	const profileId = defaultUser.value
+
+	accountSkins.value = {
+		...accountSkins.value,
+		[profileId]: skin,
+	}
 
 	try {
-		await updateHeadUrl(skin)
+		const request = ++headRequest
+		const url = await getPlayerHeadUrl(skin, true)
+		if (request !== headRequest) {
+			URL.revokeObjectURL(url)
+			return
+		}
+
+		const previousUrl = accountHeadUrls.value[profileId]
+		if (previousUrl && previousUrl !== url) URL.revokeObjectURL(previousUrl)
+		renderedTextureKeys.value[profileId] = skin.texture_key
+		accountHeadUrls.value = {
+			...accountHeadUrls.value,
+			[profileId]: url,
+		}
 	} catch (error) {
 		console.warn('Failed to get head render for equipped skin:', error)
 	}
@@ -257,30 +348,30 @@ const selectedAccount = computed(() =>
 )
 
 const avatarUrl = computed(() => {
-	if (equippedSkin.value?.texture_key) {
-		const cachedUrl = equippedHeadUrl.value
-		if (cachedUrl) {
-			return cachedUrl
-		}
-		return `https://mc-heads.net/avatar/${equippedSkin.value.texture_key}/128`
-	}
-	if (selectedAccount.value?.profile?.id) {
-		return `https://mc-heads.net/avatar/${selectedAccount.value.profile.id}/128`
-	}
-	return 'https://launcher-files.modrinth.com/assets/steve_head.png'
+	return selectedAccount.value
+		? getAccountAvatarUrl(selectedAccount.value)
+		: 'https://launcher-files.modrinth.com/assets/steve_head.png'
 })
 
 function getAccountAvatarUrl(account: MinecraftCredential) {
-	if (
-		account.profile.id === selectedAccount.value?.profile?.id &&
-		equippedSkin.value?.texture_key
-	) {
-		const cachedUrl = equippedHeadUrl.value
-		if (cachedUrl) {
-			return cachedUrl
-		}
+	const profileId = account.profile?.id
+	if (!profileId) return 'https://launcher-files.modrinth.com/assets/steve_head.png'
+
+	const cachedUrl = accountHeadUrls.value[profileId]
+	if (cachedUrl) return cachedUrl
+
+	const skin = accountSkins.value[profileId]
+	const isOffline = account.refresh_token === 'offline'
+
+	if (!isOffline && skin?.texture_key && !skin.texture_key.startsWith('local-') && !skin.texture_key.startsWith('catalog-')) {
+		return `https://mc-heads.net/avatar/${skin.texture_key}/128`
 	}
-	return `https://mc-heads.net/avatar/${account.profile.id}/128`
+
+	if (!isOffline) {
+		return `https://mc-heads.net/avatar/${profileId}/128`
+	}
+
+	return 'https://launcher-files.modrinth.com/assets/steve_head.png'
 }
 
 async function setAccount(account: MinecraftCredential) {

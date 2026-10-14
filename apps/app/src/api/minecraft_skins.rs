@@ -2,8 +2,8 @@ use crate::api::Result;
 
 use std::path::Path;
 use theseus::minecraft_skins::{
-    self, Bytes, Cape, CatalogSearchResult, MinecraftSkinVariant, SearchedSkin,
-    Skin, UrlOrBlob,
+    self, AccountSkin, Bytes, Cape, CatalogSearchResult, MinecraftSkinVariant,
+    SearchedSkin, Skin, UrlOrBlob,
 };
 
 pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
@@ -11,6 +11,7 @@ pub fn init<R: tauri::Runtime>() -> tauri::plugin::TauriPlugin<R> {
         .invoke_handler(tauri::generate_handler![
             get_available_capes,
             get_available_skins,
+            get_account_skins,
             add_and_equip_custom_skin,
             equip_skin,
             remove_custom_skin,
@@ -42,6 +43,14 @@ pub async fn get_available_capes() -> Result<Vec<Cape>> {
 #[tauri::command]
 pub async fn get_available_skins() -> Result<Vec<Skin>> {
     Ok(minecraft_skins::get_available_skins().await?)
+}
+
+/// `invoke('plugin:minecraft-skins|get_account_skins')`
+///
+/// See also: [minecraft_skins::get_account_skins]
+#[tauri::command]
+pub async fn get_account_skins() -> Result<Vec<AccountSkin>> {
+    Ok(minecraft_skins::get_account_skins().await?)
 }
 
 /// `invoke('plugin:minecraft-skins|add_and_equip_custom_skin', texture_blob, variant, cape)`

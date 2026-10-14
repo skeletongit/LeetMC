@@ -6,6 +6,7 @@ const loadBrowse = () => import('@/pages/Browse.vue')
 const loadSkins = () => import('@/pages/Skins.vue')
 const loadScreenshots = () => import('@/pages/Screenshots.vue')
 const loadUser = () => import('@/pages/User.vue')
+const loadWelcome = () => import('@/pages/Welcome.vue')
 const loadProject = () => import('@/pages/project/Index.vue')
 const loadProjectDescription = () => import('@/pages/project/Description.vue')
 const loadProjectVersions = () => import('@/pages/project/Versions.vue')
@@ -40,7 +41,13 @@ export function preloadSecondaryRoutes() {
 }
 
 export function preloadRemainingRoutes() {
-	return preloadRoutes([loadSkins, loadUser, loadProjectVersion, loadProjectGallery])
+	return preloadRoutes([
+		loadSkins,
+		loadUser,
+		loadProjectVersion,
+		loadProjectGallery,
+		loadWelcome,
+	])
 }
 
 const router = new createRouter({
@@ -50,6 +57,11 @@ const router = new createRouter({
 			path: '/',
 			name: 'Home',
 			component: loadHome,
+		},
+		{
+			path: '/welcome',
+			name: 'Welcome',
+			component: loadWelcome,
 		},
 		{
 			path: '/rooms',

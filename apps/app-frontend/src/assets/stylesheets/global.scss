@@ -99,11 +99,33 @@ html.light-mode {
 	color-scheme: light;
 }
 
+html,
 body {
 	position: fixed;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+input,
+textarea,
+pre,
+code,
+kbd,
+samp,
+[contenteditable="true"],
+.select-text,
+.selectable,
+[data-selectable],
+.markdown-body {
+	-webkit-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
 }
 
 * {
@@ -422,6 +444,7 @@ html.modrinth-mode,
 
 :where(
 	.liquid-glass-panel,
+	.skin-catalog-embedded,
 	.card,
 	.navigation-card,
 	.app-grid-navbar,
@@ -446,6 +469,7 @@ html.modrinth-mode,
 .disable-advanced-rendering
 	:where(
 		.liquid-glass-panel,
+		.skin-catalog-embedded,
 		.card,
 		.navigation-card,
 		.app-grid-navbar,

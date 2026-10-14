@@ -73,7 +73,7 @@ type VirtualSkinSectionListExpose = {
 }
 
 const PENDING_SKIN_REFRESH_DELAY_MS = 11_000
-const DEFAULT_SKIN_SECTION_SORT_ORDER = ['Default skins', 'Modrinth Pride']
+const DEFAULT_SKIN_SECTION_SORT_ORDER = ['Default skins', 'The Boys', 'Modrinth Pride']
 const EARS_NOTICE_PLACEHOLDER = '__EARS_MOD_NAME__'
 const messages = defineMessages({
 	modrinthPrideSection: {
@@ -92,6 +92,10 @@ const messages = defineMessages({
 	defaultSkinsSection: {
 		id: 'app.skins.section.default-skins',
 		defaultMessage: 'Default skins',
+	},
+	theBoysSection: {
+		id: 'app.skins.section.the-boys',
+		defaultMessage: 'The Boys',
 	},
 	mineconEarth2017Section: {
 		id: 'app.skins.section.minecon-earth-2017',
@@ -529,6 +533,8 @@ function getDefaultSkinSectionTitle(section?: string) {
 			return formatMessage(messages.wildernessBoundSection)
 		case 'Default skins':
 			return formatMessage(messages.defaultSkinsSection)
+		case 'The Boys':
+			return formatMessage(messages.theBoysSection)
 		default:
 			return section ?? formatMessage(messages.defaultSkinsSection)
 	}
@@ -1124,7 +1130,7 @@ await loadSkins()
 		<div class="skin-page-layout box-border grow p-4" :class="{ 'pb-40': !currentUser }">
 			<SkinCatalogModal
 				embedded
-				class="min-w-0 self-start"
+				class="liquid-glass-panel min-w-0 self-start"
 				@equipped="() => loadSkins()"
 				@saved="() => loadSkins()"
 				@select-preview="onCatalogSkinPreview"
@@ -1135,7 +1141,7 @@ await loadSkins()
 				{{ formatMessage(appMessages.skinSelectorLabel) }}
 			</h1>
 			<div
-				class="mt-4 flex h-[calc(80vh-1rem)] w-full items-center justify-center max-[700px]:h-[calc(50vh-1rem)]"
+				class="skin-preview-container mt-4 flex h-[calc(80vh-1rem)] w-full items-center justify-center max-[700px]:h-[calc(50vh-1rem)]"
 			>
 				<SkinPreviewRenderer
 					:cape-src="capeTexture"
@@ -1423,5 +1429,38 @@ await loadSkins()
 	width: 100%;
 	max-width: 21rem;
 	margin: 0 auto;
+}
+
+.skin-preview-container {
+	position: relative;
+	top: 0;
+	margin-bottom: 0;
+	transition: top 0.2s ease, margin-bottom 0.2s ease;
+
+	:deep(.skin-preview-controls),
+	:deep([data-skin-preview-debug='controls']) {
+		transform: translateY(-55px);
+		transition: transform 0.2s ease;
+	}
+
+	:deep(.skin-preview-subtitle-container),
+	:deep([data-skin-preview-debug='subtitle']) {
+		transform: translateY(-75px);
+		transition: transform 0.2s ease;
+	}
+
+	@container skinspage (min-width: 1200px) {
+		top: clamp(-105px, calc((780px - 100vh) * 0.7), 0px);
+		margin-bottom: clamp(-105px, calc((780px - 100vh) * 0.7), 0px);
+
+		@media (min-height: 850px) {
+			:deep(.skin-preview-controls),
+			:deep([data-skin-preview-debug='controls']),
+			:deep(.skin-preview-subtitle-container),
+			:deep([data-skin-preview-debug='subtitle']) {
+				transform: translateY(0);
+			}
+		}
+	}
 }
 </style>

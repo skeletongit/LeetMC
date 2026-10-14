@@ -188,6 +188,12 @@ impl SkinServer {
 		let raw_path = parts[1];
 		let path = raw_path.split('?').next().unwrap_or(raw_path);
 
+		if method == "POST" && (path.ends_with("/join") || path == "/sessionserver/session/minecraft/join" || path == "/session/minecraft/join") {
+			let resp = "HTTP/1.1 204 No Content\r\nContent-Length: 0\r\nConnection: close\r\n\r\n";
+			stream.write_all(resp.as_bytes()).await?;
+			return Ok(());
+		}
+
 		if method != "GET" {
 			let resp = "HTTP/1.1 405 Method Not Allowed\r\nContent-Length: 0\r\n\r\n";
 			stream.write_all(resp.as_bytes()).await?;
@@ -196,8 +202,10 @@ impl SkinServer {
 
 		if path == "/" || path == "/yggdrasil" {
 			self.handle_metadata(&mut stream).await?;
-		} else if let Some(uuid_str) = path.strip_prefix("/sessionserver/session/minecraft/profile/") {
+		} else if let Some(uuid_str) = path.strip_prefix("/sessionserver/session/minecraft/profile/").or_else(|| path.strip_prefix("/session/minecraft/profile/")) {
 			self.handle_profile(&mut stream, uuid_str).await?;
+		} else if path.ends_with("/hasJoined") || path.contains("/hasJoined") {
+			self.handle_has_joined(&mut stream, raw_path).await?;
 		} else if let Some(texture_key) = path.strip_prefix("/texture/") {
 			self.handle_texture(&mut stream, texture_key).await?;
 		} else {
@@ -221,6 +229,8 @@ impl SkinServer {
 				".minecraft.net",
 				".mojang.com",
 				".ely.by",
+				".modrinth.com",
+				".namemc.com",
 			],
 			signature_public_key_lower: &self.public_key_pem,
 			signature_public_key_camel: &self.public_key_pem,
@@ -235,6 +245,115 @@ impl SkinServer {
 
 		stream.write_all(resp.as_bytes()).await?;
 		stream.write_all(&body).await?;
+		Ok(())
+	}
+
+	async fn send_profile_response(
+		&self,
+		stream: &mut TcpStream,
+		clean_uuid_str: &str,
+		username: &str,
+		user_id: Uuid,
+		state: &State,
+	) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+		let (texture_key, is_slim) = get_equipped_skin_for_offline_user(user_id, username, state).await;
+
+		let skin_url = format!("http://127.0.0.1:{}/texture/{}", self.port, texture_key);
+		let metadata = if is_slim {
+			Some(SkinMetadata { model: "slim" })
+		} else {
+			None
+		};
+
+		let textures_payload = TexturesPayload {
+			timestamp: chrono::Utc::now().timestamp_millis(),
+			profile_id: clean_uuid_str,
+			profile_name: username,
+			textures: TexturesMap {
+				skin: SkinTextureEntry {
+					url: skin_url,
+					metadata,
+				},
+			},
+		};
+
+		let payload_json = serde_json::to_string(&textures_payload)?;
+		let value = BASE64.encode(payload_json.as_bytes());
+
+		let signature_bytes = self.signing_key.sign(value.as_bytes());
+		let signature = BASE64.encode(signature_bytes.to_vec());
+
+		let profile = ProfileResponse {
+			id: clean_uuid_str.to_string(),
+			name: username.to_string(),
+			properties: vec![ProfileProperty {
+				name: "textures".to_string(),
+				value,
+				signature: Some(signature),
+			}],
+		};
+
+		let body = serde_json::to_vec(&profile)?;
+		let resp = format!(
+			"HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+			body.len()
+		);
+
+		stream.write_all(resp.as_bytes()).await?;
+		stream.write_all(&body).await?;
+		tracing::info!(uuid = clean_uuid_str, username = username, texture_key = %texture_key, "Served offline skin profile to game");
+		Ok(())
+	}
+
+	async fn handle_has_joined(&self, stream: &mut TcpStream, raw_path: &str) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+		let query = raw_path.split('?').nth(1).unwrap_or("");
+		let mut username = None;
+		for pair in query.split('&') {
+			let mut kv = pair.split('=');
+			if let (Some(k), Some(v)) = (kv.next(), kv.next()) {
+				if k.eq_ignore_ascii_case("username") {
+					username = Some(v.to_string());
+					break;
+				}
+			}
+		}
+
+		if let Some(user_name) = username {
+			let state = match State::get().await {
+				Ok(s) => s,
+				Err(_) => {
+					let resp = "HTTP/1.1 204 No Content\r\nContent-Length: 0\r\n\r\n";
+					stream.write_all(resp.as_bytes()).await?;
+					return Ok(());
+				}
+			};
+
+			let mut matched_user = None;
+			let users = crate::state::Credentials::get_all(&state.pool).await.unwrap_or_default();
+			for entry in users.iter() {
+				let creds = entry.value();
+				if creds.is_offline() && creds.offline_profile.name.eq_ignore_ascii_case(&user_name) {
+					matched_user = Some((creds.offline_profile.id, creds.offline_profile.name.clone()));
+					break;
+				}
+			}
+
+			if matched_user.is_none() {
+				if let Ok(Some(active)) = crate::state::Credentials::get_active(&state.pool).await {
+					if active.is_offline() && active.offline_profile.name.eq_ignore_ascii_case(&user_name) {
+						matched_user = Some((active.offline_profile.id, active.offline_profile.name.clone()));
+					}
+				}
+			}
+
+			if let Some((user_id, name)) = matched_user {
+				let uuid_str = user_id.as_simple().to_string();
+				return self.send_profile_response(stream, &uuid_str, &name, user_id, &state).await;
+			}
+		}
+
+		let resp = "HTTP/1.1 204 No Content\r\nContent-Length: 0\r\n\r\n";
+		stream.write_all(resp.as_bytes()).await?;
 		Ok(())
 	}
 
@@ -260,6 +379,7 @@ impl SkinServer {
 				if creds.is_offline() {
 					if creds.offline_profile.id == target_uuid
 						|| creds.offline_profile.id.as_simple().to_string().eq_ignore_ascii_case(&clean_uuid_str)
+						|| crate::state::offline_uuid(&creds.offline_profile.name) == target_uuid
 					{
 						matched_user = Some((creds.offline_profile.id, creds.offline_profile.name.clone()));
 						break;
@@ -273,62 +393,35 @@ impl SkinServer {
 					if active.is_offline() {
 						if active.offline_profile.id == target_uuid
 							|| active.offline_profile.id.as_simple().to_string().eq_ignore_ascii_case(&clean_uuid_str)
+							|| crate::state::offline_uuid(&active.offline_profile.name) == target_uuid
 						{
 							matched_user = Some((active.offline_profile.id, active.offline_profile.name.clone()));
 						}
 					}
 				}
 			}
+
+			// If still not matched, check offline_equipped_skins table
+			if matched_user.is_none() {
+				if let Ok(Some(_)) = sqlx::query("SELECT minecraft_user_uuid FROM offline_equipped_skins WHERE replace(minecraft_user_uuid, '-', '') = ?")
+					.bind(&clean_uuid_str)
+					.fetch_optional(&state.pool)
+					.await
+				{
+					let user_name = sqlx::query_scalar::<_, String>("SELECT username FROM minecraft_users WHERE replace(uuid, '-', '') = ?")
+						.bind(&clean_uuid_str)
+						.fetch_optional(&state.pool)
+						.await
+						.ok()
+						.flatten()
+						.unwrap_or_else(|| "Player".to_string());
+					matched_user = Some((target_uuid, user_name));
+				}
+			}
 		}
 
 		if let Some((user_id, username)) = matched_user {
-			// Find equipped skin or default
-			let (texture_key, is_slim) = get_equipped_skin_for_offline_user(user_id, &username, &state).await;
-
-			let skin_url = format!("http://127.0.0.1:{}/texture/{}", self.port, texture_key);
-			let metadata = if is_slim {
-				Some(SkinMetadata { model: "slim" })
-			} else {
-				None
-			};
-
-			let textures_payload = TexturesPayload {
-				timestamp: chrono::Utc::now().timestamp_millis(),
-				profile_id: &clean_uuid_str,
-				profile_name: &username,
-				textures: TexturesMap {
-					skin: SkinTextureEntry {
-						url: skin_url,
-						metadata,
-					},
-				},
-			};
-
-			let payload_json = serde_json::to_string(&textures_payload)?;
-			let value = BASE64.encode(payload_json.as_bytes());
-
-			let signature_bytes = self.signing_key.sign(value.as_bytes());
-			let signature = BASE64.encode(signature_bytes.to_vec());
-
-			let profile = ProfileResponse {
-				id: clean_uuid_str,
-				name: username,
-				properties: vec![ProfileProperty {
-					name: "textures".to_string(),
-					value,
-					signature: Some(signature),
-				}],
-			};
-
-			let body = serde_json::to_vec(&profile)?;
-			let resp = format!(
-				"HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=utf-8\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
-				body.len()
-			);
-
-			stream.write_all(resp.as_bytes()).await?;
-			stream.write_all(&body).await?;
-			return Ok(());
+			return self.send_profile_response(stream, &clean_uuid_str, &username, user_id, &state).await;
 		}
 
 		// 2. Proxy request for other players to Mojang
@@ -397,35 +490,108 @@ impl SkinServer {
 
 		if let Ok(Some(row)) = res {
 			if let Ok(bytes) = row.try_get::<Vec<u8>, _>("texture") {
-				let headers = format!(
-					"HTTP/1.1 200 OK\r\nContent-Type: image/png\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
-					bytes.len()
-				);
-				stream.write_all(headers.as_bytes()).await?;
-				stream.write_all(&bytes).await?;
-				return Ok(());
-			}
-		}
-
-		// 2. Fallback to bundled default skins
-		for default_skin in crate::api::minecraft_skins::assets::DEFAULT_SKINS.iter() {
-			if default_skin.texture_key.as_ref() == texture_key {
-				if let Some(bytes) = crate::api::minecraft_skins::png_util::data_url_to_bytes(&default_skin.texture) {
-					let headers = format!(
-						"HTTP/1.1 200 OK\r\nContent-Type: image/png\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
-						bytes.len()
-					);
-					stream.write_all(headers.as_bytes()).await?;
-					stream.write_all(&bytes).await?;
-					return Ok(());
+				if !bytes.is_empty() {
+					return send_png(stream, &bytes).await;
 				}
 			}
 		}
 
+		// 2. Query offline_equipped_skins for URL (which could be data URL or HTTP URL)
+		let stored_url = sqlx::query("SELECT url FROM offline_equipped_skins WHERE texture_key = ? LIMIT 1")
+			.bind(texture_key)
+			.fetch_optional(&state.pool)
+			.await
+			.ok()
+			.flatten();
+
+		if let Some(row) = stored_url {
+			if let Ok(url_str) = row.try_get::<String, _>("url") {
+				if let Some(base64_data) = url_str.strip_prefix("data:image/png;base64,") {
+					if let Ok(bytes) = BASE64.decode(base64_data) {
+						let _ = sqlx::query("INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)")
+							.bind(texture_key)
+							.bind(&bytes)
+							.execute(&state.pool)
+							.await;
+						return send_png(stream, &bytes).await;
+					}
+				} else if let Ok(url) = url::Url::parse(&url_str) {
+					if let Some(bytes) = crate::api::minecraft_skins::png_util::data_url_to_bytes(&url) {
+						let _ = sqlx::query("INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)")
+							.bind(texture_key)
+							.bind(&bytes)
+							.execute(&state.pool)
+							.await;
+						return send_png(stream, &bytes).await;
+					} else if url_str.starts_with("http://") || url_str.starts_with("https://") {
+						let client = reqwest::Client::builder()
+							.timeout(std::time::Duration::from_secs(6))
+							.build()
+							.unwrap_or_default();
+						if let Ok(resp) = client.get(&url_str).send().await {
+							if resp.status().is_success() {
+								if let Ok(bytes) = resp.bytes().await {
+									let bytes_vec = bytes.to_vec();
+									let _ = sqlx::query("INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)")
+										.bind(texture_key)
+										.bind(&bytes_vec)
+										.execute(&state.pool)
+										.await;
+									return send_png(stream, &bytes_vec).await;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// 3. If texture_key is a 64-char hex string (Mojang skin hash), fetch from Mojang textures
+		if texture_key.len() == 64 && texture_key.chars().all(|c| c.is_ascii_hexdigit()) {
+			let mojang_texture_url = format!("https://textures.minecraft.net/texture/{}", texture_key);
+			let client = reqwest::Client::builder()
+				.timeout(std::time::Duration::from_secs(6))
+				.build()
+				.unwrap_or_default();
+			if let Ok(resp) = client.get(&mojang_texture_url).send().await {
+				if resp.status().is_success() {
+					if let Ok(bytes) = resp.bytes().await {
+						let bytes_vec = bytes.to_vec();
+						let _ = sqlx::query("INSERT OR REPLACE INTO custom_minecraft_skin_textures (texture_key, texture) VALUES (?, ?)")
+							.bind(texture_key)
+							.bind(&bytes_vec)
+							.execute(&state.pool)
+							.await;
+						return send_png(stream, &bytes_vec).await;
+					}
+				}
+			}
+		}
+
+		// 4. Fallback to bundled default skins
+		for default_skin in crate::api::minecraft_skins::assets::DEFAULT_SKINS.iter() {
+			if default_skin.texture_key.as_ref() == texture_key {
+				if let Some(bytes) = crate::api::minecraft_skins::png_util::data_url_to_bytes(&default_skin.texture) {
+					return send_png(stream, &bytes).await;
+				}
+			}
+		}
+
+		tracing::warn!(texture_key = texture_key, "Texture not found on offline skin server");
 		let resp = "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n";
 		stream.write_all(resp.as_bytes()).await?;
 		Ok(())
 	}
+}
+
+async fn send_png(stream: &mut TcpStream, bytes: &[u8]) -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+	let headers = format!(
+		"HTTP/1.1 200 OK\r\nContent-Type: image/png\r\nContent-Length: {}\r\nConnection: close\r\n\r\n",
+		bytes.len()
+	);
+	stream.write_all(headers.as_bytes()).await?;
+	stream.write_all(bytes).await?;
+	Ok(())
 }
 
 pub async fn ensure_tables() {
@@ -450,9 +616,9 @@ async fn get_equipped_skin_for_offline_user(
 	state: &State,
 ) -> (String, bool) {
 	// 1. Check offline equipped skins table if present
-	let user_id_hyphen = user_id.hyphenated().to_string();
-	let stored = sqlx::query("SELECT texture_key, variant FROM offline_equipped_skins WHERE minecraft_user_uuid = ?")
-		.bind(&user_id_hyphen)
+	let clean_uuid_str = user_id.as_simple().to_string();
+	let stored = sqlx::query("SELECT texture_key, variant FROM offline_equipped_skins WHERE replace(minecraft_user_uuid, '-', '') = ?")
+		.bind(&clean_uuid_str)
 		.fetch_optional(&state.pool)
 		.await
 		.ok()
@@ -481,7 +647,7 @@ async fn get_equipped_skin_for_offline_user(
 	let hash_parity = (user_id.as_u128() & 1) == 1;
 	if hash_parity {
 		// Alex (Slim)
-		("46acd06e8483b176e8ea39fc12fe105eb3a2a4970f5100057e9d84d4b60bdfa7".to_string(), true)
+		("1abc803022d8300ab7578b189294cce39622d9a404cdc00d3feacfdf45be6981".to_string(), true)
 	} else {
 		// Steve (Classic)
 		("31f477eb1a7beee631c2ca64d06f8f68fa93a3386d04452ab27f43acdf1b60cb".to_string(), false)

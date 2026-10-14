@@ -1,26 +1,16 @@
 import type { Skin } from '../skins'
-import { get_normalized_skin_texture } from '../skins'
+import { download_skin_bytes, get_normalized_skin_texture } from '../skins'
 import { headStorage } from '../storage/head-storage'
 
 export async function generatePlayerHeadBlob(skinUrl: string, size: number = 64): Promise<Blob> {
 	return new Promise((resolve, reject) => {
 		const img = new Image()
-		img.crossOrigin = 'anonymous'
+		if (!skinUrl.startsWith('data:') && !skinUrl.startsWith('blob:')) {
+			img.crossOrigin = 'anonymous'
+		}
 
-		img.onload = () => {
+		const renderHead = (sourceImg: HTMLImageElement) => {
 			try {
-				const sourceCanvas = document.createElement('canvas')
-				const sourceCtx = sourceCanvas.getContext('2d')
-
-				if (!sourceCtx) {
-					throw new Error('Could not get 2D context from source canvas')
-				}
-
-				sourceCanvas.width = img.width
-				sourceCanvas.height = img.height
-
-				sourceCtx.drawImage(img, 0, 0)
-
 				const outputCanvas = document.createElement('canvas')
 				const outputCtx = outputCanvas.getContext('2d')
 
@@ -30,50 +20,13 @@ export async function generatePlayerHeadBlob(skinUrl: string, size: number = 64)
 
 				outputCanvas.width = size
 				outputCanvas.height = size
-
 				outputCtx.imageSmoothingEnabled = false
 
-				const headImageData = sourceCtx.getImageData(8, 8, 8, 8)
+				// Base head layer: source rectangle (8, 8, 8, 8)
+				outputCtx.drawImage(sourceImg, 8, 8, 8, 8, 0, 0, size, size)
 
-				const headCanvas = document.createElement('canvas')
-				const headCtx = headCanvas.getContext('2d')
-
-				if (!headCtx) {
-					throw new Error('Could not get 2D context from head canvas')
-				}
-
-				headCanvas.width = 8
-				headCanvas.height = 8
-				headCtx.putImageData(headImageData, 0, 0)
-
-				outputCtx.drawImage(headCanvas, 0, 0, 8, 8, 0, 0, size, size)
-
-				const hatImageData = sourceCtx.getImageData(40, 8, 8, 8)
-
-				const hatCanvas = document.createElement('canvas')
-				const hatCtx = hatCanvas.getContext('2d')
-
-				if (!hatCtx) {
-					throw new Error('Could not get 2D context from hat canvas')
-				}
-
-				hatCanvas.width = 8
-				hatCanvas.height = 8
-				hatCtx.putImageData(hatImageData, 0, 0)
-
-				const hatPixels = hatImageData.data
-				let hasHat = false
-
-				for (let i = 3; i < hatPixels.length; i += 4) {
-					if (hatPixels[i] > 0) {
-						hasHat = true
-						break
-					}
-				}
-
-				if (hasHat) {
-					outputCtx.drawImage(hatCanvas, 0, 0, 8, 8, 0, 0, size, size)
-				}
+				// Hat / outer accessory layer: source rectangle (40, 8, 8, 8)
+				outputCtx.drawImage(sourceImg, 40, 8, 8, 8, 0, 0, size, size)
 
 				outputCanvas.toBlob(
 					(blob) => {
@@ -83,15 +36,39 @@ export async function generatePlayerHeadBlob(skinUrl: string, size: number = 64)
 							reject(new Error('Failed to create blob from canvas'))
 						}
 					},
-					'image/webp',
-					0.9,
+					'image/png',
 				)
 			} catch (error) {
 				reject(error)
 			}
 		}
 
-		img.onerror = () => {
+		img.onload = () => {
+			renderHead(img)
+		}
+
+		img.onerror = async () => {
+			if (!skinUrl.startsWith('data:') && !skinUrl.startsWith('blob:')) {
+				try {
+					const bytes = await download_skin_bytes(skinUrl)
+					const blob = new Blob([bytes], { type: 'image/png' })
+					const blobUrl = URL.createObjectURL(blob)
+					const fallbackImg = new Image()
+					fallbackImg.onload = () => {
+						renderHead(fallbackImg)
+						URL.revokeObjectURL(blobUrl)
+					}
+					fallbackImg.onerror = () => {
+						URL.revokeObjectURL(blobUrl)
+						reject(new Error('Failed to load fallback skin image'))
+					}
+					fallbackImg.src = blobUrl
+					return
+				} catch (downloadErr) {
+					reject(downloadErr)
+					return
+				}
+			}
 			reject(new Error('Failed to load skin texture image'))
 		}
 
@@ -99,11 +76,24 @@ export async function generatePlayerHeadBlob(skinUrl: string, size: number = 64)
 	})
 }
 
-export async function getPlayerHeadUrl(skin: Skin): Promise<string> {
+export async function getPlayerHeadUrl(skin: Skin, forceRefresh = false): Promise<string> {
 	const key = `${skin.texture_key}-head`
-	const cached = await headStorage.retrieve(key).catch(() => null)
-	if (cached) return cached
-	const blob = await generatePlayerHeadBlob(await get_normalized_skin_texture(skin), 64)
+	if (!forceRefresh) {
+		const cached = await headStorage.retrieve(key).catch(() => null)
+		if (cached) return cached
+	}
+	let blob: Blob
+	if (skin.texture) {
+		try {
+			blob = await generatePlayerHeadBlob(skin.texture, 64)
+		} catch {
+			const normalized = await get_normalized_skin_texture(skin)
+			blob = await generatePlayerHeadBlob(normalized, 64)
+		}
+	} else {
+		const normalized = await get_normalized_skin_texture(skin)
+		blob = await generatePlayerHeadBlob(normalized, 64)
+	}
 	await headStorage.store(key, blob).catch(() => {})
 	return URL.createObjectURL(blob)
 }
