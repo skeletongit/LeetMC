@@ -1,5 +1,13 @@
 <script setup lang="ts" generic="T extends string">
-import { MoonIcon, RadioButtonCheckedIcon, RadioButtonIcon, SunIcon } from '@modrinth/assets'
+import {
+	EnderPearlIcon,
+	GameIcon,
+	MinecraftBlockIcon,
+	MoonIcon,
+	RadioButtonCheckedIcon,
+	RadioButtonIcon,
+	SunIcon,
+} from '@modrinth/assets'
 
 import { defineMessages, useVIntl } from '#ui/composables/i18n'
 
@@ -36,7 +44,7 @@ const themeLabels = defineMessages({
 	},
 	modrinth: {
 		id: 'settings.display.theme.modrinth',
-		defaultMessage: 'Modrinth',
+		defaultMessage: 'LeetMC',
 	},
 	retro: {
 		id: 'settings.display.theme.retro',
@@ -99,8 +107,23 @@ function getPreviewClass(option: T): string {
 					aria-hidden="true"
 				/>
 				<MoonIcon
-					v-else-if="option === preferredDarkTheme"
+					v-else-if="'dark' === option"
 					v-tooltip="formatMessage(themeTooltips.preferredDark)"
+					class="theme-icon shrink-0"
+					aria-hidden="true"
+				/>
+				<EnderPearlIcon
+					v-else-if="'oled' === option"
+					class="theme-icon shrink-0 default-icon"
+					aria-hidden="true"
+				/>
+				<GameIcon
+					v-else-if="'retro' === option"
+					class="theme-icon shrink-0"
+					aria-hidden="true"
+				/>
+				<MinecraftBlockIcon
+					v-else-if="'modrinth' === option || 'leetmc' === option"
 					class="theme-icon shrink-0"
 					aria-hidden="true"
 				/>

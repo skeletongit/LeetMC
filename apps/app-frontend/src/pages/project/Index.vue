@@ -45,7 +45,7 @@
 				class="project-sidebar-section"
 			/>
 		</Teleport>
-		<div class="flex flex-col gap-4 p-6">
+		<div class="project-page-content flex flex-col gap-4 p-6">
 			<div
 				v-if="projectInstallContext"
 				class="sticky top-0 z-20 -mx-6 -mt-6 rounded-tl-[--radius-xl] border-0 border-b border-solid bg-surface-1 px-3 py-4 border-surface-5"

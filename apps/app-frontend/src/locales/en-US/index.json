@@ -1,4 +1,160 @@
 {
+  "app.appearance-settings.interface-style.title": {
+    "message": "Interface style"
+  },
+  "app.appearance-settings.modern-interface.title": {
+    "message": "LeetMC Next interface"
+  },
+  "app.appearance-settings.modern-interface.description": {
+    "message": "Enables the redesigned home screen, richer glass panels, unified spacing, and smoother navigation. The current interface remains the default."
+  },
+  "app.appearance-settings.modern-interface.experimental": {
+    "message": "Optional"
+  },
+  "app.modern-interface.home.eyebrow": {
+    "message": "Your game space"
+  },
+  "app.modern-interface.home.title": {
+    "message": "Ready when you are"
+  },
+  "app.modern-interface.home.description": {
+    "message": "Jump back into your latest instance or shape the next one."
+  },
+  "app.modern-interface.home.continue-playing": {
+    "message": "Continue playing"
+  },
+  "app.modern-interface.home.open-instance": {
+    "message": "Open instance"
+  },
+  "app.modern-interface.home.recent-title": {
+    "message": "Recently played"
+  },
+  "app.modern-interface.home.instance-count": {
+    "message": "{count, plural, one {# instance} other {# instances}}"
+  },
+  "app.modern-interface.home.empty-title": {
+    "message": "Your game space is ready"
+  },
+  "app.modern-interface.home.empty-description": {
+    "message": "Create your first instance and LeetMC will keep everything organised here."
+  },
+  "app.crash-diagnostics.action.run": {
+    "message": "Run diagnostics"
+  },
+  "app.crash-diagnostics.action.open-restore-point": {
+    "message": "Open restore point"
+  },
+  "app.crash-diagnostics.action.try-again": {
+    "message": "Play again"
+  },
+  "app.crash-diagnostics.header": {
+    "message": "What happened"
+  },
+  "app.crash-diagnostics.intro": {
+    "message": "LeetMC analysed the game log and found the most likely cause."
+  },
+  "app.crash-diagnostics.category.memory": {
+    "message": "Minecraft ran out of memory"
+  },
+  "app.crash-diagnostics.category.java": {
+    "message": "The selected Java version is incompatible"
+  },
+  "app.crash-diagnostics.category.mod-conflict": {
+    "message": "A mod failed or conflicts with another mod"
+  },
+  "app.crash-diagnostics.category.loader": {
+    "message": "The mod loader or game version is incompatible"
+  },
+  "app.crash-diagnostics.category.authentication": {
+    "message": "Minecraft authentication failed"
+  },
+  "app.crash-diagnostics.category.corrupt-files": {
+    "message": "Some game files are damaged or incomplete"
+  },
+  "app.crash-diagnostics.category.graphics": {
+    "message": "Minecraft could not initialise graphics"
+  },
+  "app.crash-diagnostics.category.unknown": {
+    "message": "Minecraft closed unexpectedly"
+  },
+  "app.crash-diagnostics.description.memory": {
+    "message": "The log contains a memory allocation error. Increasing the limit should help."
+  },
+  "app.crash-diagnostics.description.java": {
+    "message": "This instance is using a Java runtime that cannot load the selected game or mods."
+  },
+  "app.crash-diagnostics.description.mod-conflict": {
+    "message": "A mod crashed while loading. Disable the detected mod and try launching again."
+  },
+  "app.crash-diagnostics.description.loader": {
+    "message": "At least one installed mod does not match the current loader or Minecraft version."
+  },
+  "app.crash-diagnostics.description.authentication": {
+    "message": "Your session is no longer valid or the authentication service rejected it."
+  },
+  "app.crash-diagnostics.description.corrupt-files": {
+    "message": "LeetMC can verify the installation and download the missing files again."
+  },
+  "app.crash-diagnostics.description.graphics": {
+    "message": "The graphics driver or OpenGL support prevented the game window from opening."
+  },
+  "app.crash-diagnostics.description.unknown": {
+    "message": "The log does not contain a reliable signature. Open the logs for the full details."
+  },
+  "app.crash-diagnostics.suspect-mod": {
+    "message": "Likely culprit: {mod}"
+  },
+  "app.crash-diagnostics.confidence.high": {
+    "message": "High confidence"
+  },
+  "app.crash-diagnostics.confidence.medium": {
+    "message": "Probable cause"
+  },
+  "app.crash-diagnostics.confidence.low": {
+    "message": "Needs review"
+  },
+  "app.crash-diagnostics.restore-point-notice": {
+    "message": "Before changing the instance, LeetMC will automatically create a restore point."
+  },
+  "app.crash-diagnostics.action.disable-mod": {
+    "message": "Back up and disable mod"
+  },
+  "app.crash-diagnostics.action.increase-memory": {
+    "message": "Back up and increase memory"
+  },
+  "app.crash-diagnostics.action.reset-java": {
+    "message": "Back up and select Java automatically"
+  },
+  "app.crash-diagnostics.action.repair-files": {
+    "message": "Back up and repair files"
+  },
+  "app.crash-diagnostics.action.sign-in-again": {
+    "message": "Sign in again"
+  },
+  "app.crash-diagnostics.action.view-logs": {
+    "message": "View logs"
+  },
+  "app.crash-diagnostics.evidence": {
+    "message": "Technical details"
+  },
+  "app.crash-diagnostics.exit-code": {
+    "message": "Exit code: {code}"
+  },
+  "app.crash-diagnostics.status.creating-restore-point": {
+    "message": "Creating a restore point…"
+  },
+  "app.crash-diagnostics.status.applying-fix": {
+    "message": "Applying the fix…"
+  },
+  "app.crash-diagnostics.status.fixed": {
+    "message": "Fix applied. You can try launching the instance again."
+  },
+  "app.crash-diagnostics.restore-point-name": {
+    "message": "{instance} — Before automatic repair"
+  },
+  "app.crash-diagnostics.action.copy-details": {
+    "message": "Copy details"
+  },
   "app.action-bar.downloading-java": {
     "message": "Downloading Java {version}"
   },
@@ -3424,6 +3580,12 @@
   },
   "app.skins.offline-sign-in.button": {
     "message": "Sign in with offline account"
+  },
+  "app.skins.offline-skin-visibility-notice": {
+    "message": "In offline mode, skins are installed locally. For other players to see your skin, you need to install an additional skin-display mod in your modpack."
+  },
+  "app.skins.offline-skin-visibility-notice.expand": {
+    "message": "Show offline skin notice"
   },
   "app.skins.sign-in.button": {
     "message": "Sign in to Microsoft"

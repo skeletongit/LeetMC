@@ -1,4 +1,160 @@
 {
+  "app.appearance-settings.interface-style.title": {
+    "message": "Стиль интерфейса"
+  },
+  "app.appearance-settings.modern-interface.title": {
+    "message": "Интерфейс LeetMC Next"
+  },
+  "app.appearance-settings.modern-interface.description": {
+    "message": "Включает обновлённый главный экран, более выразительные стеклянные панели, единые отступы и плавную навигацию. Текущий интерфейс остаётся стандартным."
+  },
+  "app.appearance-settings.modern-interface.experimental": {
+    "message": "По желанию"
+  },
+  "app.modern-interface.home.eyebrow": {
+    "message": "Ваше игровое пространство"
+  },
+  "app.modern-interface.home.title": {
+    "message": "Всё готово к игре"
+  },
+  "app.modern-interface.home.description": {
+    "message": "Вернитесь в последнюю сборку или создайте следующую."
+  },
+  "app.modern-interface.home.continue-playing": {
+    "message": "Продолжить игру"
+  },
+  "app.modern-interface.home.open-instance": {
+    "message": "Открыть сборку"
+  },
+  "app.modern-interface.home.recent-title": {
+    "message": "Недавние сборки"
+  },
+  "app.modern-interface.home.instance-count": {
+    "message": "{count, plural, one {# сборка} few {# сборки} many {# сборок} other {# сборки}}"
+  },
+  "app.modern-interface.home.empty-title": {
+    "message": "Игровое пространство готово"
+  },
+  "app.modern-interface.home.empty-description": {
+    "message": "Создайте первую сборку, и LeetMC аккуратно разместит здесь всё необходимое."
+  },
+  "app.crash-diagnostics.action.run": {
+    "message": "Запустить диагностику"
+  },
+  "app.crash-diagnostics.action.open-restore-point": {
+    "message": "Открыть точку восстановления"
+  },
+  "app.crash-diagnostics.action.try-again": {
+    "message": "Играть снова"
+  },
+  "app.crash-diagnostics.header": {
+    "message": "Что произошло"
+  },
+  "app.crash-diagnostics.intro": {
+    "message": "LeetMC проанализировал журнал игры и нашёл наиболее вероятную причину."
+  },
+  "app.crash-diagnostics.category.memory": {
+    "message": "Minecraft не хватило памяти"
+  },
+  "app.crash-diagnostics.category.java": {
+    "message": "Выбранная версия Java несовместима"
+  },
+  "app.crash-diagnostics.category.mod-conflict": {
+    "message": "Мод сломался или конфликтует с другим модом"
+  },
+  "app.crash-diagnostics.category.loader": {
+    "message": "Загрузчик модов или версия игры несовместимы"
+  },
+  "app.crash-diagnostics.category.authentication": {
+    "message": "Не удалось выполнить авторизацию Minecraft"
+  },
+  "app.crash-diagnostics.category.corrupt-files": {
+    "message": "Некоторые файлы игры повреждены или загружены не полностью"
+  },
+  "app.crash-diagnostics.category.graphics": {
+    "message": "Minecraft не смог запустить графику"
+  },
+  "app.crash-diagnostics.category.unknown": {
+    "message": "Minecraft неожиданно закрылся"
+  },
+  "app.crash-diagnostics.description.memory": {
+    "message": "В журнале найдена ошибка выделения памяти. Увеличение лимита должно помочь."
+  },
+  "app.crash-diagnostics.description.java": {
+    "message": "Сборка использует Java, которая не может загрузить выбранную игру или моды."
+  },
+  "app.crash-diagnostics.description.mod-conflict": {
+    "message": "Мод вызвал сбой во время загрузки. Отключите найденный мод и попробуйте снова."
+  },
+  "app.crash-diagnostics.description.loader": {
+    "message": "Как минимум один мод не подходит к текущему загрузчику или версии Minecraft."
+  },
+  "app.crash-diagnostics.description.authentication": {
+    "message": "Сеанс больше недействителен или сервис авторизации отклонил его."
+  },
+  "app.crash-diagnostics.description.corrupt-files": {
+    "message": "LeetMC может проверить установку и заново скачать отсутствующие файлы."
+  },
+  "app.crash-diagnostics.description.graphics": {
+    "message": "Драйвер видеокарты или поддержка OpenGL не позволили открыть окно игры."
+  },
+  "app.crash-diagnostics.description.unknown": {
+    "message": "В журнале нет надёжного признака ошибки. Откройте логи, чтобы увидеть подробности."
+  },
+  "app.crash-diagnostics.suspect-mod": {
+    "message": "Вероятный виновник: {mod}"
+  },
+  "app.crash-diagnostics.confidence.high": {
+    "message": "Высокая уверенность"
+  },
+  "app.crash-diagnostics.confidence.medium": {
+    "message": "Вероятная причина"
+  },
+  "app.crash-diagnostics.confidence.low": {
+    "message": "Нужна проверка"
+  },
+  "app.crash-diagnostics.restore-point-notice": {
+    "message": "Перед изменением сборки LeetMC автоматически создаст точку восстановления."
+  },
+  "app.crash-diagnostics.action.disable-mod": {
+    "message": "Создать копию и отключить мод"
+  },
+  "app.crash-diagnostics.action.increase-memory": {
+    "message": "Создать копию и увеличить память"
+  },
+  "app.crash-diagnostics.action.reset-java": {
+    "message": "Создать копию и выбрать Java автоматически"
+  },
+  "app.crash-diagnostics.action.repair-files": {
+    "message": "Создать копию и восстановить файлы"
+  },
+  "app.crash-diagnostics.action.sign-in-again": {
+    "message": "Войти заново"
+  },
+  "app.crash-diagnostics.action.view-logs": {
+    "message": "Открыть логи"
+  },
+  "app.crash-diagnostics.evidence": {
+    "message": "Технические подробности"
+  },
+  "app.crash-diagnostics.exit-code": {
+    "message": "Код завершения: {code}"
+  },
+  "app.crash-diagnostics.status.creating-restore-point": {
+    "message": "Создаём точку восстановления…"
+  },
+  "app.crash-diagnostics.status.applying-fix": {
+    "message": "Применяем исправление…"
+  },
+  "app.crash-diagnostics.status.fixed": {
+    "message": "Исправление применено. Можно снова запустить сборку."
+  },
+  "app.crash-diagnostics.restore-point-name": {
+    "message": "{instance} — До автоисправления"
+  },
+  "app.crash-diagnostics.action.copy-details": {
+    "message": "Скопировать подробности"
+  },
   "app.action-bar.downloading-java": {
     "message": "Скачивание Java {version}"
   },
@@ -3325,6 +3481,12 @@
   },
   "app.skins.offline-sign-in.button": {
     "message": "Войти в оффлайн-аккаунт"
+  },
+  "app.skins.offline-skin-visibility-notice": {
+    "message": "В офлайн-режиме скины устанавливаются локально. Чтобы другие игроки видели ваш скин, вам необходимо установить дополнительный мод для отображения скинов в свою сборку."
+  },
+  "app.skins.offline-skin-visibility-notice.expand": {
+    "message": "Показать уведомление об офлайн-скинах"
   },
   "app.skins.sign-in.button": {
     "message": "Войти в Microsoft"

@@ -1,4 +1,160 @@
 {
+  "app.appearance-settings.interface-style.title": {
+    "message": "Estilo de la interfaz"
+  },
+  "app.appearance-settings.modern-interface.title": {
+    "message": "Interfaz LeetMC Next"
+  },
+  "app.appearance-settings.modern-interface.description": {
+    "message": "Activa la pantalla de inicio rediseñada, paneles de cristal más expresivos, espacios uniformes y una navegación más fluida. La interfaz actual seguirá siendo la predeterminada."
+  },
+  "app.appearance-settings.modern-interface.experimental": {
+    "message": "Opcional"
+  },
+  "app.modern-interface.home.eyebrow": {
+    "message": "Tu espacio de juego"
+  },
+  "app.modern-interface.home.title": {
+    "message": "Listo cuando tú lo estés"
+  },
+  "app.modern-interface.home.description": {
+    "message": "Vuelve a tu última instancia o crea la siguiente."
+  },
+  "app.modern-interface.home.continue-playing": {
+    "message": "Seguir jugando"
+  },
+  "app.modern-interface.home.open-instance": {
+    "message": "Abrir instancia"
+  },
+  "app.modern-interface.home.recent-title": {
+    "message": "Jugado recientemente"
+  },
+  "app.modern-interface.home.instance-count": {
+    "message": "{count, plural, one {# instancia} other {# instancias}}"
+  },
+  "app.modern-interface.home.empty-title": {
+    "message": "Tu espacio de juego está listo"
+  },
+  "app.modern-interface.home.empty-description": {
+    "message": "Crea tu primera instancia y LeetMC mantendrá todo organizado aquí."
+  },
+  "app.crash-diagnostics.action.run": {
+    "message": "Ejecutar diagnóstico"
+  },
+  "app.crash-diagnostics.action.open-restore-point": {
+    "message": "Abrir punto de restauración"
+  },
+  "app.crash-diagnostics.action.try-again": {
+    "message": "Jugar de nuevo"
+  },
+  "app.crash-diagnostics.header": {
+    "message": "Qué ha ocurrido"
+  },
+  "app.crash-diagnostics.intro": {
+    "message": "LeetMC analizó el registro del juego y encontró la causa más probable."
+  },
+  "app.crash-diagnostics.category.memory": {
+    "message": "Minecraft se quedó sin memoria"
+  },
+  "app.crash-diagnostics.category.java": {
+    "message": "La versión de Java seleccionada es incompatible"
+  },
+  "app.crash-diagnostics.category.mod-conflict": {
+    "message": "Un mod falló o entra en conflicto con otro"
+  },
+  "app.crash-diagnostics.category.loader": {
+    "message": "El cargador de mods o la versión del juego son incompatibles"
+  },
+  "app.crash-diagnostics.category.authentication": {
+    "message": "Falló la autenticación de Minecraft"
+  },
+  "app.crash-diagnostics.category.corrupt-files": {
+    "message": "Algunos archivos del juego están dañados o incompletos"
+  },
+  "app.crash-diagnostics.category.graphics": {
+    "message": "Minecraft no pudo iniciar los gráficos"
+  },
+  "app.crash-diagnostics.category.unknown": {
+    "message": "Minecraft se cerró inesperadamente"
+  },
+  "app.crash-diagnostics.description.memory": {
+    "message": "El registro contiene un error de memoria. Aumentar el límite debería ayudar."
+  },
+  "app.crash-diagnostics.description.java": {
+    "message": "Esta instancia usa una versión de Java que no puede cargar el juego o los mods seleccionados."
+  },
+  "app.crash-diagnostics.description.mod-conflict": {
+    "message": "Un mod falló durante la carga. Desactiva el mod detectado e inténtalo de nuevo."
+  },
+  "app.crash-diagnostics.description.loader": {
+    "message": "Al menos un mod no coincide con el cargador o la versión de Minecraft actual."
+  },
+  "app.crash-diagnostics.description.authentication": {
+    "message": "Tu sesión ya no es válida o el servicio de autenticación la rechazó."
+  },
+  "app.crash-diagnostics.description.corrupt-files": {
+    "message": "LeetMC puede verificar la instalación y volver a descargar los archivos que faltan."
+  },
+  "app.crash-diagnostics.description.graphics": {
+    "message": "El controlador gráfico o la compatibilidad con OpenGL impidieron abrir la ventana del juego."
+  },
+  "app.crash-diagnostics.description.unknown": {
+    "message": "El registro no contiene una firma fiable. Abre los registros para ver los detalles."
+  },
+  "app.crash-diagnostics.suspect-mod": {
+    "message": "Posible responsable: {mod}"
+  },
+  "app.crash-diagnostics.confidence.high": {
+    "message": "Confianza alta"
+  },
+  "app.crash-diagnostics.confidence.medium": {
+    "message": "Causa probable"
+  },
+  "app.crash-diagnostics.confidence.low": {
+    "message": "Requiere revisión"
+  },
+  "app.crash-diagnostics.restore-point-notice": {
+    "message": "Antes de cambiar la instancia, LeetMC creará automáticamente un punto de restauración."
+  },
+  "app.crash-diagnostics.action.disable-mod": {
+    "message": "Crear copia y desactivar mod"
+  },
+  "app.crash-diagnostics.action.increase-memory": {
+    "message": "Crear copia y aumentar memoria"
+  },
+  "app.crash-diagnostics.action.reset-java": {
+    "message": "Crear copia y seleccionar Java automáticamente"
+  },
+  "app.crash-diagnostics.action.repair-files": {
+    "message": "Crear copia y reparar archivos"
+  },
+  "app.crash-diagnostics.action.sign-in-again": {
+    "message": "Iniciar sesión de nuevo"
+  },
+  "app.crash-diagnostics.action.view-logs": {
+    "message": "Ver registros"
+  },
+  "app.crash-diagnostics.evidence": {
+    "message": "Detalles técnicos"
+  },
+  "app.crash-diagnostics.exit-code": {
+    "message": "Código de salida: {code}"
+  },
+  "app.crash-diagnostics.status.creating-restore-point": {
+    "message": "Creando un punto de restauración…"
+  },
+  "app.crash-diagnostics.status.applying-fix": {
+    "message": "Aplicando la corrección…"
+  },
+  "app.crash-diagnostics.status.fixed": {
+    "message": "Corrección aplicada. Ya puedes iniciar la instancia de nuevo."
+  },
+  "app.crash-diagnostics.restore-point-name": {
+    "message": "{instance} — Antes de la reparación automática"
+  },
+  "app.crash-diagnostics.action.copy-details": {
+    "message": "Copiar detalles"
+  },
   "app.action-bar.downloading-java": {
     "message": "Descargando Java {version}"
   },
@@ -3259,6 +3415,12 @@
   },
   "app.skins.section.chase-the-skies": {
     "message": "Persigue los cielos"
+  },
+  "app.skins.offline-skin-visibility-notice": {
+    "message": "En el modo sin conexión, los skins se instalan localmente. Para que otros jugadores vean tu skin, debes instalar un mod adicional para mostrar skins en tu modpack."
+  },
+  "app.skins.offline-skin-visibility-notice.expand": {
+    "message": "Mostrar aviso sobre skins sin conexión"
   },
   "app.skins.section.default-skins": {
     "message": "Skins por defecto"

@@ -102,6 +102,8 @@ import { useInstanceMetadataRefresh } from '@/composables/use-instance-metadata-
 import { useQuickInstanceLimit } from '@/composables/use-quick-instance-limit.ts'
 import { isDarkTheme, useTheme } from '@/composables/use-theme.ts'
 import { config } from '@/config'
+import CrashDiagnosticsModal from '@/features/crash-diagnostics/CrashDiagnosticsModal.vue'
+import { shouldRunCrashDiagnostics } from '@/features/crash-diagnostics/crash-diagnostics'
 import NewUpdateModal from '@/features/updates/new-update-modal/index.vue'
 import { getAccountAppearance, rememberAccountAppearance } from '@/helpers/account-appearance.ts'
 import { trackEvent } from '@/helpers/analytics'
@@ -109,6 +111,7 @@ import { check_reachable } from '@/helpers/auth.js'
 import { get_user, get_user_many, get_version } from '@/helpers/cache.js'
 import { gameSettingsQueryOptions } from '@/helpers/game-options'
 import { install_create_modpack_instance, install_get_modpack_preview } from '@/helpers/install'
+import { get_live_log_buffer, get_logs, get_output_by_filename } from '@/helpers/logs.js'
 import {
 	can_current_user_use_shared_instances,
 	get as getInstance,
@@ -196,6 +199,12 @@ const appTheme = useTheme()
 const quickInstances = useQuickInstanceLimit()
 const router = useRouter()
 const route = useRoute()
+
+watch(
+	() => appSettings.getFeatureFlag('modern_interface'),
+	(enabled) => document.documentElement.classList.toggle('leetmc-next-interface', enabled),
+	{ immediate: true },
+)
 const { channel: appEventChannel, events: appEvents } = setupAppEventsProvider()
 useInstanceMetadataRefresh(appEvents)
 const breadcrumbManager = createBreadcrumbManager()
@@ -257,6 +266,52 @@ useAppEvent(
 const popupNotificationManager = new AppPopupNotificationManager()
 providePopupNotificationManager(popupNotificationManager)
 const { addPopupNotification } = popupNotificationManager
+const crashDiagnosticsModal = ref(null)
+const handledCrashProcesses = new Set()
+
+useAppEvent(
+	'process',
+	async (event) => {
+		if (event.event !== 'finished' || handledCrashProcesses.has(event.uuid)) return
+		handledCrashProcesses.add(event.uuid)
+		if (handledCrashProcesses.size > 100) {
+			handledCrashProcesses.delete(handledCrashProcesses.values().next().value)
+		}
+
+		await new Promise((resolve) => setTimeout(resolve, 200))
+		const bufferedLog = await get_live_log_buffer(event.instance_id).catch(() => [])
+		let log = Array.isArray(bufferedLog) ? bufferedLog.join('\n') : String(bufferedLog ?? '')
+		if (!log.trim()) {
+			const availableLogs = await get_logs(event.instance_id, true).catch(() => [])
+			const recentCrashReport = availableLogs.find(
+				(entry) =>
+					entry.log_type === 'CrashReport' &&
+					Date.now() / 1000 - entry.age < 10 * 60,
+			)
+			const diagnosticLogs = [
+				recentCrashReport,
+				availableLogs.find((entry) => entry.filename === 'launcher_log.txt'),
+				availableLogs.find((entry) => entry.filename === 'latest.log'),
+			].filter((entry, index, entries) => entry && entries.indexOf(entry) === index)
+			const outputs = await Promise.all(
+				diagnosticLogs.map((entry) =>
+					get_output_by_filename(event.instance_id, entry.log_type, entry.filename).catch(() => ''),
+				),
+			)
+			log = outputs.filter(Boolean).join('\n')
+		}
+		if (!shouldRunCrashDiagnostics(log, event.message)) return
+
+		const crashedInstance = await getInstance(event.instance_id).catch(() => null)
+		crashDiagnosticsModal.value?.show({
+			instanceId: event.instance_id,
+			instanceName: crashedInstance?.name,
+			log,
+			processMessage: event.message,
+		})
+	},
+	appEvents,
+)
 const appVersion = getVersion()
 const tauriApiClient = new TauriModrinthClient({
 	userAgent: async () => `modrinth/theseus/${await appVersion} (support@modrinth.com)`,
@@ -1862,6 +1917,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 		:class="{
 			'disable-advanced-rendering': !appTheme.advancedRendering,
 			'sidebar-enabled': sidebarVisible,
+			'modern-interface': appSettings.getFeatureFlag('modern_interface'),
 		}"
 	>
 		<InteractiveDotBackground
@@ -1885,6 +1941,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 		</Transition>
 		<AppSettingsModal ref="appSettingsModal" />
 		<NewUpdateModal ref="newUpdateModal" />
+		<CrashDiagnosticsModal ref="crashDiagnosticsModal" />
 		<Suspense>
 			<ModrinthAccountRequiredModal ref="modrinthLoginModal" :request-auth="requestModrinthAuth" />
 		</Suspense>
@@ -2093,6 +2150,7 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 		:class="{
 			'sidebar-enabled': sidebarVisible,
 			'disable-advanced-rendering': !appTheme.advancedRendering,
+			'modern-interface': appSettings.getFeatureFlag('modern_interface'),
 		}"
 	>
 		<div class="app-viewport flex-grow router-view">
@@ -2263,10 +2321,49 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 }
 
 .app-grid-layout {
+	--app-glow-primary: color-mix(in srgb, var(--color-brand) 10%, transparent);
+	--app-glow-secondary: color-mix(in srgb, var(--color-brand) 7%, transparent);
+	--app-glow-soft: color-mix(in srgb, var(--color-brand) 4%, transparent);
+
 	position: relative;
 	isolation: isolate;
-	background-color: var(--color-bg);
+	background:
+		radial-gradient(ellipse 19rem 15rem at 96% 9%, var(--app-glow-secondary), transparent 78%),
+		radial-gradient(ellipse 20rem 18rem at 84% 21%, var(--app-glow-soft), transparent 80%),
+		radial-gradient(ellipse 25rem 22rem at 96% 98%, var(--app-glow-secondary), transparent 78%),
+		radial-gradient(ellipse 27rem 16rem at 78% 100%, var(--app-glow-soft), transparent 80%),
+		var(--color-bg);
 	height: 100vh;
+}
+
+.app-grid-layout::before {
+	position: absolute;
+	z-index: 0;
+	inset: 0;
+	background:
+		radial-gradient(ellipse 37rem 20rem at 8% 10%, var(--app-glow-primary), transparent 76%),
+		radial-gradient(ellipse 31rem 25rem at 27% 21%, var(--app-glow-soft), transparent 78%);
+	content: '';
+	filter: blur(38px);
+	pointer-events: none;
+}
+
+:global(html.light-mode) .app-grid-layout {
+	--app-glow-primary: color-mix(in srgb, var(--color-brand) 13%, transparent);
+	--app-glow-secondary: color-mix(in srgb, var(--color-brand) 9%, transparent);
+	--app-glow-soft: color-mix(in srgb, var(--color-brand) 6%, transparent);
+}
+
+:global(html.oled-mode) .app-grid-layout {
+	--app-glow-primary: color-mix(in srgb, var(--color-brand) 12%, transparent);
+	--app-glow-secondary: color-mix(in srgb, var(--color-brand) 9%, transparent);
+	--app-glow-soft: color-mix(in srgb, var(--color-brand) 5%, transparent);
+}
+
+:global(html.retro-mode) .app-grid-layout {
+	--app-glow-primary: color-mix(in srgb, var(--color-brand) 8%, transparent);
+	--app-glow-secondary: color-mix(in srgb, var(--color-brand) 5%, transparent);
+	--app-glow-soft: color-mix(in srgb, var(--color-brand) 3%, transparent);
 }
 
 .app-grid-layout.sidebar-enabled::after {
@@ -2584,6 +2681,88 @@ provideAppUpdateDownloadProgress(appUpdateDownload)
 
 	.fade-enter-from {
 		opacity: 0;
+	}
+}
+
+.modern-interface.app-grid-layout .app-grid-navbar {
+	top: calc(var(--top-bar-height) + 0.9rem);
+	left: 0.75rem;
+	right: 0.75rem;
+	height: calc(var(--navigation-bar-height) - 0.45rem);
+	gap: 0.4rem;
+	border-color: color-mix(in srgb, var(--liquid-glass-border) 82%, var(--color-brand) 18%);
+	border-radius: 1.35rem;
+	background: var(--liquid-glass-bg);
+	box-shadow:
+		0 1rem 2.5rem color-mix(in srgb, #000 15%, transparent),
+		inset 0 1px 0 color-mix(in srgb, #fff 10%, transparent);
+}
+
+.modern-interface.app-grid-layout.sidebar-enabled .app-grid-navbar {
+	right: calc(var(--right-bar-width, 300px) + 0.75rem);
+}
+
+.modern-interface.app-grid-layout .app-grid-navbar :deep(.nav-button) {
+	border-radius: 0.9rem;
+	transition: color 160ms ease, background-color 160ms ease, transform 160ms ease;
+}
+
+.modern-interface.app-grid-layout .app-grid-navbar :deep(.nav-button:hover) {
+	transform: translateY(-1px);
+	background: color-mix(in srgb, var(--color-button-bg) 72%, transparent) !important;
+}
+
+.modern-interface.app-grid-layout .app-grid-navbar :deep(.nav-button.router-link-active),
+.modern-interface.app-grid-layout .app-grid-navbar :deep(.nav-button.subpage-active) {
+	background: var(--color-brand-highlight) !important;
+}
+
+.modern-interface.app-grid-layout .app-grid-statusbar {
+	background: var(--liquid-glass-bg) !important;
+	box-shadow: 0 0.5rem 2rem color-mix(in srgb, #000 10%, transparent);
+}
+
+.modern-interface.app-contents .app-sidebar {
+	background: var(--liquid-glass-bg);
+	box-shadow: -1.5rem 0 4rem color-mix(in srgb, #000 12%, transparent);
+}
+
+.modern-interface.app-contents .app-viewport {
+	scroll-behavior: smooth;
+}
+
+.modern-interface.app-contents :deep(.liquid-glass-panel) {
+	backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 22px)) saturate(1.16);
+	-webkit-backdrop-filter: blur(calc(var(--liquid-glass-level, 1) * 22px)) saturate(1.16);
+}
+
+.modern-interface.app-contents .page-transition-enter-active {
+	transition: opacity 220ms ease, transform 260ms cubic-bezier(0.2, 0.8, 0.2, 1), filter 220ms ease;
+}
+
+.modern-interface.app-contents .page-transition-enter-from {
+	opacity: 0;
+	filter: blur(5px);
+	transform: translateY(0.65rem) scale(0.995);
+}
+
+@media (max-width: 760px) {
+	.modern-interface.app-grid-layout .app-grid-navbar {
+		left: 0.5rem;
+		right: 0.5rem;
+		gap: 0.15rem;
+		padding-inline: 0.35rem;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.modern-interface.app-grid-layout .app-grid-navbar :deep(.nav-button),
+	.modern-interface.app-contents .page-transition-enter-active {
+		transition: none;
+	}
+
+	.modern-interface.app-contents .app-viewport {
+		scroll-behavior: auto;
 	}
 }
 </style>

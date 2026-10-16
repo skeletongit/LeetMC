@@ -258,7 +258,7 @@ function handleSharedInstanceUnavailable(
 
 <template>
 	<div
-		class="box-border flex h-full w-full flex-col gap-6 p-6"
+		class="rooms-page box-border flex h-full w-full flex-col gap-6 p-6"
 		:class="{ 'justify-center': rooms.length === 0 }"
 	>
 		<div v-if="rooms.length" class="flex justify-start">
@@ -272,7 +272,7 @@ function handleSharedInstanceUnavailable(
 			<div
 				v-for="instance in rooms"
 				:key="instance.id"
-				class="flex min-w-0 flex-col gap-4 rounded-2xl border border-solid border-surface-5 bg-bg-raised p-5"
+				class="room-card flex min-w-0 flex-col gap-4 rounded-2xl border border-solid border-surface-5 bg-bg-raised p-5"
 			>
 				<div class="flex min-w-0 items-center gap-3">
 					<Avatar

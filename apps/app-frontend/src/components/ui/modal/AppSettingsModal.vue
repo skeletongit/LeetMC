@@ -313,10 +313,6 @@ const messages = defineMessages({
 		id: 'app.settings.app-version',
 		defaultMessage: 'Modrinth App {version}',
 	},
-	macos: {
-		id: 'app.settings.operating-system.macos',
-		defaultMessage: 'macOS',
-	},
 	developerModeButtonLabel: {
 		id: 'app.settings.developer-mode-button.label',
 		defaultMessage: 'Toggle developer mode',
@@ -326,6 +322,7 @@ const messages = defineMessages({
 <template>
 	<TabbedModal
 		ref="modal"
+		nav-position="top"
 		:tabs="availableTabs"
 		:width="'min(928px, calc(95vw - 10rem))'"
 		:before-hide="canLeaveCurrentTab"
@@ -349,18 +346,7 @@ const messages = defineMessages({
 			/>
 		</template>
 		<template #footer>
-			<div class="mt-auto text-secondary text-sm">
-				<div class="mb-3">
-					<template v-if="progress > 0 && progress < 1">
-						<p class="m-0 mb-2">
-							{{ formatMessage(messages.downloading, { version: downloadingVersion }) }}
-						</p>
-						<ProgressBar :progress="progress" />
-					</template>
-				</div>
-				<p v-if="appSettings.devMode" class="text-brand font-semibold m-0 mb-2">
-					{{ formatMessage(developerModeEnabled) }}
-				</p>
+			<div class="flex flex-wrap items-center justify-between gap-4 text-secondary text-sm">
 				<div class="flex items-center gap-3">
 					<button
 						:aria-label="formatMessage(messages.developerModeButtonLabel)"
@@ -374,16 +360,18 @@ const messages = defineMessages({
 					>
 						<ModrinthIcon aria-hidden="true" class="w-6 h-6" />
 					</button>
-					<div v-if="appInfo" class="max-w-[200px]">
-						<p class="m-0">
-							{{ formatMessage(messages.appVersion, { version: appInfo.version }) }}
-						</p>
-						<p class="m-0">
-							<span v-if="appInfo.osPlatform === 'macos'">{{ formatMessage(messages.macos) }}</span>
-							<span v-else class="capitalize">{{ appInfo.osPlatform }}</span>
-							{{ appInfo.osVersion }}
-						</p>
+					<div v-if="appInfo" class="flex flex-wrap items-center gap-2 text-xs">
+						<span>{{ formatMessage(messages.appVersion, { version: appInfo.version }) }}</span>
 					</div>
+				</div>
+				<p v-if="appSettings.devMode" class="text-brand font-semibold m-0 text-xs">
+					{{ formatMessage(developerModeEnabled) }}
+				</p>
+				<div v-if="progress > 0 && progress < 1" class="w-48">
+					<p class="m-0 mb-1 text-xs">
+						{{ formatMessage(messages.downloading, { version: downloadingVersion }) }}
+					</p>
+					<ProgressBar :progress="progress" />
 				</div>
 			</div>
 		</template>

@@ -14,6 +14,7 @@ import { computed, inject, ref } from 'vue'
 import { onBeforeRouteLeave } from 'vue-router'
 
 import LibrarySection from '@/components/ui/library/index.vue'
+import ModernLibraryHome from '@/components/ui/library/ModernLibraryHome.vue'
 import { libraryScrollTop } from '@/components/ui/library/view-state'
 import RecentWorldsList from '@/components/ui/world/RecentWorldsList.vue'
 import { useAppSettings } from '@/composables/use-app-settings.ts'
@@ -108,7 +109,15 @@ function openPageContextMenu(event: MouseEvent) {
 
 <template>
 	<div
-		v-if="isReady && instances.length === 0"
+		v-if="isReady && appSettings.getFeatureFlag('modern_interface')"
+		data-library-page-background
+		@contextmenu="openPageContextMenu"
+	>
+		<ModernLibraryHome :instances="recentInstances" @create="showCreationModal?.()" />
+		<ContextMenu ref="pageOptions" :label="formatMessage(messages.libraryActionsLabel)" />
+	</div>
+	<div
+		v-else-if="isReady && instances.length === 0"
 		data-library-page-background
 		class="flex min-h-[calc(100vh-8rem)] items-center justify-center p-6"
 		@contextmenu="openPageContextMenu"

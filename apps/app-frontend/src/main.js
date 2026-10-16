@@ -1,4 +1,5 @@
 import 'overlayscrollbars/overlayscrollbars.css'
+import '@/assets/stylesheets/modern-interface.scss'
 
 import { installTooltipDirective } from '@modrinth/ui'
 import { VueQueryPlugin } from '@tanstack/vue-query'

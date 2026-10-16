@@ -1,7 +1,7 @@
 use crate::State;
 use crate::api::instance::CONFIG_DIRECTORY;
 use crate::event::InstancePayloadType;
-use crate::event::emit::{emit_instance, emit_warning};
+use crate::event::emit::emit_instance;
 use crate::state::{
     DirectoryInfo, InstanceInstallStage, ProjectType, attached_world_data,
 };
@@ -446,11 +446,11 @@ fn crash_task(instance_id: String) {
             };
 
             if instance.install_stage == InstanceInstallStage::Installed {
-                emit_warning(&format!(
-					"Instance {} has crashed! Visit the logs page to see a crash report.",
-					instance.name
-				))
-				.await?;
+                tracing::info!(
+                    instance_id = instance_id,
+                    instance_name = instance.name,
+                    "Crash report detected; waiting for automatic diagnostics"
+                );
             }
 
             Ok::<(), crate::Error>(())

@@ -5,7 +5,7 @@ use crate::event::{LogEvent, LogPayload};
 use crate::util::io::IOError;
 use crate::util::rpc::RpcServer;
 use chrono::{DateTime, NaiveDateTime, TimeZone, Utc};
-use dashmap::DashMap;
+use dashmap::{DashMap, DashSet};
 use quick_xml::Reader;
 use quick_xml::events::Event;
 use serde::Deserialize;
@@ -150,6 +150,7 @@ pub(crate) async fn instance_has_running_process(
 
 pub struct ProcessManager {
     processes: DashMap<Uuid, Process>,
+    manually_stopped: DashSet<Uuid>,
 }
 
 impl Default for ProcessManager {
@@ -162,6 +163,7 @@ impl ProcessManager {
     pub fn new() -> Self {
         Self {
             processes: DashMap::new(),
+            manually_stopped: DashSet::new(),
         }
     }
 
@@ -383,6 +385,7 @@ impl ProcessManager {
 
     pub async fn kill(&self, id: Uuid) -> crate::Result<()> {
         if let Some(mut process) = self.processes.get_mut(&id) {
+            self.manually_stopped.insert(id);
             process.child.kill().await?;
         }
 
@@ -391,6 +394,10 @@ impl ProcessManager {
 
     fn remove(&self, id: Uuid) {
         self.processes.remove(&id);
+    }
+
+    fn take_manually_stopped(&self, id: Uuid) -> bool {
+        self.manually_stopped.remove(&id).is_some()
     }
 }
 
@@ -927,6 +934,8 @@ impl Process {
                 .await;
         }
 
+        let manually_stopped =
+            state.process_manager.take_manually_stopped(uuid);
         state.process_manager.remove(uuid);
         clear_persisted_process(&state, persisted_process).await;
         let sync_instance_id = instance_id.clone();
@@ -942,14 +951,6 @@ impl Process {
                 );
             }
         });
-        emit_process(
-            &instance_id,
-            uuid,
-            ProcessPayloadType::Finished,
-            "Exited process",
-        )
-        .await?;
-
         // Now fully complete- update playtime one last time
         update_playtime(&mut last_updated_playtime, &instance_id, true).await;
 
@@ -983,6 +984,20 @@ impl Process {
         {
             tracing::warn!("Failed to write exit status to log file: {}", e);
         }
+
+        let exit_code = mc_exit_status
+            .code()
+            .map_or_else(|| "none".to_string(), |code| code.to_string());
+        emit_process(
+            &instance_id,
+            uuid,
+            ProcessPayloadType::Finished,
+            &format!(
+                "Exited process; success={}; code={exit_code}; manually_stopped={manually_stopped}",
+                mc_exit_status.success(),
+            ),
+        )
+        .await?;
 
         let _ = state.discord_rpc.clear_to_default(true).await;
 

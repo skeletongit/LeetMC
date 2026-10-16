@@ -64,8 +64,9 @@ const { saved, current, changes, saving, hasChanges, reset, save } = useSavable(
 			})
 		}
 
+		const storedSettings = await get()
 		const nextSettings: AppSettings = {
-			...(await get()),
+			...storedSettings,
 			theme: value.theme,
 			sync_theme_across_devices: value.syncAcrossDevices,
 			advanced_rendering: value.advancedRendering,

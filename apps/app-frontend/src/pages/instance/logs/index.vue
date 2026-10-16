@@ -1,21 +1,40 @@
 <template>
-	<div class="flex flex-col gap-4 h-full">
-		<ConsolePageLayout />
+	<div class="flex h-full flex-col gap-2">
+		<div class="flex justify-end">
+			<Button
+				type="colored"
+				color="brand"
+				:disabled="logLines.length === 0"
+				@click="openDiagnostics"
+			>
+				<WrenchIcon />
+				{{ formatMessage(messages.runDiagnostics) }}
+			</Button>
+		</div>
+		<div class="min-h-0 flex-1">
+			<ConsolePageLayout />
+		</div>
+		<CrashDiagnosticsModal ref="crashDiagnosticsModal" />
 	</div>
 </template>
 
 <script setup>
+import { WrenchIcon } from '@modrinth/assets'
 import {
+	Button,
 	ConsolePageLayout,
+	defineMessages,
 	injectModrinthClient,
 	injectNotificationManager,
 	provideConsoleManager,
+	useVIntl,
 } from '@modrinth/ui'
 import { useQuery } from '@tanstack/vue-query'
 import { computed, ref, shallowRef, triggerRef, watch, watchEffect } from 'vue'
 
 import { useAppEvent } from '@/composables/use-app-event'
 import { useInstanceConsole } from '@/composables/useInstanceConsole'
+import CrashDiagnosticsModal from '@/features/crash-diagnostics/CrashDiagnosticsModal.vue'
 import { delete_logs_by_filename, get_output_by_filename } from '@/helpers/logs.js'
 
 import { injectInstancePage } from '../instance-context'
@@ -23,6 +42,7 @@ import { instanceKeys } from '../query-options'
 
 const client = injectModrinthClient()
 const { handleError } = injectNotificationManager()
+const { formatMessage } = useVIntl()
 const instancePage = injectInstancePage()
 const instanceId = instancePage.instanceId
 const {
@@ -109,6 +129,22 @@ watchEffect(() => {
 })
 
 const crashAnalysis = ref(null)
+const crashDiagnosticsModal = ref(null)
+const messages = defineMessages({
+	runDiagnostics: {
+		id: 'app.crash-diagnostics.action.run',
+		defaultMessage: 'Run diagnostics',
+	},
+})
+
+function openDiagnostics() {
+	const log = logLines.value.map((line) => line.text).join('\n')
+	crashDiagnosticsModal.value?.show({
+		instanceId: instanceId.value,
+		instanceName: instancePage.instance.value?.name,
+		log,
+	})
+}
 
 async function analyseForCrash() {
 	const lines = liveConsole.output.value

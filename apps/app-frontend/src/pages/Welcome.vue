@@ -25,7 +25,7 @@ useRootBreadcrumb({
 </script>
 
 <template>
-	<div class="box-border h-full">
+	<div class="welcome-page box-border h-full">
 		<WelcomeScreen />
 	</div>
 </template>

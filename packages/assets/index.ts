@@ -13,6 +13,7 @@ import _FourOhFourNotFound from './branding/404.svg?component'
 import _BrowserWindowSuccessIllustration from './branding/illustrations/browser-window-success.svg?component'
 import _InviteBackgroundIllustration from './branding/illustrations/invite-bg.webp?url'
 import _ModrinthIcon from './branding/EnderPearlIcon.vue'
+import _MinecraftBlockIcon from './branding/MinecraftBlockIcon.vue'
 import _ModrinthPlusIcon from './branding/modrinth-plus.svg?component'
 import _AngryRinthbot from './branding/rinthbot/angry.webp'
 import _AnnoyedRinthbot from './branding/rinthbot/annoyed.webp'
@@ -85,6 +86,8 @@ import _NoSearchResultIllustration from './illustrations/no-search-result.svg?co
 import _NoTasksIllustration from './illustrations/no-tasks.svg?component'
 
 export const ModrinthIcon = _ModrinthIcon
+export const EnderPearlIcon = _ModrinthIcon
+export const MinecraftBlockIcon = _MinecraftBlockIcon
 export const BrowserWindowSuccessIllustration = _BrowserWindowSuccessIllustration
 export const InviteBackgroundIllustration = _InviteBackgroundIllustration
 export const FourOhFourNotFound = _FourOhFourNotFound

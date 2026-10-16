@@ -414,3 +414,52 @@ export const ScrollableContent: StoryObj = {
 		`,
 	}),
 }
+
+export const TopNavigation: StoryObj = {
+	render: () => ({
+		components: { TabbedModal, Button },
+		setup() {
+			const modalRef = ref<InstanceType<typeof TabbedModal> | null>(null)
+			const tabs = [
+				{
+					name: { id: 'appearance', defaultMessage: 'Appearance' },
+					category: { id: 'display', defaultMessage: 'Display' },
+					icon: PaintbrushIcon,
+					content: makeTabContent('Appearance'),
+				},
+				{
+					name: { id: 'language', defaultMessage: 'Language' },
+					category: { id: 'display', defaultMessage: 'Display' },
+					icon: LanguagesIcon,
+					content: makeTabContent('Language'),
+				},
+				{
+					name: { id: 'profile', defaultMessage: 'Profile' },
+					category: { id: 'account', defaultMessage: 'Account' },
+					icon: ShieldIcon,
+					content: makeTabContent('Profile'),
+				},
+				{
+					name: { id: 'privacy', defaultMessage: 'Privacy' },
+					category: { id: 'account', defaultMessage: 'Account' },
+					icon: ShieldIcon,
+					content: makeTabContent('Privacy'),
+				},
+				{
+					name: { id: 'java', defaultMessage: 'Java' },
+					category: { id: 'instances', defaultMessage: 'Instances' },
+					icon: CoffeeIcon,
+					content: makeTabContent('Java'),
+				},
+			]
+			return { modalRef, tabs }
+		},
+		template: /* html */ `
+			<div>
+				<Button type="colored" color="brand" @click="modalRef?.show()">Open Top Navigation</Button>
+				<TabbedModal ref="modalRef" header="Settings" nav-position="top" :tabs="tabs" />
+			</div>
+		`,
+	}),
+}
+

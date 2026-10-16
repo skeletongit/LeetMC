@@ -1,4 +1,160 @@
 {
+  "app.appearance-settings.interface-style.title": {
+    "message": "Стиль інтерфейсу"
+  },
+  "app.appearance-settings.modern-interface.title": {
+    "message": "Інтерфейс LeetMC Next"
+  },
+  "app.appearance-settings.modern-interface.description": {
+    "message": "Вмикає оновлений головний екран, виразніші скляні панелі, єдині відступи та плавну навігацію. Поточний інтерфейс залишається стандартним."
+  },
+  "app.appearance-settings.modern-interface.experimental": {
+    "message": "За бажанням"
+  },
+  "app.modern-interface.home.eyebrow": {
+    "message": "Ваш ігровий простір"
+  },
+  "app.modern-interface.home.title": {
+    "message": "Усе готово до гри"
+  },
+  "app.modern-interface.home.description": {
+    "message": "Поверніться до останньої збірки або створіть наступну."
+  },
+  "app.modern-interface.home.continue-playing": {
+    "message": "Продовжити гру"
+  },
+  "app.modern-interface.home.open-instance": {
+    "message": "Відкрити збірку"
+  },
+  "app.modern-interface.home.recent-title": {
+    "message": "Нещодавні збірки"
+  },
+  "app.modern-interface.home.instance-count": {
+    "message": "{count, plural, one {# збірка} few {# збірки} many {# збірок} other {# збірки}}"
+  },
+  "app.modern-interface.home.empty-title": {
+    "message": "Ігровий простір готовий"
+  },
+  "app.modern-interface.home.empty-description": {
+    "message": "Створіть першу збірку, і LeetMC охайно розмістить тут усе необхідне."
+  },
+  "app.crash-diagnostics.action.run": {
+    "message": "Запустити діагностику"
+  },
+  "app.crash-diagnostics.action.open-restore-point": {
+    "message": "Відкрити точку відновлення"
+  },
+  "app.crash-diagnostics.action.try-again": {
+    "message": "Грати знову"
+  },
+  "app.crash-diagnostics.header": {
+    "message": "Що сталося"
+  },
+  "app.crash-diagnostics.intro": {
+    "message": "LeetMC проаналізував журнал гри та знайшов найімовірнішу причину."
+  },
+  "app.crash-diagnostics.category.memory": {
+    "message": "Minecraft не вистачило пам’яті"
+  },
+  "app.crash-diagnostics.category.java": {
+    "message": "Вибрана версія Java несумісна"
+  },
+  "app.crash-diagnostics.category.mod-conflict": {
+    "message": "Мод зламався або конфліктує з іншим модом"
+  },
+  "app.crash-diagnostics.category.loader": {
+    "message": "Завантажувач модів або версія гри несумісні"
+  },
+  "app.crash-diagnostics.category.authentication": {
+    "message": "Не вдалося авторизувати Minecraft"
+  },
+  "app.crash-diagnostics.category.corrupt-files": {
+    "message": "Деякі файли гри пошкоджені або завантажені не повністю"
+  },
+  "app.crash-diagnostics.category.graphics": {
+    "message": "Minecraft не зміг запустити графіку"
+  },
+  "app.crash-diagnostics.category.unknown": {
+    "message": "Minecraft несподівано закрився"
+  },
+  "app.crash-diagnostics.description.memory": {
+    "message": "У журналі знайдено помилку виділення пам’яті. Збільшення ліміту має допомогти."
+  },
+  "app.crash-diagnostics.description.java": {
+    "message": "Збірка використовує Java, яка не може завантажити вибрану гру або моди."
+  },
+  "app.crash-diagnostics.description.mod-conflict": {
+    "message": "Мод спричинив збій під час завантаження. Вимкніть знайдений мод і спробуйте знову."
+  },
+  "app.crash-diagnostics.description.loader": {
+    "message": "Принаймні один мод не відповідає поточному завантажувачу або версії Minecraft."
+  },
+  "app.crash-diagnostics.description.authentication": {
+    "message": "Сеанс більше недійсний або сервіс авторизації відхилив його."
+  },
+  "app.crash-diagnostics.description.corrupt-files": {
+    "message": "LeetMC може перевірити встановлення та повторно завантажити відсутні файли."
+  },
+  "app.crash-diagnostics.description.graphics": {
+    "message": "Драйвер відеокарти або підтримка OpenGL не дали відкрити вікно гри."
+  },
+  "app.crash-diagnostics.description.unknown": {
+    "message": "У журналі немає надійної ознаки помилки. Відкрийте логи для подробиць."
+  },
+  "app.crash-diagnostics.suspect-mod": {
+    "message": "Ймовірний винуватець: {mod}"
+  },
+  "app.crash-diagnostics.confidence.high": {
+    "message": "Висока впевненість"
+  },
+  "app.crash-diagnostics.confidence.medium": {
+    "message": "Ймовірна причина"
+  },
+  "app.crash-diagnostics.confidence.low": {
+    "message": "Потрібна перевірка"
+  },
+  "app.crash-diagnostics.restore-point-notice": {
+    "message": "Перед зміною збірки LeetMC автоматично створить точку відновлення."
+  },
+  "app.crash-diagnostics.action.disable-mod": {
+    "message": "Створити копію та вимкнути мод"
+  },
+  "app.crash-diagnostics.action.increase-memory": {
+    "message": "Створити копію та збільшити пам’ять"
+  },
+  "app.crash-diagnostics.action.reset-java": {
+    "message": "Створити копію та вибрати Java автоматично"
+  },
+  "app.crash-diagnostics.action.repair-files": {
+    "message": "Створити копію та відновити файли"
+  },
+  "app.crash-diagnostics.action.sign-in-again": {
+    "message": "Увійти знову"
+  },
+  "app.crash-diagnostics.action.view-logs": {
+    "message": "Відкрити логи"
+  },
+  "app.crash-diagnostics.evidence": {
+    "message": "Технічні подробиці"
+  },
+  "app.crash-diagnostics.exit-code": {
+    "message": "Код завершення: {code}"
+  },
+  "app.crash-diagnostics.status.creating-restore-point": {
+    "message": "Створюємо точку відновлення…"
+  },
+  "app.crash-diagnostics.status.applying-fix": {
+    "message": "Застосовуємо виправлення…"
+  },
+  "app.crash-diagnostics.status.fixed": {
+    "message": "Виправлення застосовано. Можна знову запустити збірку."
+  },
+  "app.crash-diagnostics.restore-point-name": {
+    "message": "{instance} — До автовиправлення"
+  },
+  "app.crash-diagnostics.action.copy-details": {
+    "message": "Копіювати подробиці"
+  },
   "app.action-bar.downloading-java": {
     "message": "Завантаження Java {version}"
   },
@@ -3250,6 +3406,12 @@
   },
   "app.skins.section.chase-the-skies": {
     "message": "Chase the Skies"
+  },
+  "app.skins.offline-skin-visibility-notice": {
+    "message": "В офлайн-режимі скіни встановлюються локально. Щоб інші гравці бачили ваш скін, вам потрібно встановити додатковий мод для відображення скінів у свою збірку."
+  },
+  "app.skins.offline-skin-visibility-notice.expand": {
+    "message": "Показати сповіщення про офлайн-скіни"
   },
   "app.skins.section.default-skins": {
     "message": "Усталені скіни"

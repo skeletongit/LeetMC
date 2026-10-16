@@ -48,10 +48,10 @@ const filterId = `ender-pearl-accent-${useId().replaceAll(':', '')}`
 		<image
 			class="pearl-original pearl-original-light"
 			:href="lightEnderPearlIcon"
-			x="-0.18"
-			y="-0.18"
-			width="1.36"
-			height="1.36"
+			x="-0.05"
+			y="-0.05"
+			width="1.1"
+			height="1.1"
 			preserveAspectRatio="xMidYMid meet"
 		/>
 	</svg>
@@ -64,6 +64,16 @@ const filterId = `ender-pearl-accent-${useId().replaceAll(':', '')}`
 
 .pearl-original {
 	display: none;
+}
+
+.ender-pearl-graphic.default-icon .pearl-accent,
+.ender-pearl-graphic.original .pearl-accent {
+	display: none;
+}
+
+.ender-pearl-graphic.default-icon .pearl-original-dark,
+.ender-pearl-graphic.original .pearl-original-dark {
+	display: block;
 }
 
 :global(.disable-pearl-accent-adaptation .pearl-accent) {
@@ -79,14 +89,6 @@ const filterId = `ender-pearl-accent-${useId().replaceAll(':', '')}`
 }
 
 :global(.light-mode.disable-pearl-accent-adaptation .pearl-original-light) {
-	display: block;
-}
-
-:global(.light-mode .pearl-accent) {
-	display: none;
-}
-
-:global(.light-mode .pearl-original-light) {
 	display: block;
 }
 </style>

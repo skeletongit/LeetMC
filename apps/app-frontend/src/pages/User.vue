@@ -1,5 +1,5 @@
 <template>
-	<div class="w-full p-2">
+	<div class="user-page w-full p-2">
 		<UserProfilePageLayout
 			:user-id="userId"
 			:project-type="projectType"

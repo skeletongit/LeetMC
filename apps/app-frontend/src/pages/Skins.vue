@@ -7,8 +7,10 @@ import {
 	RotateCounterClockwiseIcon,
 	ShirtIcon,
 	SpinnerIcon,
+	TriangleAlertIcon,
 	UserIcon,
 	WindowsIcon,
+	XIcon,
 } from '@modrinth/assets'
 import {
 	Button,
@@ -222,6 +224,15 @@ const messages = defineMessages({
 		id: 'app.skins.offline-sign-in.button',
 		defaultMessage: 'Sign in with offline account',
 	},
+	offlineSkinVisibilityNotice: {
+		id: 'app.skins.offline-skin-visibility-notice',
+		defaultMessage:
+			'In offline mode, skins are installed locally. For other players to see your skin, you need to install an additional skin-display mod in your modpack.',
+	},
+	expandOfflineSkinVisibilityNotice: {
+		id: 'app.skins.offline-skin-visibility-notice.expand',
+		defaultMessage: 'Show offline skin notice',
+	},
 })
 
 const editSkinModal = useTemplateRef('editSkinModal')
@@ -248,6 +259,7 @@ const selectedSkin = ref<Skin | null>(null)
 const isApplyingSkin = ref(false)
 const earsFeaturesEnabled = ref(true)
 const selectedSkinHasEarsFeatures = ref(false)
+const isOfflineSkinNoticeExpanded = ref(true)
 
 const originalSelectedSkin = ref<Skin | null>(null)
 const earsFeatureNoticeParts = computed(() => {
@@ -1126,7 +1138,41 @@ await loadSkins()
 		:proceed-label="formatMessage(commonMessages.deleteLabel)"
 		@proceed="deleteSkin"
 	/>
-	<div class="skin-page-wrapper w-full min-w-0">
+	<div class="skin-page-wrapper next-skin-page w-full min-w-0">
+		<div v-if="currentUser?.refresh_token === 'offline'" class="offline-skin-notice-slot mx-4 mt-4">
+			<Transition name="offline-skin-notice-swap" mode="out-in">
+				<div
+					v-if="isOfflineSkinNoticeExpanded"
+					key="expanded"
+					class="offline-skin-notice border border-solid border-orange bg-bg-orange"
+					role="note"
+				>
+					<TriangleAlertIcon class="size-5 shrink-0 text-orange" aria-hidden="true" />
+					<p class="m-0 min-w-0 flex-1 text-sm font-medium leading-5 text-contrast">
+						{{ formatMessage(messages.offlineSkinVisibilityNotice) }}
+					</p>
+					<button
+						type="button"
+						class="offline-skin-notice-button shrink-0"
+						:aria-label="formatMessage(commonMessages.closeButton)"
+						@click="isOfflineSkinNoticeExpanded = false"
+					>
+						<XIcon class="size-5" aria-hidden="true" />
+					</button>
+				</div>
+				<button
+					v-else
+					key="collapsed"
+					type="button"
+					class="offline-skin-notice-collapsed border border-solid border-orange bg-bg-orange"
+					:aria-label="formatMessage(messages.expandOfflineSkinVisibilityNotice)"
+					:aria-expanded="false"
+					@click="isOfflineSkinNoticeExpanded = true"
+				>
+					<TriangleAlertIcon class="size-5" aria-hidden="true" />
+				</button>
+			</Transition>
+		</div>
 		<div class="skin-page-layout box-border grow p-4" :class="{ 'pb-40': !currentUser }">
 			<SkinCatalogModal
 				embedded
@@ -1406,6 +1452,83 @@ await loadSkins()
 	container-type: inline-size;
 	container-name: skinspage;
 	width: 100%;
+}
+
+.offline-skin-notice-slot {
+	min-width: 0;
+	min-height: 2.875rem;
+}
+
+.offline-skin-notice {
+	box-sizing: border-box;
+	display: flex;
+	width: 100%;
+	min-width: 0;
+	align-items: flex-start;
+	gap: 0.625rem;
+	padding: 0.75rem 1rem;
+	border-radius: 0.75rem;
+	overflow-wrap: anywhere;
+}
+
+.offline-skin-notice-button,
+.offline-skin-notice-collapsed {
+	display: grid;
+	place-items: center;
+	padding: 0.125rem;
+	border-radius: 0.5rem;
+	color: var(--color-orange);
+	cursor: pointer;
+
+	&:hover {
+		background: color-mix(in srgb, var(--color-orange) 14%, transparent);
+	}
+
+	&:focus-visible {
+		outline: 2px solid var(--color-orange);
+		outline-offset: 2px;
+	}
+}
+
+.offline-skin-notice-button {
+	border: 0;
+	background: transparent;
+}
+
+.offline-skin-notice-collapsed {
+	box-sizing: border-box;
+	width: 2.875rem;
+	height: 2.875rem;
+}
+
+.offline-skin-notice-swap-enter-active,
+.offline-skin-notice-swap-leave-active {
+	transform-origin: left center;
+	transition:
+		opacity 0.16s ease,
+		transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+		clip-path 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.offline-skin-notice-swap-enter-from,
+.offline-skin-notice-swap-leave-to {
+	opacity: 0;
+	transform: translateX(-0.25rem);
+	clip-path: inset(0 100% 0 0 round 0.75rem);
+}
+
+.offline-skin-notice-swap-enter-to,
+.offline-skin-notice-swap-leave-from {
+	opacity: 1;
+	transform: translateX(0);
+	clip-path: inset(0 0 0 0 round 0.75rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.offline-skin-notice-swap-enter-active,
+	.offline-skin-notice-swap-leave-active {
+		transition: none;
+	}
 }
 
 .skin-page-layout {
